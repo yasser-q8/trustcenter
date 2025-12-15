@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>برنامج مركز تراست لصيانة الأجهزة المنزلية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* إعادة تعيين عام */
         * {
@@ -432,12 +433,12 @@
         
         .nav-btn {
             flex: 1;
-            min-width: 150px;
+            min-width: 120px;
             text-align: center;
-            padding: 15px 10px;
+            padding: 12px 8px;
             background: transparent;
             border: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -640,21 +641,22 @@
             color: white;
         }
         
-        /* كروت الإحصائيات */
+        /* كروت الإحصائيات - 5 في الصف */
         .dashboard-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
             margin-bottom: 30px;
         }
         
         .card {
             background: linear-gradient(135deg, #ffffff, #f8f9fa);
             border-radius: 10px;
-            padding: 25px;
+            padding: 20px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             border-top: 5px solid #FF6E00;
             transition: all 0.3s ease;
+            min-height: 130px;
         }
         
         .card:hover {
@@ -664,15 +666,15 @@
         
         .card h3 {
             color: #1a8c5e;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+            margin-bottom: 12px;
+            font-size: 1rem;
         }
         
         .card-value {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .card-profit {
@@ -784,38 +786,10 @@
             font-weight: 500;
         }
         
-        /* شاشة العملاء */
-        .customer-card {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 5px solid #FF6E00;
-        }
-        
-        .customer-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .customer-info-item {
-            background: white;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #eee;
-        }
-        
-        .customer-info-label {
-            font-weight: 600;
-            color: #1a8c5e;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-        
-        .customer-info-value {
-            font-size: 1.1rem;
+        /* شاشة العملاء - جدول */
+        .customer-table-container {
+            overflow-x: auto;
+            margin-top: 20px;
         }
         
         /* النسخ الاحتياطي */
@@ -861,6 +835,42 @@
         .backup-actions {
             display: flex;
             gap: 10px;
+        }
+        
+        /* الرسوم البيانية */
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chart-title {
+            color: #1a8c5e;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .report-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .report-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .report-card h4 {
+            color: #1a8c5e;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
         }
         
         footer {
@@ -909,6 +919,18 @@
             font-weight: 500; 
         }
         
+        @media (max-width: 1200px) {
+            .dashboard-cards {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .dashboard-cards {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+        
         @media (max-width: 768px) { 
             .signature-card { 
                 position: relative; 
@@ -920,16 +942,25 @@
             } 
             
             .nav-btn {
-                min-width: 120px;
-                font-size: 0.9rem;
-                padding: 12px 5px;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
+                min-width: 100px;
+                font-size: 0.8rem;
+                padding: 10px 5px;
             }
             
             .dashboard-cards {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            
+            .card {
+                padding: 15px;
+                min-height: 120px;
+            }
+            
+            .card-value {
+                font-size: 1.4rem;
+            }
+            
+            .form-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -951,6 +982,12 @@
             .date-filter {
                 flex-direction: column;
                 align-items: stretch;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .dashboard-cards {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
@@ -1077,8 +1114,6 @@
                     <input type="submit" value="تسجيل الدخول" id="loginBtn">
                 </div>
                 
-              
-                
                 <div id="loginError">
                     <i class="fas fa-exclamation-circle"></i> كلمة المرور غير صحيحة
                 </div>
@@ -1107,7 +1142,6 @@
                 </div>
                 <div class="user-info">
                     <div class="user-name" id="currentUserName"></div>
-                    <div class="user-name" id="currentUserRole"></div>
                     <button id="logoutBtn" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
                     </button>
@@ -1124,9 +1158,6 @@
                 <button class="nav-btn" data-section="customers" id="customersNav">
                     <i class="fas fa-users"></i> العملاء
                 </button>
-                <button class="nav-btn" data-section="settings" id="settingsNav">
-                    <i class="fas fa-cogs"></i> الإعدادات
-                </button>
                 <button class="nav-btn" data-section="orders">
                     <i class="fas fa-file-invoice-dollar"></i> تسجيل الفواتير
                 </button>
@@ -1136,11 +1167,14 @@
                 <button class="nav-btn" data-section="general-expenses" id="generalExpensesNav">
                     <i class="fas fa-receipt"></i> المصروفات العامة
                 </button>
-                <button class="nav-btn" data-section="advances">
+                <button class="nav-btn" data-section="advances" id="advancesNav">
                     <i class="fas fa-hand-holding-usd"></i> سلف الموظفين
                 </button>
                 <button class="nav-btn" data-section="reports" id="reportsNav">
                     <i class="fas fa-chart-bar"></i> التقارير
+                </button>
+                <button class="nav-btn" data-section="settings" id="settingsNav" style="margin-right: auto;">
+                    <i class="fas fa-cogs"></i> الإعدادات
                 </button>
             </nav>
             
@@ -1174,9 +1208,19 @@
                         <p id="revenuePeriod">منذ بداية الشهر</p>
                     </div>
                     <div class="card">
-                        <h3>عدد الفواتير</h3>
-                        <div class="card-value" id="totalOrders">0</div>
-                        <p id="ordersPeriod">فواتير هذا الشهر</p>
+                        <h3>عمولات الفنيين</h3>
+                        <div class="card-value" id="totalCommissions">0 ج.م</div>
+                        <p id="commissionsPeriod">لهذا الشهر</p>
+                    </div>
+                    <div class="card">
+                        <h3>مصروفات الأوردرات</h3>
+                        <div class="card-value" id="totalOrderExpensesCard">0 ج.م</div>
+                        <p id="orderExpensesPeriod">لهذا الشهر</p>
+                    </div>
+                    <div class="card">
+                        <h3>المصروفات العامة</h3>
+                        <div class="card-value" id="totalGeneralExpensesCard">0 ج.م</div>
+                        <p id="generalExpensesPeriod">لهذا الشهر</p>
                     </div>
                     <div class="card">
                         <h3>صافي الربح</h3>
@@ -1184,9 +1228,14 @@
                         <p id="profitPeriod">لهذا الشهر</p>
                     </div>
                     <div class="card">
-                        <h3>المصروفات</h3>
-                        <div class="card-value" id="totalExpenses">0 ج.م</div>
-                        <p id="expensesPeriod">إجمالي المصروفات</p>
+                        <h3>نسبة الربحية</h3>
+                        <div class="card-value" id="profitPercentage">0%</div>
+                        <p id="percentagePeriod">متوسط الربحية</p>
+                    </div>
+                    <div class="card">
+                        <h3>عدد الفواتير</h3>
+                        <div class="card-value" id="totalOrders">0</div>
+                        <p id="ordersPeriod">فواتير هذا الشهر</p>
                     </div>
                     <div class="card">
                         <h3>الفنيين النشطين</h3>
@@ -1197,24 +1246,6 @@
                         <h3>السلف المستحقة</h3>
                         <div class="card-value" id="totalAdvances">0 ج.م</div>
                         <p>إجمالي سلف الموظفين</p>
-                    </div>
-                    <div class="card">
-                        <h3>عمولات الفنيين</h3>
-                        <div class="card-value" id="totalCommissions">0 ج.م</div>
-                        <p id="commissionsPeriod">لهذا الشهر</p>
-                    </div>
-                    <div class="card">
-                        <h3>نسبة الربحية</h3>
-                        <div class="card-value" id="profitPercentage">0%</div>
-                        <p id="percentagePeriod">متوسط الربحية</p>
-                    </div>
-                </div>
-                
-                <!-- تفاصيل الملخص -->
-                <div style="margin-top: 30px;">
-                    <h3 class="section-title"><i class="fas fa-table"></i> تفاصيل الملخص</h3>
-                    <div class="dashboard-cards" id="detailedSummary">
-                        <!-- سيتم ملؤها بالبيانات من JavaScript -->
                     </div>
                 </div>
                 
@@ -1280,8 +1311,27 @@
                     <input type="text" id="searchCustomers" class="search-input" placeholder="ابحث باسم العميل أو رقم الهاتف أو العنوان...">
                 </div>
                 
-                <div id="customersList">
-                    <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                <!-- جدول العملاء -->
+                <div class="customer-table-container">
+                    <h3 class="section-title"><i class="fas fa-list"></i> قائمة العملاء</h3>
+                    <table id="customersTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>اسم العميل</th>
+                                <th>رقم الهاتف</th>
+                                <th>العنوان</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customersTableBody">
+                            <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                        </tbody>
+                    </table>
+                    <div id="noCustomers" class="empty-message">
+                        <i class="fas fa-users"></i>
+                        <p>لا يوجد عملاء مسجلين بعد. قم بإضافة عميل جديد.</p>
+                    </div>
                 </div>
             </section>
             
@@ -1357,7 +1407,7 @@
                 </div>
                 
                 <!-- إدارة المستخدمين -->
-                <div id="usersManagement" class="hidden-by-role">
+                <div id="usersManagement">
                     <h3 style="color: #1a8c5e; margin-bottom: 15px;"><i class="fas fa-user-cog"></i> إدارة المستخدمين</h3>
                     <div class="form-grid">
                         <div class="form-group">
@@ -1429,6 +1479,10 @@
                         <label for="customerPhone">رقم موبايل العميل *</label>
                         <input type="tel" id="customerPhone" placeholder="رقم هاتف العميل">
                     </div>
+                    <div class="form-group">
+                        <label for="orderAmount">مبلغ الفاتورة (ج.م)</label>
+                        <input type="number" id="orderAmount" min="0" placeholder="إجمالي مبلغ الفاتورة">
+                    </div>
                 </div>
                 
                 <!-- بيانات العميل التلقائية -->
@@ -1468,10 +1522,6 @@
                             <option value="أجهزة منزلية">أجهزة منزلية</option>
                             <option value="أخرى">أخرى</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="orderAmount">مبلغ الفاتورة (ج.م)</label>
-                        <input type="number" id="orderAmount" min="0" placeholder="إجمالي مبلغ الفاتورة">
                     </div>
                 </div>
                 <div class="form-group">
@@ -1701,7 +1751,7 @@
                     <h3 class="section-title"><i class="fas fa-history"></i> كشف حساب الذمة للموظفين</h3>
                     
                     <div class="date-filter">
-                        <div class="form-group">
+                        <div>
                             <label for="advanceEmployeeFilter">اختر الموظف</label>
                             <select id="advanceEmployeeFilter">
                                 <option value="">جميع الموظفين</option>
@@ -1754,53 +1804,144 @@
             
             <!-- شاشة التقارير -->
             <section id="reports" class="content-section">
-                <h2 class="section-title"><i class="fas fa-chart-bar"></i> تقارير ربحية الفواتير</h2>
+                <h2 class="section-title"><i class="fas fa-chart-bar"></i> التقارير الشاملة</h2>
                 
-                <div class="date-filter">
-                    <div>
-                        <label for="reportFromDate">من تاريخ</label>
-                        <input type="date" id="reportFromDate">
+                <!-- تقارير ربحية الفواتير -->
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: #1a8c5e; margin-bottom: 15px;"><i class="fas fa-chart-line"></i> تقارير ربحية الفواتير</h3>
+                    
+                    <div class="date-filter">
+                        <div>
+                            <label for="reportFromDate">من تاريخ</label>
+                            <input type="date" id="reportFromDate">
+                        </div>
+                        <div>
+                            <label for="reportToDate">إلى تاريخ</label>
+                            <input type="date" id="reportToDate">
+                        </div>
+                        <button id="filterReportBtn" class="btn">
+                            <i class="fas fa-filter"></i> تصفية التقارير
+                        </button>
+                        <button id="resetReportBtn" class="btn">
+                            <i class="fas fa-redo"></i> عرض الكل
+                        </button>
                     </div>
-                    <div>
-                        <label for="reportToDate">إلى تاريخ</label>
-                        <input type="date" id="reportToDate">
+                    
+                    <div class="report-table">
+                        <table id="profitReportTable">
+                            <thead>
+                                <tr>
+                                    <th>رقم الفاتورة</th>
+                                    <th>التاريخ</th>
+                                    <th>قيمة الفاتورة</th>
+                                    <th>اسم الفني</th>
+                                    <th>عمولة الفني</th> 
+                                    <th>مصروفات الأوردر</th>
+                                    <th>صافي الربح</th>
+                                    <th>نسبة الربح</th>
+                                </tr>
+                            </thead>
+                            <tbody id="profitReportTableBody">
+                                <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                            </tbody>
+                        </table>
+                        <div id="noReportData" class="empty-message">
+                            <i class="fas fa-chart-line"></i>
+                            <p>لا توجد بيانات لتقرير الربحية. قم بإضافة فواتير ومصروفات أولاً.</p>
+                        </div>
                     </div>
-                    <button id="filterReportBtn" class="btn">
-                        <i class="fas fa-filter"></i> تصفية التقارير
-                    </button>
-                    <button id="resetReportBtn" class="btn">
-                        <i class="fas fa-redo"></i> عرض الكل
-                    </button>
-                </div>
-                
-                <div class="report-table">
-                    <table id="profitReportTable">
-                        <thead>
-                            <tr>
-                                <th>رقم الفاتورة</th>
-                                <th>التاريخ</th>
-                                <th>قيمة الفاتورة</th>
-                                <th>اسم الفني</th>
-                                <th>عمولة الفني</th> 
-                                <th>مصروفات الأوردر</th>
-                                <th>صافي الربح</th>
-                                <th>نسبة الربح</th>
-                            </tr>
-                        </thead>
-                        <tbody id="profitReportTableBody">
+                    
+                    <div style="margin-top: 40px;">
+                        <h4 style="color: #1a8c5e; margin-bottom: 15px;">تقرير مجمع</h4>
+                        <div class="dashboard-cards" id="aggregateReport">
                             <!-- سيتم ملؤها بالبيانات من JavaScript -->
-                        </tbody>
-                    </table>
-                    <div id="noReportData" class="empty-message">
-                        <i class="fas fa-chart-line"></i>
-                        <p>لا توجد بيانات لتقرير الربحية. قم بإضافة فواتير ومصروفات أولاً.</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div style="margin-top: 40px;">
-                    <h3 class="section-title"><i class="fas fa-chart-bar"></i> تقرير مجمع</h3>
-                    <div class="dashboard-cards" id="aggregateReport">
-                        <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                <!-- تقرير إيرادات الفنيين -->
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: #1a8c5e; margin-bottom: 15px;"><i class="fas fa-user-tie"></i> تقرير إيرادات الفنيين</h3>
+                    <div class="chart-container">
+                        <div class="chart-title">إيرادات الفنيين</div>
+                        <canvas id="technicianRevenueChart"></canvas>
+                    </div>
+                    <div class="report-table">
+                        <table id="technicianReportTable">
+                            <thead>
+                                <tr>
+                                    <th>اسم الفني</th>
+                                    <th>عدد الفواتير</th>
+                                    <th>إجمالي الإيرادات</th>
+                                    <th>متوسط قيمة الفاتورة</th>
+                                    <th>إجمالي العمولة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="technicianReportTableBody">
+                                <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- تقرير المبيعات الشهري -->
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: #1a8c5e; margin-bottom: 15px;"><i class="fas fa-calendar-alt"></i> تقرير المبيعات الشهري</h3>
+                    <div class="chart-container">
+                        <div class="chart-title">الإيرادات الشهرية</div>
+                        <canvas id="monthlySalesChart"></canvas>
+                    </div>
+                </div>
+                
+                <!-- تقرير العملاء الدائمين -->
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: #1a8c5e; margin-bottom: 15px;"><i class="fas fa-user-friends"></i> تقرير العملاء الدائمين</h3>
+                    <div class="report-table">
+                        <table id="regularCustomersTable">
+                            <thead>
+                                <tr>
+                                    <th>اسم العميل</th>
+                                    <th>رقم الهاتف</th>
+                                    <th>عدد الفواتير</th>
+                                    <th>إجمالي المشتريات</th>
+                                    <th>متوسط قيمة الفاتورة</th>
+                                    <th>تاريخ آخر فاتورة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="regularCustomersTableBody">
+                                <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                            </tbody>
+                        </table>
+                        <div id="noRegularCustomers" class="empty-message">
+                            <i class="fas fa-user-friends"></i>
+                            <p>لا توجد بيانات كافية عن العملاء الدائمين.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- تقرير ربحية أنواع التصليح -->
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: #1a8c5e; margin-bottom: 15px;"><i class="fas fa-tools"></i> تقرير ربحية أنواع التصليح</h3>
+                    <div class="chart-container">
+                        <div class="chart-title">ربحية أنواع التصليح</div>
+                        <canvas id="repairTypeProfitChart"></canvas>
+                    </div>
+                    <div class="report-table">
+                        <table id="repairTypeReportTable">
+                            <thead>
+                                <tr>
+                                    <th>نوع التصليح</th>
+                                    <th>عدد الفواتير</th>
+                                    <th>إجمالي الإيرادات</th>
+                                    <th>إجمالي المصروفات</th>
+                                    <th>صافي الربح</th>
+                                    <th>نسبة الربحية</th>
+                                </tr>
+                            </thead>
+                            <tbody id="repairTypeReportTableBody">
+                                <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
@@ -2002,7 +2143,6 @@
                 if (e.key === 'Enter') login();
             });
             
-                        
             // تسجيل الخروج
             document.getElementById('logoutBtn').addEventListener('click', logout);
             
@@ -2021,6 +2161,11 @@
                     
                     this.classList.add('active');
                     document.getElementById(this.dataset.section).classList.add('active');
+                    
+                    // إذا كانت شاشة التقارير، قم بتحميل جميع التقارير
+                    if (this.dataset.section === 'reports') {
+                        loadAllReports();
+                    }
                 });
             });
             
@@ -2102,11 +2247,11 @@
             
             // التقارير
             if (document.getElementById('filterReportBtn')) {
-                document.getElementById('filterReportBtn').addEventListener('click', loadProfitReport);
+                document.getElementById('filterReportBtn').addEventListener('click', loadAllReports);
                 document.getElementById('resetReportBtn').addEventListener('click', function() {
                     document.getElementById('reportFromDate').value = '';
                     document.getElementById('reportToDate').value = '';
-                    loadProfitReport();
+                    loadAllReports();
                 });
             }
             
@@ -2145,8 +2290,8 @@
                 
                 // تحديث معلومات المستخدم
                 document.getElementById('currentUserName').textContent = `مرحباً ${user.name}`;
-// إخفاء عنصر الدور بالكامل
-document.getElementById('currentUserRole').style.display = 'none';                // تحميل البيانات بناءً على صلاحيات المستخدم
+                
+                // تحميل البيانات بناءً على صلاحيات المستخدم
                 loadDataBasedOnRole();
                 applyUserPermissions();
                 
@@ -2209,10 +2354,10 @@ document.getElementById('currentUserRole').style.display = 'none';              
             const settingsNav = document.getElementById('settingsNav');
             const reportsNav = document.getElementById('reportsNav');
             const generalExpensesNav = document.getElementById('generalExpensesNav');
+            const advancesNav = document.getElementById('advancesNav');
             
             if (role === 'superAdmin') {
                 // سوبر أدمن: كل الصلاحيات
-                if (usersManagement) usersManagement.classList.remove('hidden-by-role');
                 userManagementButtons.forEach(btn => {
                     if (btn) btn.classList.remove('hidden-by-role');
                 });
@@ -2234,16 +2379,23 @@ document.getElementById('currentUserRole').style.display = 'none';              
                 if (settingsNav) settingsNav.classList.remove('disabled');
                 if (reportsNav) reportsNav.classList.remove('disabled');
                 if (generalExpensesNav) generalExpensesNav.classList.remove('disabled');
+                if (advancesNav) advancesNav.classList.remove('disabled');
             } else if (role === 'admin') {
-                // أدمن: لا يرى الإعدادات أو التقارير
-                if (usersManagement) usersManagement.classList.add('hidden-by-role');
+                // أدمن: لا يرى الإعدادات أو إدارة المستخدمين
                 userManagementButtons.forEach(btn => {
                     if (btn) btn.classList.add('hidden-by-role');
                 });
                 backupButtons.forEach(btn => {
                     if (btn) btn.classList.add('hidden-by-role');
                 });
-                allEditButtons.forEach(btn => {
+                // المشرف يمكنه التعديل فقط (بدون حذف)
+                const deleteButtons = document.querySelectorAll('.delete-btn, .btn-danger');
+                deleteButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                // إظهار أزرار التعديل فقط
+                const editButtons = document.querySelectorAll('.edit-btn, .btn-success:not(#saveOrderBtn):not(#saveCustomerBtn):not(#saveExpenseBtn):not(#saveGeneralExpenseBtn)');
+                editButtons.forEach(btn => {
                     if (btn) btn.classList.remove('hidden-by-role');
                 });
                 allUpdateButtons.forEach(btn => {
@@ -2253,68 +2405,69 @@ document.getElementById('currentUserRole').style.display = 'none';              
                     if (btn) btn.classList.remove('hidden-by-role');
                 });
                 
-                if (dashboardNav) dashboardNav.classList.remove('disabled');
-                if (customersNav) customersNav.classList.remove('disabled');
-                if (settingsNav) settingsNav.classList.add('disabled');
-                if (reportsNav) reportsNav.classList.add('disabled');
-                if (generalExpensesNav) generalExpensesNav.classList.remove('disabled');
-                
-                // إذا كان في الإعدادات أو التقارير، انتقل إلى لوحة التحكم
-                const activeSection = document.querySelector('.content-section.active');
-                if (activeSection && ['settings', 'reports'].includes(activeSection.id)) {
-                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-                    if (dashboardNav) {
-                        dashboardNav.classList.add('active');
-                        document.getElementById('dashboard').classList.add('active');
-                    }
-                }
-            } else if (role === 'dataEntry') {
-                // مدخل بيانات: فقط إضافة، لا تعديل ولا حذف ولا تقارير ولا إعدادات
-                if (usersManagement) usersManagement.classList.add('hidden-by-role');
-                userManagementButtons.forEach(btn => {
-                    if (btn) btn.classList.add('hidden-by-role');
-                });
-                backupButtons.forEach(btn => {
-                    if (btn) btn.classList.add('hidden-by-role');
-                });
-                allEditButtons.forEach(btn => {
-                    if (btn) btn.classList.add('hidden-by-role');
-                });
-                allUpdateButtons.forEach(btn => {
-                    if (btn) btn.classList.add('hidden-by-role');
-                });
-                allCancelButtons.forEach(btn => {
-                    if (btn) btn.classList.add('hidden-by-role');
-                });
-                
-                if (dashboardNav) dashboardNav.classList.remove('disabled');
+                if (dashboardNav) dashboardNav.classList.add('disabled');
                 if (customersNav) customersNav.classList.remove('disabled');
                 if (settingsNav) settingsNav.classList.add('disabled');
                 if (reportsNav) reportsNav.classList.add('disabled');
                 if (generalExpensesNav) generalExpensesNav.classList.add('disabled');
+                if (advancesNav) advancesNav.classList.add('disabled');
+                
+                // إذا كان في لوحة التحكم أو الإعدادات أو التقارير أو السلف أو المصاريف العامة، انتقل إلى العملاء
+                const activeSection = document.querySelector('.content-section.active');
+                if (activeSection && ['dashboard', 'settings', 'reports', 'advances', 'general-expenses'].includes(activeSection.id)) {
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                    if (customersNav) {
+                        customersNav.classList.add('active');
+                        document.getElementById('customers').classList.add('active');
+                    }
+                }
+            } else if (role === 'dataEntry') {
+                // مدخل بيانات: لا يرى لوحة التحكم، ولا سلف الموظفين، ولا الإعدادات، ولا التقارير، ولا المصاريف العامة
+                userManagementButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                backupButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                // مدخل البيانات لا يستطيع التعديل أو الحذف
+                allEditButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                allUpdateButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                allCancelButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                
+                if (dashboardNav) dashboardNav.classList.add('disabled');
+                if (customersNav) customersNav.classList.remove('disabled');
+                if (settingsNav) settingsNav.classList.add('disabled');
+                if (reportsNav) reportsNav.classList.add('disabled');
+                if (generalExpensesNav) generalExpensesNav.classList.add('disabled');
+                if (advancesNav) advancesNav.classList.add('disabled');
                 
                 // إظهار أزرار الحفظ فقط
                 const saveButtons = [
                     document.getElementById('saveOrderBtn'),
                     document.getElementById('saveExpenseBtn'),
                     document.getElementById('saveCustomerBtn'),
-                    document.getElementById('saveGeneralExpenseBtn'),
-                    document.getElementById('saveAdvanceBtn')
+                    document.getElementById('saveGeneralExpenseBtn')
                 ];
                 
                 saveButtons.forEach(btn => {
                     if (btn) btn.classList.remove('hidden-by-role');
                 });
                 
-                // إذا كان في الإعدادات أو التقارير، انتقل إلى لوحة التحكم
+                // إذا كان في لوحة التحكم أو السلف أو الإعدادات أو التقارير أو المصاريف العامة، انتقل إلى العملاء
                 const activeSection = document.querySelector('.content-section.active');
-                if (activeSection && ['settings', 'reports', 'general-expenses'].includes(activeSection.id)) {
+                if (activeSection && ['dashboard', 'settings', 'reports', 'advances', 'general-expenses'].includes(activeSection.id)) {
                     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                     document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-                    if (dashboardNav) {
-                        dashboardNav.classList.add('active');
-                        document.getElementById('dashboard').classList.add('active');
+                    if (customersNav) {
+                        customersNav.classList.add('active');
+                        document.getElementById('customers').classList.add('active');
                     }
                 }
             }
@@ -2328,8 +2481,12 @@ document.getElementById('currentUserRole').style.display = 'none';              
             loadOrderExpenses();
             loadGeneralExpenses();
             loadAdvances();
-            loadProfitReport();
             loadDashboard();
+            
+            if (currentUser.role === 'superAdmin' || currentUser.role === 'admin') {
+                loadProfitReport();
+                loadAllReports();
+            }
             
             if (currentUser.role === 'superAdmin') {
                 loadUsers();
@@ -2345,6 +2502,7 @@ document.getElementById('currentUserRole').style.display = 'none';              
             let filteredOrders = orders;
             let filteredOrderExpenses = orderExpenses;
             let filteredGeneralExpenses = generalExpenses;
+            let filteredAdvances = advances;
             
             // تطبيق الفلاتر إذا كانت محددة
             if (fromDate || toDate) {
@@ -2369,6 +2527,13 @@ document.getElementById('currentUserRole').style.display = 'none';              
                     const expDate = new Date(exp.date);
                     if (from && expDate < from) return false;
                     if (to && expDate > to) return false;
+                    return true;
+                });
+                
+                filteredAdvances = advances.filter(adv => {
+                    const advDate = new Date(adv.date);
+                    if (from && advDate < from) return false;
+                    if (to && advDate > to) return false;
                     return true;
                 });
             }
@@ -2401,83 +2566,45 @@ document.getElementById('currentUserRole').style.display = 'none';              
             const profitPercentage = totalRevenue > 0 ? ((netProfit / totalRevenue) * 100).toFixed(1) : 0;
             
             // السلف
-            const totalAdvances = advances
+            const totalAdvances = filteredAdvances
                 .filter(adv => adv.type === 'سلفة')
                 .reduce((sum, adv) => sum + adv.amount, 0);
             
-            const totalPayments = advances
+            const totalPayments = filteredAdvances
                 .filter(adv => adv.type === 'تسديد')
                 .reduce((sum, adv) => sum + adv.amount, 0);
             
             const netAdvances = totalAdvances - totalPayments;
             
             // تحديث الفترة المعروضة
-            let periodText = '';
+            let periodText = 'لهذا الشهر';
             if (fromDate && toDate) {
                 periodText = `من ${formatDate(fromDate)} إلى ${formatDate(toDate)}`;
-            } else {
-                const today = new Date();
-                const monthName = today.toLocaleString('ar-EG', { month: 'long' });
-                periodText = `لشهر ${monthName}`;
+            } else if (fromDate) {
+                periodText = `من ${formatDate(fromDate)}`;
+            } else if (toDate) {
+                periodText = `إلى ${formatDate(toDate)}`;
             }
             
             if (document.getElementById('revenuePeriod')) {
                 document.getElementById('revenuePeriod').textContent = periodText;
                 document.getElementById('ordersPeriod').textContent = periodText;
                 document.getElementById('profitPeriod').textContent = periodText;
-                document.getElementById('expensesPeriod').textContent = periodText;
                 document.getElementById('commissionsPeriod').textContent = periodText;
                 document.getElementById('percentagePeriod').textContent = periodText;
+                document.getElementById('orderExpensesPeriod').textContent = periodText;
+                document.getElementById('generalExpensesPeriod').textContent = periodText;
                 
                 // تحديث البيانات في لوحة التحكم
                 document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString() + ' ج.م';
                 document.getElementById('totalOrders').textContent = filteredOrders.length;
                 document.getElementById('netProfit').textContent = netProfit.toLocaleString() + ' ج.م';
-                document.getElementById('totalExpenses').textContent = totalExpenses.toLocaleString() + ' ج.م';
-                document.getElementById('activeTechnicians').textContent = technicians.length;
-                document.getElementById('totalAdvances').textContent = netAdvances.toLocaleString() + ' ج.م';
                 document.getElementById('totalCommissions').textContent = totalTechCommission.toLocaleString() + ' ج.م';
                 document.getElementById('profitPercentage').textContent = profitPercentage + '%';
-                
-                // تحديث تفاصيل الملخص
-                const detailedSummary = document.getElementById('detailedSummary');
-                if (detailedSummary) {
-                    detailedSummary.innerHTML = '';
-                    
-                    const summaryCards = [
-                        {
-                            title: 'إيرادات الفواتير',
-                            value: totalRevenue.toLocaleString() + ' ج.م',
-                            description: `من ${filteredOrders.length} فاتورة`
-                        },
-                        {
-                            title: 'مصروفات الأوردر',
-                            value: totalOrderExpenses.toLocaleString() + ' ج.م',
-                            description: `من ${filteredOrderExpenses.length} مصروف`
-                        },
-                        {
-                            title: 'المصروفات العامة',
-                            value: totalGeneralExpenses.toLocaleString() + ' ج.م',
-                            description: `من ${filteredGeneralExpenses.length} مصروف`
-                        },
-                        {
-                            title: 'عمولات الفنيين',
-                            value: totalTechCommission.toLocaleString() + ' ج.م',
-                            description: `${((totalTechCommission / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات`
-                        }
-                    ];
-                    
-                    summaryCards.forEach(card => {
-                        const cardElement = document.createElement('div');
-                        cardElement.className = 'card';
-                        cardElement.innerHTML = `
-                            <h3>${card.title}</h3>
-                            <div class="card-value">${card.value}</div>
-                            <p>${card.description}</p>
-                        `;
-                        detailedSummary.appendChild(cardElement);
-                    });
-                }
+                document.getElementById('totalOrderExpensesCard').textContent = totalOrderExpenses.toLocaleString() + ' ج.م';
+                document.getElementById('totalGeneralExpensesCard').textContent = totalGeneralExpenses.toLocaleString() + ' ج.م';
+                document.getElementById('activeTechnicians').textContent = technicians.length;
+                document.getElementById('totalAdvances').textContent = netAdvances.toLocaleString() + ' ج.م';
                 
                 // آخر الفواتير (5 فواتير)
                 const recentOrders = filteredOrders.slice(-5).reverse();
@@ -2704,47 +2831,40 @@ document.getElementById('currentUserRole').style.display = 'none';              
         
         // تحميل العملاء
         function loadCustomers() {
-            const customersList = document.getElementById('customersList');
-            if (!customersList) return;
+            const customersTableBody = document.getElementById('customersTableBody');
+            const noCustomers = document.getElementById('noCustomers');
             
-            customersList.innerHTML = '';
+            if (!customersTableBody || !noCustomers) return;
+            
+            customersTableBody.innerHTML = '';
             
             if (customers.length === 0) {
-                customersList.innerHTML = `
-                    <div class="empty-message">
-                        <i class="fas fa-users"></i>
-                        <p>لا يوجد عملاء مسجلين بعد. قم بإضافة عميل جديد.</p>
-                    </div>
-                `;
+                noCustomers.style.display = 'block';
+                if (document.getElementById('customersTable')) {
+                    document.getElementById('customersTable').style.display = 'none';
+                }
             } else {
-                customers.forEach(customer => {
-                    const customerCard = document.createElement('div');
-                    customerCard.className = 'customer-card';
-                    customerCard.innerHTML = `
-                        <div class="customer-info">
-                            <div class="customer-info-item">
-                                <div class="customer-info-label">اسم العميل</div>
-                                <div class="customer-info-value">${customer.name}</div>
-                            </div>
-                            <div class="customer-info-item">
-                                <div class="customer-info-label">رقم الهاتف</div>
-                                <div class="customer-info-value">${customer.phone}</div>
-                            </div>
-                            <div class="customer-info-item">
-                                <div class="customer-info-label">العنوان</div>
-                                <div class="customer-info-value">${customer.address || '-'}</div>
-                            </div>
-                        </div>
-                        <div class="action-btns">
-                            <button class="action-btn edit-btn" onclick="editCustomer(${customer.id})">
+                noCustomers.style.display = 'none';
+                if (document.getElementById('customersTable')) {
+                    document.getElementById('customersTable').style.display = 'table';
+                }
+                
+                customers.forEach((customer, index) => {
+                    const row = customersTableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${customer.name}</td>
+                        <td>${customer.phone}</td>
+                        <td>${customer.address || '-'}</td>
+                        <td class="action-btns">
+                            <button class="action-btn edit-btn customer-edit-btn" onclick="editCustomer(${customer.id})">
                                 <i class="fas fa-edit"></i> تعديل
                             </button>
-                            <button class="action-btn delete-btn" onclick="deleteCustomer(${customer.id})">
+                            <button class="action-btn delete-btn customer-delete-btn" onclick="deleteCustomer(${customer.id})">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
-                        </div>
+                        </td>
                     `;
-                    customersList.appendChild(customerCard);
                 });
             }
         }
@@ -2752,34 +2872,35 @@ document.getElementById('currentUserRole').style.display = 'none';              
         // البحث في العملاء
         function searchCustomers() {
             const searchText = document.getElementById('searchCustomers').value.toLowerCase();
-            const customerCards = document.querySelectorAll('.customer-card');
+            const rows = document.querySelectorAll('#customersTableBody tr');
             let found = false;
             
-            customerCards.forEach(card => {
-                const text = card.textContent.toLowerCase();
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
                 if (text.includes(searchText)) {
-                    card.style.display = '';
+                    row.style.display = '';
                     found = true;
                 } else {
-                    card.style.display = 'none';
+                    row.style.display = 'none';
                 }
             });
             
-            // إظهار رسالة إذا لم يتم العثور على نتائج
-            const customersList = document.getElementById('customersList');
-            const noResultsMsg = customersList.querySelector('.no-results');
+            // إظهار/إخفاء رسالة عدم وجود نتائج
+            const noCustomers = document.getElementById('noCustomers');
+            const table = document.getElementById('customersTable');
+            
             if (!found && searchText) {
-                if (!noResultsMsg) {
-                    const msg = document.createElement('div');
-                    msg.className = 'empty-message no-results';
-                    msg.innerHTML = `
+                if (noCustomers) {
+                    noCustomers.style.display = 'block';
+                    noCustomers.innerHTML = `
                         <i class="fas fa-search"></i>
                         <p>لا توجد نتائج للبحث "${searchText}"</p>
                     `;
-                    customersList.appendChild(msg);
                 }
-            } else if (noResultsMsg) {
-                noResultsMsg.remove();
+                if (table) table.style.display = 'none';
+            } else if (found) {
+                if (noCustomers) noCustomers.style.display = 'none';
+                if (table) table.style.display = 'table';
             }
         }
         
@@ -2979,10 +3100,10 @@ document.getElementById('currentUserRole').style.display = 'none';              
                         <td>${order.amount.toLocaleString()} ج.م</td>
                         <td>${techName}</td>
                         <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editOrder(${order.id})">
+                            <button class="action-btn edit-btn" onclick="editOrder(${order.id})">
                                 <i class="fas fa-edit"></i> تعديل
                             </button>
-                            <button class="action-btn delete-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteOrder(${order.id})">
+                            <button class="action-btn delete-btn" onclick="deleteOrder(${order.id})">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
                         </td>
@@ -3092,6 +3213,7 @@ document.getElementById('currentUserRole').style.display = 'none';              
         function clearOrderForm() {
             if (document.getElementById('orderNumber')) {
                 document.getElementById('orderNumber').value = '';
+                document.getElementById('orderDate').value = new Date().toISOString().split('T')[0];
                 document.getElementById('customerPhone').value = '';
                 document.getElementById('customerName').value = '';
                 document.getElementById('customerAddress').value = '';
@@ -3138,10 +3260,10 @@ document.getElementById('currentUserRole').style.display = 'none';              
                         <td>${total.toLocaleString()} ج.م</td>
                         <td>${expense.description}</td>
                         <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editOrderExpense(${expense.id})">
+                            <button class="action-btn edit-btn" onclick="editOrderExpense(${expense.id})">
                                 <i class="fas fa-edit"></i> تعديل
                             </button>
-                            <button class="action-btn delete-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteOrderExpense(${expense.id})">
+                            <button class="action-btn delete-btn" onclick="deleteOrderExpense(${expense.id})">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
                         </td>
@@ -3188,6 +3310,7 @@ document.getElementById('currentUserRole').style.display = 'none';              
         function clearExpenseForm() {
             if (document.getElementById('expenseOrderNumber')) {
                 document.getElementById('expenseOrderNumber').value = '';
+                document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
                 document.getElementById('partsExpense').value = '';
                 document.getElementById('transportExpense').value = '';
                 document.getElementById('otherExpense').value = '';
@@ -3223,10 +3346,10 @@ document.getElementById('currentUserRole').style.display = 'none';              
                         <td>${expense.amount.toLocaleString()} ج.م</td>
                         <td>${expense.description}</td>
                         <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editGeneralExpense(${expense.id})">
+                            <button class="action-btn edit-btn" onclick="editGeneralExpense(${expense.id})">
                                 <i class="fas fa-edit"></i> تعديل
                             </button>
-                            <button class="action-btn delete-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteGeneralExpense(${expense.id})">
+                            <button class="action-btn delete-btn" onclick="deleteGeneralExpense(${expense.id})">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
                         </td>
@@ -3268,6 +3391,7 @@ document.getElementById('currentUserRole').style.display = 'none';              
         // مسح نموذج المصروف العام
         function clearGeneralExpenseForm() {
             if (document.getElementById('generalExpenseType')) {
+                document.getElementById('generalExpenseDate').value = new Date().toISOString().split('T')[0];
                 document.getElementById('generalExpenseType').value = 'ايجار المركز';
                 document.getElementById('generalExpenseAmount').value = '';
                 document.getElementById('generalExpenseDescription').value = '';
@@ -3363,13 +3487,13 @@ document.getElementById('currentUserRole').style.display = 'none';              
                             <td>${typeText}</td>
                             <td>${advance.reason}</td>
                             <td class="action-btns">
-                                <button class="action-btn edit-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editAdvance(${advance.id})">
+                                <button class="action-btn edit-btn" onclick="editAdvance(${advance.id})">
                                     <i class="fas fa-edit"></i> تعديل
                                 </button>
-                                <button class="action-btn delete-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteAdvance(${advance.id})">
+                                <button class="action-btn delete-btn" onclick="deleteAdvance(${advance.id})">
                                     <i class="fas fa-trash"></i> حذف
                                 </button>
-                                ${advance.type === 'سلفة' ? `<button class="action-btn pay-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="showPayAdvanceModal('${advance.employee}')">
+                                ${advance.type === 'سلفة' ? `<button class="action-btn pay-btn" onclick="showPayAdvanceModal('${advance.employee}')">
                                     <i class="fas fa-money-bill-wave"></i> تسديد
                                 </button>` : ''}
                             </td>
@@ -3415,6 +3539,7 @@ document.getElementById('currentUserRole').style.display = 'none';              
         function clearAdvanceForm() {
             if (document.getElementById('advanceEmployee')) {
                 document.getElementById('advanceEmployee').value = '';
+                document.getElementById('advanceDate').value = new Date().toISOString().split('T')[0];
                 document.getElementById('advanceAmount').value = '';
                 document.getElementById('advanceReason').value = '';
             }
@@ -3494,7 +3619,7 @@ document.getElementById('currentUserRole').style.display = 'none';              
             hidePayAdvanceModal();
         }
         
-        // تحميل التقارير
+        // تحميل تقرير الربحية
         function loadProfitReport() {
             const fromDate = document.getElementById('reportFromDate') ? document.getElementById('reportFromDate').value : '';
             const toDate = document.getElementById('reportToDate') ? document.getElementById('reportToDate').value : '';
@@ -3611,6 +3736,424 @@ document.getElementById('currentUserRole').style.display = 'none';              
                         </div>
                     `;
                 }
+            }
+        }
+        
+        // تحميل جميع التقارير
+        function loadAllReports() {
+            loadProfitReport();
+            loadTechnicianRevenueReport();
+            loadMonthlySalesReport();
+            loadRegularCustomersReport();
+            loadRepairTypeProfitReport();
+        }
+        
+        // تقرير إيرادات الفنيين
+        function loadTechnicianRevenueReport() {
+            const fromDate = document.getElementById('reportFromDate') ? document.getElementById('reportFromDate').value : '';
+            const toDate = document.getElementById('reportToDate') ? document.getElementById('reportToDate').value : '';
+            
+            let filteredOrders = orders;
+            
+            // تطبيق الفلاتر إذا كانت محددة
+            if (fromDate || toDate) {
+                const from = fromDate ? new Date(fromDate) : null;
+                const to = toDate ? new Date(toDate) : null;
+                
+                filteredOrders = orders.filter(order => {
+                    const orderDate = new Date(order.date);
+                    if (from && orderDate < from) return false;
+                    if (to && orderDate > to) return false;
+                    return true;
+                });
+            }
+            
+            // تجميع البيانات حسب الفني
+            const technicianData = {};
+            
+            filteredOrders.forEach(order => {
+                const tech = technicians.find(t => t.id === order.technicianId);
+                if (tech) {
+                    if (!technicianData[tech.id]) {
+                        technicianData[tech.id] = {
+                            name: tech.name,
+                            orders: 0,
+                            totalRevenue: 0,
+                            totalCommission: 0
+                        };
+                    }
+                    
+                    technicianData[tech.id].orders++;
+                    technicianData[tech.id].totalRevenue += order.amount;
+                    technicianData[tech.id].totalCommission += order.amount * (tech.percentage / 100);
+                }
+            });
+            
+            // تحديث الجدول
+            const technicianReportTableBody = document.getElementById('technicianReportTableBody');
+            if (technicianReportTableBody) {
+                technicianReportTableBody.innerHTML = '';
+                
+                Object.values(technicianData).forEach(data => {
+                    const avgOrderValue = data.orders > 0 ? (data.totalRevenue / data.orders).toFixed(0) : 0;
+                    
+                    const row = technicianReportTableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${data.name}</td>
+                        <td>${data.orders}</td>
+                        <td>${data.totalRevenue.toLocaleString()} ج.م</td>
+                        <td>${avgOrderValue} ج.م</td>
+                        <td>${data.totalCommission.toLocaleString()} ج.م</td>
+                    `;
+                });
+            }
+            
+            // تحديث الرسم البياني
+            const ctx = document.getElementById('technicianRevenueChart');
+            if (ctx) {
+                // تدمير المخطط الحالي إذا كان موجوداً
+                if (window.technicianChart) {
+                    window.technicianChart.destroy();
+                }
+                
+                const chartLabels = Object.values(technicianData).map(data => data.name);
+                const chartData = Object.values(technicianData).map(data => data.totalRevenue);
+                
+                window.technicianChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: chartLabels,
+                        datasets: [{
+                            label: 'إيرادات الفنيين',
+                            data: chartData,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(153, 102, 255, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value.toLocaleString() + ' ج.م';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // تقرير المبيعات الشهري
+        function loadMonthlySalesReport() {
+            // تجميع البيانات حسب الشهر
+            const monthlyData = {};
+            
+            orders.forEach(order => {
+                const date = new Date(order.date);
+                const monthYear = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                const monthName = date.toLocaleString('ar-EG', { month: 'long', year: 'numeric' });
+                
+                if (!monthlyData[monthYear]) {
+                    monthlyData[monthYear] = {
+                        name: monthName,
+                        revenue: 0,
+                        orders: 0
+                    };
+                }
+                
+                monthlyData[monthYear].revenue += order.amount;
+                monthlyData[monthYear].orders++;
+            });
+            
+            // تحويل البيانات إلى مصفوفات مرتبة
+            const sortedMonths = Object.keys(monthlyData).sort();
+            const chartLabels = sortedMonths.map(month => monthlyData[month].name);
+            const chartData = sortedMonths.map(month => monthlyData[month].revenue);
+            
+            // تحديث الرسم البياني
+            const ctx = document.getElementById('monthlySalesChart');
+            if (ctx) {
+                // تدمير المخطط الحالي إذا كان موجوداً
+                if (window.monthlySalesChart) {
+                    window.monthlySalesChart.destroy();
+                }
+                
+                window.monthlySalesChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: chartLabels,
+                        datasets: [{
+                            label: 'الإيرادات الشهرية',
+                            data: chartData,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return value.toLocaleString() + ' ج.م';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // تقرير العملاء الدائمين
+        function loadRegularCustomersReport() {
+            // تجميع البيانات حسب العميل
+            const customerData = {};
+            
+            orders.forEach(order => {
+                const customerPhone = order.customerPhone;
+                
+                if (!customerData[customerPhone]) {
+                    customerData[customerPhone] = {
+                        name: order.customerName,
+                        phone: customerPhone,
+                        orders: 0,
+                        totalSpent: 0,
+                        lastOrderDate: order.date
+                    };
+                }
+                
+                customerData[customerPhone].orders++;
+                customerData[customerPhone].totalSpent += order.amount;
+                
+                // تحديث تاريخ آخر فاتورة
+                if (new Date(order.date) > new Date(customerData[customerPhone].lastOrderDate)) {
+                    customerData[customerPhone].lastOrderDate = order.date;
+                }
+            });
+            
+            // تصفية العملاء الذين لديهم أكثر من فاتورة واحدة
+            const regularCustomers = Object.values(customerData).filter(customer => customer.orders > 1);
+            
+            // تحديث الجدول
+            const regularCustomersTableBody = document.getElementById('regularCustomersTableBody');
+            const noRegularCustomers = document.getElementById('noRegularCustomers');
+            
+            if (regularCustomersTableBody) {
+                regularCustomersTableBody.innerHTML = '';
+                
+                if (regularCustomers.length === 0) {
+                    if (noRegularCustomers) noRegularCustomers.style.display = 'block';
+                } else {
+                    if (noRegularCustomers) noRegularCustomers.style.display = 'none';
+                    
+                    regularCustomers.sort((a, b) => b.orders - a.orders);
+                    
+                    regularCustomers.forEach(customer => {
+                        const avgOrderValue = customer.orders > 0 ? (customer.totalSpent / customer.orders).toFixed(0) : 0;
+                        
+                        const row = regularCustomersTableBody.insertRow();
+                        row.innerHTML = `
+                            <td>${customer.name}</td>
+                            <td>${customer.phone}</td>
+                            <td>${customer.orders}</td>
+                            <td>${customer.totalSpent.toLocaleString()} ج.م</td>
+                            <td>${avgOrderValue} ج.م</td>
+                            <td>${formatDate(customer.lastOrderDate)}</td>
+                        `;
+                    });
+                }
+            }
+        }
+        
+        // تقرير ربحية أنواع التصليح
+        function loadRepairTypeProfitReport() {
+            const fromDate = document.getElementById('reportFromDate') ? document.getElementById('reportFromDate').value : '';
+            const toDate = document.getElementById('reportToDate') ? document.getElementById('reportToDate').value : '';
+            
+            let filteredOrders = orders;
+            let filteredOrderExpenses = orderExpenses;
+            
+            // تطبيق الفلاتر إذا كانت محددة
+            if (fromDate || toDate) {
+                const from = fromDate ? new Date(fromDate) : null;
+                const to = toDate ? new Date(toDate) : null;
+                
+                filteredOrders = orders.filter(order => {
+                    const orderDate = new Date(order.date);
+                    if (from && orderDate < from) return false;
+                    if (to && orderDate > to) return false;
+                    return true;
+                });
+                
+                filteredOrderExpenses = orderExpenses.filter(exp => {
+                    const expDate = new Date(exp.date);
+                    if (from && expDate < from) return false;
+                    if (to && expDate > to) return false;
+                    return true;
+                });
+            }
+            
+            // تجميع البيانات حسب نوع التصليح
+            const repairTypeData = {};
+            
+            filteredOrders.forEach(order => {
+                const repairType = order.repairType;
+                
+                if (!repairTypeData[repairType]) {
+                    repairTypeData[repairType] = {
+                        type: repairType,
+                        orders: 0,
+                        totalRevenue: 0,
+                        totalExpenses: 0,
+                        totalCommission: 0,
+                        netProfit: 0
+                    };
+                }
+                
+                repairTypeData[repairType].orders++;
+                repairTypeData[repairType].totalRevenue += order.amount;
+                
+                // حساب مصروفات هذا الأوردر
+                const orderExpenses = filteredOrderExpenses.filter(exp => exp.orderNumber === order.orderNumber);
+                const totalOrderExpenses = orderExpenses.reduce((sum, exp) => {
+                    return sum + (exp.parts || 0) + (exp.transport || 0) + (exp.other || 0);
+                }, 0);
+                
+                // حساب العمولة
+                const tech = technicians.find(t => t.id === order.technicianId);
+                const techPercentage = tech ? tech.percentage : 0;
+                const commission = order.amount * (techPercentage / 100);
+                
+                repairTypeData[repairType].totalExpenses += totalOrderExpenses;
+                repairTypeData[repairType].totalCommission += commission;
+                repairTypeData[repairType].netProfit += order.amount - commission - totalOrderExpenses;
+            });
+            
+            // تحديث الجدول
+            const repairTypeReportTableBody = document.getElementById('repairTypeReportTableBody');
+            if (repairTypeReportTableBody) {
+                repairTypeReportTableBody.innerHTML = '';
+                
+                Object.values(repairTypeData).forEach(data => {
+                    const profitPercentage = data.totalRevenue > 0 ? ((data.netProfit / data.totalRevenue) * 100).toFixed(1) : 0;
+                    
+                    const row = repairTypeReportTableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${data.type}</td>
+                        <td>${data.orders}</td>
+                        <td>${data.totalRevenue.toLocaleString()} ج.م</td>
+                        <td>${data.totalExpenses.toLocaleString()} ج.م</td>
+                        <td>${data.netProfit.toLocaleString()} ج.م</td>
+                        <td>${profitPercentage}%</td>
+                    `;
+                });
+            }
+            
+            // تحديث الرسم البياني
+            const ctx = document.getElementById('repairTypeProfitChart');
+            if (ctx) {
+                // تدمير المخطط الحالي إذا كان موجوداً
+                if (window.repairTypeChart) {
+                    window.repairTypeChart.destroy();
+                }
+                
+                const chartLabels = Object.values(repairTypeData).map(data => data.type);
+                const chartData = Object.values(repairTypeData).map(data => data.netProfit);
+                
+                window.repairTypeChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: chartLabels,
+                        datasets: [{
+                            label: 'صافي الربح',
+                            data: chartData,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(153, 102, 255, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'right',
+                                labels: {
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.raw || 0;
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percentage = Math.round((value / total) * 100);
+                                        return `${label}: ${value.toLocaleString()} ج.م (${percentage}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
             }
         }
         
