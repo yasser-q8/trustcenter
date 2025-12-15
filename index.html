@@ -1099,7 +1099,7 @@
                         <div class="form-group">
                             <label for="userRole">دور المستخدم</label>
                             <select id="userRole">
-			       <option value="superAdmin">(Yasser)</option>
+ 			        <option value="superAdmin">مطور النظام (Yasser)</option>
 				<option value="superAdmin">المدير العام (وائل)</option>
                                 <option value="admin">مشرف (محمد)</option>
                                 <option value="dataEntry">مدخل بيانات (جمال)</option>
@@ -1767,7 +1767,7 @@
             users.forEach(user => {
                 const option = document.createElement('option');
                 option.value = user.id;
-                option.textContent = `${user.name} (${getRoleName(user.role)})`;
+option.textContent = `${user.name} (${getRoleName(user.role, user.name)})`;
                 loginUserSelect.appendChild(option);
             });
         }
@@ -1775,7 +1775,12 @@
         // الحصول على اسم الدور
         function getRoleName(role) {
             switch(role) {
-                case 'superAdmin': return 'المدير العام';
+               case 'superAdmin': 
+            // إذا كان اسم المستخدم "Yasser" يعرض "مطور النظام"
+            if (userName === "Yasser") {
+                return "مطور النظام";
+            }
+            return 'المدير العام';
                 case 'admin': return 'مشرف';
                 case 'dataEntry': return 'تسجيل الفواتير';
                 default: return role;
@@ -1906,8 +1911,7 @@
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
                 document.getElementById('currentUserName').textContent = `مرحباً ${user.name}`;
-                document.getElementById('currentUserRole').textContent = `الدور: ${getRoleName(user.role)}`;
-                
+		document.getElementById('currentUserRole').textContent = `الدور: ${getRoleName(user.role, user.name)}`;                
                 // تحميل البيانات بناءً على صلاحيات المستخدم
                 loadDataBasedOnRole();
                 applyUserPermissions();
