@@ -9,6 +9,7 @@
     <title>برنامج مركز تراست لصيانة الأجهزة المنزلية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* إعادة تعيين عام */
         * {
             margin: 0;
             padding: 0;
@@ -16,7 +17,304 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        body {
+        /* تصميم جديد لشاشة الدخول مع أنيميشن */
+        body.login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #111;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* الحاوية الرئيسية للأنيميشن */
+        .login-ring-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* الحلقات المتحركة */
+        .ring {
+            position: absolute;
+            inset: 0;
+            border: 2px solid #fff;
+            transition: 0.5s;
+        }
+        
+        .ring:nth-child(1) {
+            border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
+            animation: animate 6s linear infinite;
+            border-color: #ff00cc;
+        }
+        
+        .ring:nth-child(2) {
+            border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+            animation: animate 4s linear infinite;
+            border-color: #00ffff;
+        }
+        
+        .ring:nth-child(3) {
+            border-radius: 41% 44% 56% 59% / 38% 62% 63% 37%;
+            animation: animate2 10s linear infinite;
+            border-color: #ffcc00;
+        }
+        
+        .ring:hover {
+            border: 6px solid var(--clr);
+            filter: drop-shadow(0 0 20px var(--clr));
+        }
+        
+        @keyframes animate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes animate2 {
+            0% {
+                transform: rotate(360deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+        
+        /* صندوق الدخول داخل الأنيميشن */
+        .login-box-animated {
+            position: absolute;
+            width: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .login-box-animated h2 {
+            font-size: 2em;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        /* شعار المركز داخل الأنيميشن */
+        .login-logo-animated {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #FF6E00;
+            box-shadow: 0 0 20px rgba(255, 110, 0, 0.5);
+            background: white;
+        }
+        
+        .login-logo-animated img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .login-title-animated {
+            color: white;
+            font-size: 2em;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        
+        .login-subtitle-animated {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        /* حقول الإدخال المعدلة */
+        .inputBx {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .inputBx input, .inputBx select {
+            position: relative;
+            width: 100%;
+            padding: 12px 15px;
+            background: #222 !important;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 1em;
+            color: white !important;
+            outline: none;
+            transition: 0.3s;
+        }
+        
+        .inputBx input:focus, .inputBx select:focus {
+            border-color: #FF6E00;
+            box-shadow: 0 0 10px rgba(255, 110, 0, 0.5);
+        }
+        
+        .inputBx input::placeholder {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+        
+        /* تحسين القائمة المنسدلة */
+        .inputBx select option {
+            background: #222 !important;
+            color: white !important;
+        }
+        
+        /* زر تسجيل الدخول */
+        .inputBx input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            background: linear-gradient(45deg, #FF6E00, #FF8C42);
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        
+        .inputBx input[type="submit"]:hover {
+            background: linear-gradient(45deg, #FF8C42, #FF6E00);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 110, 0, 0.3);
+        }
+        
+        /* الروابط */
+        .links {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+            margin-top: 15px;
+        }
+        
+        .links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: 0.3s;
+        }
+        
+        .links a:hover {
+            color: #FF6E00;
+            text-shadow: 0 0 10px rgba(255, 110, 0, 0.5);
+        }
+        
+        /* رسالة الخطأ */
+        #loginError {
+            color: #ff6b6b;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+            padding: 8px;
+            border-radius: 5px;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            width: 100%;
+        }
+        
+        /* توقيع المطور في شاشة الدخول */
+        .signature-card-login {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #FF6E00, #80EF80, #2196F3);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            z-index: 1000;
+            animation: float 6s ease-in-out infinite;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .signature-card-login:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4); 
+        }
+        
+        @keyframes float { 
+            0% { transform: translateY(0px); } 
+            50% { transform: translateY(-8px); } 
+            100% { transform: translateY(0px); } 
+        }
+        
+        .signature-card-login .name { 
+            font-size: 1.1rem; 
+            font-weight: 700; 
+            margin-bottom: 3px; 
+        }
+        
+        .signature-card-login .title { 
+            font-size: 0.75rem; 
+            opacity: 0.9; 
+            font-weight: 500; 
+        }
+        
+        /* التجاوب مع الشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .login-ring-container {
+                width: 100%;
+                height: 100%;
+                padding: 20px;
+            }
+            
+            .login-box-animated {
+                width: 90%;
+                max-width: 320px;
+                padding: 25px 20px;
+            }
+            
+            .login-title-animated {
+                font-size: 1.5em;
+            }
+            
+            .login-subtitle-animated {
+                font-size: 1em;
+            }
+            
+            .signature-card-login {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                margin: 20px auto 0;
+                width: fit-content;
+                animation: none;
+            }
+        }
+        
+        /* =========== التصميم الأصلي للتطبيق الرئيسي =========== */
+        body.app-screen {
             background-color: #e6f7ff;
             color: #333;
             line-height: 1.6;
@@ -26,86 +324,19 @@
             background-attachment: fixed;
             background-position: center;
             background-blend-mode: overlay;
+            overflow-y: auto;
+            min-height: 100vh;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1250px;
             margin: 0 auto;
             padding: 20px;
         }
         
-        /* شاشة تسجيل الدخول */
+        /* شاشة تسجيل الدخول الأصلية (مخفية) */
         .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: rgba(255, 255, 255, 0.9);
-        }
-        
-        .login-box {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-        
-        .login-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid #FF6E00;
-        }
-        
-        .login-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .login-title {
-            color: #1a8c5e;
-            margin-bottom: 30px;
-            font-size: 1.8rem;
-        }
-        
-        .login-input {
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 20px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-        
-        .login-input:focus {
-            outline: none;
-            border-color: #FF6E00;
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #FF6E00, #FF8C42);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .login-btn:hover {
-            background: linear-gradient(135deg, #FF8C42, #FF6E00);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 110, 0, 0.3);
+            display: none;
         }
         
         /* الهيدر */
@@ -119,6 +350,7 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            flex-wrap: wrap;
         }
         
         .logo-container {
@@ -158,7 +390,9 @@
         .user-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
         }
         
         .user-name {
@@ -166,6 +400,7 @@
             padding: 8px 15px;
             border-radius: 20px;
             font-weight: bold;
+            font-size: 0.9rem;
         }
         
         .logout-btn {
@@ -177,6 +412,7 @@
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
+            font-size: 0.9rem;
         }
         
         .logout-btn:hover {
@@ -198,10 +434,10 @@
             flex: 1;
             min-width: 150px;
             text-align: center;
-            padding: 18px 10px;
+            padding: 15px 10px;
             background: transparent;
             border: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: white;
             cursor: pointer;
@@ -286,6 +522,8 @@
             border-radius: 6px;
             font-size: 1rem;
             transition: border 0.3s;
+            background: white;
+            color: #333;
         }
         
         input:focus, select:focus, textarea:focus {
@@ -634,63 +872,39 @@
             font-size: 0.9rem;
         }
         
+        /* توقيع المطور في التطبيق الرئيسي */
         .signature-card {
             position: fixed;
             bottom: 20px;
             left: 20px;
             background: linear-gradient(135deg, #FF6E00, #80EF80, #2196F3);
             color: white;
-            padding: 12px 22px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            padding: 10px 18px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 600;
             z-index: 1000;
             animation: float 6s ease-in-out infinite;
             transition: all 0.3s ease;
             cursor: pointer;
             border: 2px solid rgba(255,255,255,0.2);
-            transform: scale(0.9);
         }
         
         .signature-card:hover { 
-            transform: scale(0.95); 
-            box-shadow: 0 12px 35px rgba(0,0,0,0.4); 
-        }
-        
-        @keyframes float { 
-            0% { transform: scale(0.9) translateY(0px); } 
-            50% { transform: scale(0.9) translateY(-10px); } 
-            100% { transform: scale(0.9) translateY(0px); } 
-        }
-        
-        .signature-card::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(135deg, #FF746C, #FF6E00, #80EF80, #2196F3);
-            border-radius: 14px;
-            z-index: -1;
-            animation: borderGlow 3s linear infinite;
-            background-size: 400%;
-        }
-        
-        @keyframes borderGlow { 
-            0% { background-position: 0% 50%; } 
-            50% { background-position: 100% 50%; } 
-            100% { background-position: 0% 50%; } 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4); 
         }
         
         .signature-card .name { 
-            font-size: 1.2rem; 
+            font-size: 1.1rem; 
             font-weight: 700; 
             margin-bottom: 3px; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3); 
         }
         
         .signature-card .title { 
-            font-size: 0.8rem; 
+            font-size: 0.75rem; 
             opacity: 0.9; 
             font-weight: 500; 
         }
@@ -703,17 +917,12 @@
                 margin: 20px auto 0; 
                 width: fit-content; 
                 animation: none; 
-                transform: scale(0.85);
-            } 
-            
-            .signature-card:hover { 
-                transform: scale(0.9); 
             } 
             
             .nav-btn {
                 min-width: 120px;
                 font-size: 0.9rem;
-                padding: 15px 5px;
+                padding: 12px 5px;
             }
             
             .form-grid {
@@ -726,6 +935,17 @@
             
             .header-text h1 {
                 font-size: 1.4rem;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .user-info {
+                width: 100%;
+                justify-content: center;
+                margin-top: 15px;
             }
             
             .date-filter {
@@ -797,35 +1017,86 @@
             gap: 10px;
             margin-top: 20px;
         }
+        
+        /* حالة التطبيق */
+        #mainApp {
+            display: none;
+        }
+        
+        /* عرض شاشة الدخول */
+        body.login-screen #loginScreen {
+            display: flex;
+        }
+        
+        body.login-screen #mainApp {
+            display: none;
+        }
+        
+        /* عرض التطبيق الرئيسي */
+        body.app-screen #loginScreen {
+            display: none;
+        }
+        
+        body.app-screen #mainApp {
+            display: block;
+        }
     </style>
 </head>
-<body>
-    <!-- شاشة تسجيل الدخول -->
-    <div id="loginScreen" class="login-container">
-        <div class="login-box">
-            <div class="login-logo">
-                <img src="https://i.postimg.cc/zDSN2f6D/logo-Copy.jpg" alt="شعار مركز تراست">
+<body class="login-screen">
+    <!-- شاشة تسجيل الدخول مع الأنيميشن -->
+    <div id="loginScreen">
+        <div class="login-ring-container">
+            <!-- الحلقات المتحركة -->
+            <div class="ring" style="--clr:#ff00cc;"></div>
+            <div class="ring" style="--clr:#00ffff;"></div>
+            <div class="ring" style="--clr:#ffcc00;"></div>
+            
+            <!-- صندوق الدخول -->
+            <div class="login-box-animated">
+                <div class="login-logo-animated">
+                    <img src="https://i.postimg.cc/zDSN2f6D/logo-Copy.jpg" alt="شعار مركز تراست">
+                </div>
+                <h2 class="login-title-animated">مركز تراست</h2>
+                <p class="login-subtitle-animated">لصيانة الأجهزة المنزلية</p>
+                
+                <div class="inputBx">
+                    <select id="loginUser">
+                        <option value="">اختر المستخدم</option>
+                        <option value="1">Yasser (مطور النظام)</option>
+                        <option value="2">وائل (المدير العام)</option>
+                        <option value="3">محمد (مشرف)</option>
+                        <option value="4">جمال (مدخل بيانات)</option>
+                    </select>
+                </div>
+                
+                <div class="inputBx">
+                    <input type="password" id="loginPassword" placeholder="كلمة المرور (123)">
+                </div>
+                
+                <div class="inputBx">
+                    <input type="submit" value="تسجيل الدخول" id="loginBtn">
+                </div>
+                
+                <div class="links">
+                    <a href="#" id="forgotPasswordLink">نسيت كلمة المرور؟</a>
+                    <a href="#" id="changeUserLink">تغيير المستخدم</a>
+                </div>
+                
+                <div id="loginError">
+                    <i class="fas fa-exclamation-circle"></i> كلمة المرور غير صحيحة
+                </div>
             </div>
-            <h1 class="login-title">مركز تراست لصيانة الأجهزة المنزلية</h1>
-            <div class="form-group">
-                <select id="loginUser" class="login-input">
-                    <option value="">اختر المستخدم</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <input type="password" id="loginPassword" class="login-input" placeholder="كلمة المرور (123)">
-            </div>
-            <button id="loginBtn" class="login-btn">
-                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
-            </button>
-            <div id="loginError" style="color: #dc3545; margin-top: 15px; display: none;">
-                <i class="fas fa-exclamation-circle"></i> كلمة المرور غير صحيحة
-            </div>
+        </div>
+        
+        <!-- توقيع المطور في شاشة الدخول -->
+        <div class="signature-card-login">
+            <div class="name">Yasser Elkhateeb</div>
+            <div class="title">مطور البرنامج 01146118541</div>
         </div>
     </div>
     
     <!-- الواجهة الرئيسية -->
-    <div id="mainApp" style="display: none;">
+    <div id="mainApp">
         <div class="container">
             <header>
                 <div class="logo-container">
@@ -1099,11 +1370,9 @@
                         <div class="form-group">
                             <label for="userRole">دور المستخدم</label>
                             <select id="userRole">
- 			        <option value="superAdmin">مطور النظام (Yasser)</option>
-				<option value="superAdmin">المدير العام (وائل)</option>
-                                <option value="admin">مشرف (محمد)</option>
-                                <option value="dataEntry">مدخل بيانات (جمال)</option>
-
+                                <option value="superAdmin">المدير العام</option>
+                                <option value="admin">مشرف</option>
+                                <option value="dataEntry">مدخل بيانات</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1515,7 +1784,7 @@
                                 <th>التاريخ</th>
                                 <th>قيمة الفاتورة</th>
                                 <th>اسم الفني</th>
-                                <th>نسبة الفني</th>
+                                <th>عمولة الفني</th> 
                                 <th>مصروفات الأوردر</th>
                                 <th>صافي الربح</th>
                                 <th>نسبة الربح</th>
@@ -1580,15 +1849,15 @@
                     <h3 class="modal-title"><i class="fas fa-key"></i> تغيير كلمة المرور</h3>
                     <div class="form-group">
                         <label for="oldPassword">كلمة المرور القديمة</label>
-                        <input type="password" id="oldPassword" class="login-input">
+                        <input type="password" id="oldPassword">
                     </div>
                     <div class="form-group">
                         <label for="newPassword">كلمة المرور الجديدة</label>
-                        <input type="password" id="newPassword" class="login-input">
+                        <input type="password" id="newPassword">
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">تأكيد كلمة المرور الجديدة</label>
-                        <input type="password" id="confirmPassword" class="login-input">
+                        <input type="password" id="confirmPassword">
                     </div>
                     <div class="modal-buttons">
                         <button id="savePasswordBtn" class="btn btn-success">
@@ -1603,12 +1872,12 @@
             </div>
             
             <footer>
-                <p>برنامج إدارة مركز تراست لصيانة الأجهزة المنزلية &copy; 2025 - نظام متكامل للمحاسبة والتقارير</p>
+                <p>برنامج إدارة مركز تراست لصيانة الأجهزة المنزلية &copy; 2026 - نظام متكامل للمحاسبة والتقارير</p>
                 <p>جميع الحقوق محفوظة</p>
             </footer>
         </div>
         
-        <!-- توقيع المطور -->
+        <!-- توقيع المطور في التطبيق الرئيسي -->
         <div class="signature-card">
             <div class="name">Yasser Elkhateeb</div>
             <div class="title">مطور البرنامج 01146118541</div>
@@ -1630,8 +1899,8 @@
         
         // المستخدمون الافتراضيون
         let users = JSON.parse(localStorage.getItem('users')) || [
-	    {id: 1, name: "Yasser", role: "superAdmin", password: "123"},
-	    {id: 2, name: "وائل", role: "superAdmin", password: "123"},
+            {id: 1, name: "Yasser", role: "superAdmin", password: "123"},
+            {id: 2, name: "وائل", role: "superAdmin", password: "123"},
             {id: 3, name: "محمد", role: "admin", password: "123"},
             {id: 4, name: "جمال", role: "dataEntry", password: "123"}
         ];
@@ -1649,26 +1918,26 @@
         ];
         
         let orders = JSON.parse(localStorage.getItem('orders')) || [
-            {id: 1, orderNumber: "ORD-001", date: "2025-10-01", customerName: "علي محمد", customerPhone: "01012345678", customerAddress: "شارع محمد نجيب - سيدي بشر", technicianId: 1, repairType: "ثلاجة وتكييف", amount: 500, description: "صيانة ثلاجة"},
-            {id: 2, orderNumber: "ORD-002", date: "2025-10-05", customerName: "محمود أحمد", customerPhone: "01087654321", customerAddress: "شارع 45 - العصافر", technicianId: 2, repairType: "تكييف", amount: 800, description: "صيانة تكييف"},
-            {id: 3, orderNumber: "ORD-003", date: "2025-10-10", customerName: "سعيد جمال", customerPhone: "01055556666", customerAddress: "فيكتوريا - شارع سيبوية", technicianId: 3, repairType: "أجهزة منزلية", amount: 300, description: "صيانة غسالة"}
+            {id: 1, orderNumber: "ORD-001", date: "2025-12-01", customerName: "علي محمد", customerPhone: "01012345678", customerAddress: "شارع محمد نجيب - سيدي بشر", technicianId: 1, repairType: "ثلاجة وتكييف", amount: 500, description: "صيانة ثلاجة"},
+            {id: 2, orderNumber: "ORD-002", date: "2025-12-05", customerName: "محمود أحمد", customerPhone: "01087654321", customerAddress: "شارع 45 - العصافر", technicianId: 2, repairType: "تكييف", amount: 800, description: "صيانة تكييف"},
+            {id: 3, orderNumber: "ORD-003", date: "2025-12-10", customerName: "سعيد جمال", customerPhone: "01055556666", customerAddress: "فيكتوريا - شارع سيبوية", technicianId: 3, repairType: "أجهزة منزلية", amount: 300, description: "صيانة غسالة"}
         ];
         
         let orderExpenses = JSON.parse(localStorage.getItem('orderExpenses')) || [
-            {id: 1, orderNumber: "ORD-001", date: "2025-10-01", parts: 100, transport: 50, other: 0, description: "شراء قطع غيار للثلاجة ومواصلات"},
-            {id: 2, orderNumber: "ORD-002", date: "2025-10-05", parts: 200, transport: 0, other: 0, description: "شراء قطع غيار للتكييف"}
+            {id: 1, orderNumber: "ORD-001", date: "2025-12-01", parts: 100, transport: 50, other: 0, description: "شراء قطع غيار للثلاجة ومواصلات"},
+            {id: 2, orderNumber: "ORD-002", date: "2025-12-05", parts: 200, transport: 0, other: 0, description: "شراء قطع غيار للتكييف"}
         ];
         
         let generalExpenses = JSON.parse(localStorage.getItem('generalExpenses')) || [
-            {id: 1, date: "2025-10-01", type: "ايجار المركز", amount: 2000, description: "ايجار مركز الصيانة"},
-            {id: 2, date: "2025-10-01", type: "الرواتب", amount: 5000, description: "رواتب الموظفين"},
-            {id: 3, date: "2025-10-05", type: "النظافة", amount: 300, description: "مصاريف نظافة المركز"}
+            {id: 1, date: "2025-12-01", type: "ايجار المركز", amount: 2000, description: "ايجار مركز الصيانة"},
+            {id: 2, date: "2025-12-01", type: "الرواتب", amount: 5000, description: "رواتب الموظفين"},
+            {id: 3, date: "2025-12-05", type: "النظافة", amount: 300, description: "مصاريف نظافة المركز"}
         ];
         
         let advances = JSON.parse(localStorage.getItem('advances')) || [
-            {id: 1, employee: "أبو علي", date: "2025-10-01", amount: 500, reason: "سلفة شهرية", type: "سلفة"},
-            {id: 2, employee: "احمد", date: "2025-10-05", amount: 300, reason: "مصاريف علاج", type: "سلفة"},
-            {id: 3, employee: "أبو علي", date: "2025-10-10", amount: 200, reason: "تسديد جزء من السلفة", type: "تسديد"}
+            {id: 1, employee: "أبو علي", date: "2025-12-01", amount: 500, reason: "سلفة شهرية", type: "سلفة"},
+            {id: 2, employee: "احمد", date: "2025-12-05", amount: 300, reason: "مصاريف علاج", type: "سلفة"},
+            {id: 3, employee: "أبو علي", date: "2025-12-10", amount: 200, reason: "تسديد جزء من السلفة", type: "تسديد"}
         ];
         
         // النسخ الاحتياطية
@@ -1692,20 +1961,20 @@
             const today = new Date().toISOString().split('T')[0];
             const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
             
-            document.getElementById('orderDate').value = today;
-            document.getElementById('expenseDate').value = today;
-            document.getElementById('generalExpenseDate').value = today;
-            document.getElementById('advanceDate').value = today;
-            document.getElementById('payDate').value = today;
-            document.getElementById('summaryFromDate').value = firstDayOfMonth;
-            document.getElementById('summaryToDate').value = today;
-            document.getElementById('reportFromDate').value = firstDayOfMonth;
-            document.getElementById('reportToDate').value = today;
-            document.getElementById('advanceFromDate').value = firstDayOfMonth;
-            document.getElementById('advanceToDate').value = today;
-            
-            // تحميل قائمة المستخدمين في شاشة الدخول
-            loadLoginUsers();
+            // تعيين التواريخ في التطبيق الرئيسي (عند التحميل)
+            if (document.getElementById('orderDate')) {
+                document.getElementById('orderDate').value = today;
+                document.getElementById('expenseDate').value = today;
+                document.getElementById('generalExpenseDate').value = today;
+                document.getElementById('advanceDate').value = today;
+                document.getElementById('payDate').value = today;
+                document.getElementById('summaryFromDate').value = firstDayOfMonth;
+                document.getElementById('summaryToDate').value = today;
+                document.getElementById('reportFromDate').value = firstDayOfMonth;
+                document.getElementById('reportToDate').value = today;
+                document.getElementById('advanceFromDate').value = firstDayOfMonth;
+                document.getElementById('advanceToDate').value = today;
+            }
             
             // إضافة المستمعين للأحداث
             setupEventListeners();
@@ -1714,75 +1983,16 @@
             startAutoBackup();
         });
         
-        // بدء النسخ الاحتياطي التلقائي
-        function startAutoBackup() {
-            // إنشاء نسخة أولية عند بدء التشغيل
-            createAutoBackup();
-            
-            // ضبط المؤقت للنسخ كل ساعة (3600000 مللي ثانية)
-            backupTimer = setInterval(createAutoBackup, 3600000);
-        }
-        
-        // إنشاء نسخة احتياطية تلقائية
-        function createAutoBackup() {
-            const timestamp = new Date().getTime();
-            const dateStr = new Date().toLocaleString('ar-EG');
-            
-            const backupData = {
-                id: timestamp,
-                name: `نسخة تلقائية - ${dateStr}`,
-                date: new Date().toISOString(),
-                data: {
-                    users: JSON.parse(JSON.stringify(users)),
-                    technicians: JSON.parse(JSON.stringify(technicians)),
-                    customers: JSON.parse(JSON.stringify(customers)),
-                    orders: JSON.parse(JSON.stringify(orders)),
-                    orderExpenses: JSON.parse(JSON.stringify(orderExpenses)),
-                    generalExpenses: JSON.parse(JSON.stringify(generalExpenses)),
-                    advances: JSON.parse(JSON.stringify(advances))
-                }
-            };
-            
-            // إضافة النسخة إلى القائمة
-            backups.unshift(backupData);
-            
-            // الاحتفاظ فقط بآخر 10 نسخ
-            if (backups.length > 10) {
-                backups = backups.slice(0, 10);
-            }
-            
-            saveData();
-            
-            // تحديث قائمة النسخ إذا كانت صفحة الإعدادات مفتوحة
-            if (currentUser && currentUser.role === 'superAdmin') {
-                loadBackups();
-            }
-        }
-        
-        // تحميل قائمة المستخدمين في شاشة الدخول
-        function loadLoginUsers() {
-            const loginUserSelect = document.getElementById('loginUser');
-            loginUserSelect.innerHTML = '<option value="">اختر المستخدم</option>';
-            
-            users.forEach(user => {
-                const option = document.createElement('option');
-                option.value = user.id;
-option.textContent = `${user.name} (${getRoleName(user.role, user.name)})`;
-                loginUserSelect.appendChild(option);
-            });
-        }
-        
         // الحصول على اسم الدور
-function getRoleName(role, userName) {
+        function getRoleName(role, userName) {
             switch(role) {
-               case 'superAdmin': 
-            // إذا كان اسم المستخدم "Yasser" يعرض "مطور النظام"
-            if (userName === "Yasser") {
-                return "مطور النظام";
-            }
-            return 'المدير العام';
+                case 'superAdmin': 
+                    if (userName === "Yasser") {
+                        return "مطور النظام";
+                    }
+                    return 'المدير العام';
                 case 'admin': return 'مشرف';
-                case 'dataEntry': return 'تسجيل الفواتير';
+                case 'dataEntry': return 'مدخل بيانات';
                 default: return role;
             }
         }
@@ -1793,6 +2003,18 @@ function getRoleName(role, userName) {
             document.getElementById('loginBtn').addEventListener('click', login);
             document.getElementById('loginPassword').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') login();
+            });
+            
+            // نسيت كلمة المرور
+            document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('كلمة المرور الافتراضية هي "123"');
+            });
+            
+            // تغيير المستخدم
+            document.getElementById('changeUserLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('loginUser').focus();
             });
             
             // تسجيل الخروج
@@ -1817,81 +2039,103 @@ function getRoleName(role, userName) {
             });
             
             // إدارة الفنيين
-            document.getElementById('addTechBtn').addEventListener('click', addTechnician);
-            document.getElementById('updateTechBtn').addEventListener('click', updateTechnician);
-            document.getElementById('cancelTechBtn').addEventListener('click', cancelEditTechnician);
+            if (document.getElementById('addTechBtn')) {
+                document.getElementById('addTechBtn').addEventListener('click', addTechnician);
+                document.getElementById('updateTechBtn').addEventListener('click', updateTechnician);
+                document.getElementById('cancelTechBtn').addEventListener('click', cancelEditTechnician);
+            }
             
             // إدارة المستخدمين
-            document.getElementById('addUserBtn').addEventListener('click', addUser);
-            document.getElementById('updateUserBtn').addEventListener('click', updateUser);
-            document.getElementById('cancelUserBtn').addEventListener('click', cancelEditUser);
+            if (document.getElementById('addUserBtn')) {
+                document.getElementById('addUserBtn').addEventListener('click', addUser);
+                document.getElementById('updateUserBtn').addEventListener('click', updateUser);
+                document.getElementById('cancelUserBtn').addEventListener('click', cancelEditUser);
+            }
             
             // إدارة العملاء
-            document.getElementById('saveCustomerBtn').addEventListener('click', saveCustomer);
-            document.getElementById('updateCustomerBtn').addEventListener('click', updateCustomer);
-            document.getElementById('cancelCustomerBtn').addEventListener('click', cancelEditCustomer);
-            document.getElementById('searchCustomers').addEventListener('input', searchCustomers);
+            if (document.getElementById('saveCustomerBtn')) {
+                document.getElementById('saveCustomerBtn').addEventListener('click', saveCustomer);
+                document.getElementById('updateCustomerBtn').addEventListener('click', updateCustomer);
+                document.getElementById('cancelCustomerBtn').addEventListener('click', cancelEditCustomer);
+                document.getElementById('searchCustomers').addEventListener('input', searchCustomers);
+            }
             
             // إدارة الفواتير
-            document.getElementById('saveOrderBtn').addEventListener('click', saveOrder);
-            document.getElementById('updateOrderBtn').addEventListener('click', updateOrder);
-            document.getElementById('cancelOrderBtn').addEventListener('click', cancelEditOrder);
-            document.getElementById('searchOrders').addEventListener('input', searchOrders);
-            document.getElementById('customerPhone').addEventListener('blur', fillCustomerInfo);
-            document.getElementById('customerPhone').addEventListener('input', function() {
-                if (this.value.trim() === '') {
-                    document.getElementById('customerAutofill').classList.remove('show');
-                }
-            });
+            if (document.getElementById('saveOrderBtn')) {
+                document.getElementById('saveOrderBtn').addEventListener('click', saveOrder);
+                document.getElementById('updateOrderBtn').addEventListener('click', updateOrder);
+                document.getElementById('cancelOrderBtn').addEventListener('click', cancelEditOrder);
+                document.getElementById('searchOrders').addEventListener('input', searchOrders);
+                document.getElementById('customerPhone').addEventListener('blur', fillCustomerInfo);
+                document.getElementById('customerPhone').addEventListener('input', function() {
+                    if (this.value.trim() === '') {
+                        document.getElementById('customerAutofill').classList.remove('show');
+                    }
+                });
+            }
             
             // إدارة مصروفات الأوردر
-            document.getElementById('saveExpenseBtn').addEventListener('click', saveOrderExpense);
-            document.getElementById('updateExpenseBtn').addEventListener('click', updateOrderExpense);
-            document.getElementById('cancelExpenseBtn').addEventListener('click', cancelEditExpense);
+            if (document.getElementById('saveExpenseBtn')) {
+                document.getElementById('saveExpenseBtn').addEventListener('click', saveOrderExpense);
+                document.getElementById('updateExpenseBtn').addEventListener('click', updateOrderExpense);
+                document.getElementById('cancelExpenseBtn').addEventListener('click', cancelEditExpense);
+            }
             
             // إدارة المصروفات العامة
-            document.getElementById('saveGeneralExpenseBtn').addEventListener('click', saveGeneralExpense);
-            document.getElementById('updateGeneralExpenseBtn').addEventListener('click', updateGeneralExpense);
-            document.getElementById('cancelGeneralExpenseBtn').addEventListener('click', cancelEditGeneralExpense);
+            if (document.getElementById('saveGeneralExpenseBtn')) {
+                document.getElementById('saveGeneralExpenseBtn').addEventListener('click', saveGeneralExpense);
+                document.getElementById('updateGeneralExpenseBtn').addEventListener('click', updateGeneralExpense);
+                document.getElementById('cancelGeneralExpenseBtn').addEventListener('click', cancelEditGeneralExpense);
+            }
             
             // إدارة السلف
-            document.getElementById('saveAdvanceBtn').addEventListener('click', saveAdvance);
-            document.getElementById('updateAdvanceBtn').addEventListener('click', updateAdvance);
-            document.getElementById('cancelAdvanceBtn').addEventListener('click', cancelEditAdvance);
-            document.getElementById('filterAdvancesBtn').addEventListener('click', loadAdvances);
-            document.getElementById('resetAdvancesBtn').addEventListener('click', function() {
-                document.getElementById('advanceEmployeeFilter').value = '';
-                document.getElementById('advanceFromDate').value = '';
-                document.getElementById('advanceToDate').value = '';
-                loadAdvances();
-            });
+            if (document.getElementById('saveAdvanceBtn')) {
+                document.getElementById('saveAdvanceBtn').addEventListener('click', saveAdvance);
+                document.getElementById('updateAdvanceBtn').addEventListener('click', updateAdvance);
+                document.getElementById('cancelAdvanceBtn').addEventListener('click', cancelEditAdvance);
+                document.getElementById('filterAdvancesBtn').addEventListener('click', loadAdvances);
+                document.getElementById('resetAdvancesBtn').addEventListener('click', function() {
+                    document.getElementById('advanceEmployeeFilter').value = '';
+                    document.getElementById('advanceFromDate').value = '';
+                    document.getElementById('advanceToDate').value = '';
+                    loadAdvances();
+                });
+            }
             
             // تسديد السلفة
-            document.getElementById('cancelPayBtn').addEventListener('click', hidePayAdvanceModal);
-            document.getElementById('confirmPayBtn').addEventListener('click', confirmPayAdvance);
+            if (document.getElementById('cancelPayBtn')) {
+                document.getElementById('cancelPayBtn').addEventListener('click', hidePayAdvanceModal);
+                document.getElementById('confirmPayBtn').addEventListener('click', confirmPayAdvance);
+            }
             
             // النسخ الاحتياطي
-            document.getElementById('createBackupBtn').addEventListener('click', createManualBackup);
-            document.getElementById('restoreLastBackupBtn').addEventListener('click', restoreLastBackup);
+            if (document.getElementById('createBackupBtn')) {
+                document.getElementById('createBackupBtn').addEventListener('click', createManualBackup);
+                document.getElementById('restoreLastBackupBtn').addEventListener('click', restoreLastBackup);
+            }
             
             // التقارير
-            document.getElementById('filterReportBtn').addEventListener('click', loadProfitReport);
-            document.getElementById('resetReportBtn').addEventListener('click', function() {
-                document.getElementById('reportFromDate').value = '';
-                document.getElementById('reportToDate').value = '';
-                loadProfitReport();
-            });
+            if (document.getElementById('filterReportBtn')) {
+                document.getElementById('filterReportBtn').addEventListener('click', loadProfitReport);
+                document.getElementById('resetReportBtn').addEventListener('click', function() {
+                    document.getElementById('reportFromDate').value = '';
+                    document.getElementById('reportToDate').value = '';
+                    loadProfitReport();
+                });
+            }
             
             // ملخص العمليات في لوحة التحكم
-            document.getElementById('filterSummaryBtn').addEventListener('click', loadDashboard);
-            document.getElementById('resetSummaryBtn').addEventListener('click', function() {
-                const today = new Date();
-                const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
-                
-                document.getElementById('summaryFromDate').value = firstDayOfMonth;
-                document.getElementById('summaryToDate').value = new Date().toISOString().split('T')[0];
-                loadDashboard();
-            });
+            if (document.getElementById('filterSummaryBtn')) {
+                document.getElementById('filterSummaryBtn').addEventListener('click', loadDashboard);
+                document.getElementById('resetSummaryBtn').addEventListener('click', function() {
+                    const today = new Date();
+                    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
+                    
+                    document.getElementById('summaryFromDate').value = firstDayOfMonth;
+                    document.getElementById('summaryToDate').value = new Date().toISOString().split('T')[0];
+                    loadDashboard();
+                });
+            }
         }
         
         // تسجيل الدخول
@@ -1908,13 +2152,20 @@ function getRoleName(role, userName) {
             
             if (user && user.password === password) {
                 currentUser = user;
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
+                
+                // تغيير فئة body لإظهار التطبيق الرئيسي
+                document.body.classList.remove('login-screen');
+                document.body.classList.add('app-screen');
+                
+                // تحديث معلومات المستخدم
                 document.getElementById('currentUserName').textContent = `مرحباً ${user.name}`;
-		document.getElementById('currentUserRole').textContent = `الدور: ${getRoleName(user.role, user.name)}`;                
-                // تحميل البيانات بناءً على صلاحيات المستخدم
+// إخفاء عنصر الدور بالكامل
+document.getElementById('currentUserRole').style.display = 'none';                // تحميل البيانات بناءً على صلاحيات المستخدم
                 loadDataBasedOnRole();
                 applyUserPermissions();
+                
+                // إخفاء توقيع المطور في شاشة الدخول
+                document.querySelector('.signature-card-login').style.display = 'none';
             } else {
                 showLoginError('كلمة المرور غير صحيحة');
             }
@@ -1925,19 +2176,33 @@ function getRoleName(role, userName) {
             const errorDiv = document.getElementById('loginError');
             errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
             errorDiv.style.display = 'block';
+            
+            // إخفاء الرسالة بعد 3 ثواني
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 3000);
         }
         
         // تسجيل الخروج
         function logout() {
             currentUser = null;
-            document.getElementById('mainApp').style.display = 'none';
-            document.getElementById('loginScreen').style.display = 'flex';
+            
+            // تغيير فئة body لإظهار شاشة الدخول
+            document.body.classList.remove('app-screen');
+            document.body.classList.add('login-screen');
+            
+            // مسح حقل كلمة المرور
             document.getElementById('loginPassword').value = '';
             document.getElementById('loginError').style.display = 'none';
+            
+            // إظهار توقيع المطور في شاشة الدخول
+            document.querySelector('.signature-card-login').style.display = 'block';
         }
         
         // تطبيق صلاحيات المستخدم
         function applyUserPermissions() {
+            if (!currentUser) return;
+            
             const role = currentUser.role;
             
             // إخفاء/إظهار الأزرار حسب الصلاحية
@@ -1961,70 +2226,110 @@ function getRoleName(role, userName) {
             
             if (role === 'superAdmin') {
                 // سوبر أدمن: كل الصلاحيات
-                usersManagement.classList.remove('hidden-by-role');
-                userManagementButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
-                backupButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
-                allEditButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
-                allUpdateButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
-                allCancelButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
+                if (usersManagement) usersManagement.classList.remove('hidden-by-role');
+                userManagementButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('hidden-by-role');
+                });
+                backupButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('hidden-by-role');
+                });
+                allEditButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('hidden-by-role');
+                });
+                allUpdateButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('hidden-by-role');
+                });
+                allCancelButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('hidden-by-role');
+                });
                 
-                dashboardNav.classList.remove('disabled');
-                customersNav.classList.remove('disabled');
-                settingsNav.classList.remove('disabled');
-                reportsNav.classList.remove('disabled');
-                generalExpensesNav.classList.remove('disabled');
+                if (dashboardNav) dashboardNav.classList.remove('disabled');
+                if (customersNav) customersNav.classList.remove('disabled');
+                if (settingsNav) settingsNav.classList.remove('disabled');
+                if (reportsNav) reportsNav.classList.remove('disabled');
+                if (generalExpensesNav) generalExpensesNav.classList.remove('disabled');
             } else if (role === 'admin') {
                 // أدمن: لا يرى الإعدادات أو التقارير
-                usersManagement.classList.add('hidden-by-role');
-                userManagementButtons.forEach(btn => btn.classList.add('hidden-by-role'));
-                backupButtons.forEach(btn => btn.classList.add('hidden-by-role'));
-                allEditButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
-                allUpdateButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
-                allCancelButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
+                if (usersManagement) usersManagement.classList.add('hidden-by-role');
+                userManagementButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                backupButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                allEditButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('hidden-by-role');
+                });
+                allUpdateButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('hidden-by-role');
+                });
+                allCancelButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('hidden-by-role');
+                });
                 
-                dashboardNav.classList.remove('disabled');
-                customersNav.classList.remove('disabled');
-                settingsNav.classList.add('disabled');
-                reportsNav.classList.add('disabled');
-                generalExpensesNav.classList.remove('disabled');
+                if (dashboardNav) dashboardNav.classList.remove('disabled');
+                if (customersNav) customersNav.classList.remove('disabled');
+                if (settingsNav) settingsNav.classList.add('disabled');
+                if (reportsNav) reportsNav.classList.add('disabled');
+                if (generalExpensesNav) generalExpensesNav.classList.remove('disabled');
                 
                 // إذا كان في الإعدادات أو التقارير، انتقل إلى لوحة التحكم
                 const activeSection = document.querySelector('.content-section.active');
                 if (activeSection && ['settings', 'reports'].includes(activeSection.id)) {
                     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                     document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-                    dashboardNav.classList.add('active');
-                    document.getElementById('dashboard').classList.add('active');
+                    if (dashboardNav) {
+                        dashboardNav.classList.add('active');
+                        document.getElementById('dashboard').classList.add('active');
+                    }
                 }
             } else if (role === 'dataEntry') {
                 // مدخل بيانات: فقط إضافة، لا تعديل ولا حذف ولا تقارير ولا إعدادات
-                usersManagement.classList.add('hidden-by-role');
-                userManagementButtons.forEach(btn => btn.classList.add('hidden-by-role'));
-                backupButtons.forEach(btn => btn.classList.add('hidden-by-role'));
-                allEditButtons.forEach(btn => btn.classList.add('hidden-by-role'));
-                allUpdateButtons.forEach(btn => btn.classList.add('hidden-by-role'));
-                allCancelButtons.forEach(btn => btn.classList.add('hidden-by-role'));
+                if (usersManagement) usersManagement.classList.add('hidden-by-role');
+                userManagementButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                backupButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                allEditButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                allUpdateButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                allCancelButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
                 
-                dashboardNav.classList.remove('disabled');
-                customersNav.classList.remove('disabled');
-                settingsNav.classList.add('disabled');
-                reportsNav.classList.add('disabled');
-                generalExpensesNav.classList.add('disabled');
+                if (dashboardNav) dashboardNav.classList.remove('disabled');
+                if (customersNav) customersNav.classList.remove('disabled');
+                if (settingsNav) settingsNav.classList.add('disabled');
+                if (reportsNav) reportsNav.classList.add('disabled');
+                if (generalExpensesNav) generalExpensesNav.classList.add('disabled');
                 
                 // إظهار أزرار الحفظ فقط
-                document.getElementById('saveOrderBtn').classList.remove('hidden-by-role');
-                document.getElementById('saveExpenseBtn').classList.remove('hidden-by-role');
-                document.getElementById('saveCustomerBtn').classList.remove('hidden-by-role');
-                document.getElementById('saveGeneralExpenseBtn').classList.remove('hidden-by-role');
-                document.getElementById('saveAdvanceBtn').classList.remove('hidden-by-role');
+                const saveButtons = [
+                    document.getElementById('saveOrderBtn'),
+                    document.getElementById('saveExpenseBtn'),
+                    document.getElementById('saveCustomerBtn'),
+                    document.getElementById('saveGeneralExpenseBtn'),
+                    document.getElementById('saveAdvanceBtn')
+                ];
+                
+                saveButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('hidden-by-role');
+                });
                 
                 // إذا كان في الإعدادات أو التقارير، انتقل إلى لوحة التحكم
                 const activeSection = document.querySelector('.content-section.active');
                 if (activeSection && ['settings', 'reports', 'general-expenses'].includes(activeSection.id)) {
                     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                     document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-                    dashboardNav.classList.add('active');
-                    document.getElementById('dashboard').classList.add('active');
+                    if (dashboardNav) {
+                        dashboardNav.classList.add('active');
+                        document.getElementById('dashboard').classList.add('active');
+                    }
                 }
             }
         }
@@ -2048,8 +2353,8 @@ function getRoleName(role, userName) {
         
         // تحميل لوحة التحكم مع ملخص العمليات
         function loadDashboard() {
-            const fromDate = document.getElementById('summaryFromDate').value;
-            const toDate = document.getElementById('summaryToDate').value;
+            const fromDate = document.getElementById('summaryFromDate') ? document.getElementById('summaryFromDate').value : '';
+            const toDate = document.getElementById('summaryToDate') ? document.getElementById('summaryToDate').value : '';
             
             let filteredOrders = orders;
             let filteredOrderExpenses = orderExpenses;
@@ -2130,89 +2435,99 @@ function getRoleName(role, userName) {
                 periodText = `لشهر ${monthName}`;
             }
             
-            document.getElementById('revenuePeriod').textContent = periodText;
-            document.getElementById('ordersPeriod').textContent = periodText;
-            document.getElementById('profitPeriod').textContent = periodText;
-            document.getElementById('expensesPeriod').textContent = periodText;
-            document.getElementById('commissionsPeriod').textContent = periodText;
-            document.getElementById('percentagePeriod').textContent = periodText;
-            
-            // تحديث البيانات في لوحة التحكم
-            document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString() + ' ج.م';
-            document.getElementById('totalOrders').textContent = filteredOrders.length;
-            document.getElementById('netProfit').textContent = netProfit.toLocaleString() + ' ج.م';
-            document.getElementById('totalExpenses').textContent = totalExpenses.toLocaleString() + ' ج.م';
-            document.getElementById('activeTechnicians').textContent = technicians.length;
-            document.getElementById('totalAdvances').textContent = netAdvances.toLocaleString() + ' ج.م';
-            document.getElementById('totalCommissions').textContent = totalTechCommission.toLocaleString() + ' ج.م';
-            document.getElementById('profitPercentage').textContent = profitPercentage + '%';
-            
-            // تحديث تفاصيل الملخص
-            const detailedSummary = document.getElementById('detailedSummary');
-            detailedSummary.innerHTML = '';
-            
-            const summaryCards = [
-                {
-                    title: 'إيرادات الفواتير',
-                    value: totalRevenue.toLocaleString() + ' ج.م',
-                    description: `من ${filteredOrders.length} فاتورة`
-                },
-                {
-                    title: 'مصروفات الأوردر',
-                    value: totalOrderExpenses.toLocaleString() + ' ج.م',
-                    description: `من ${filteredOrderExpenses.length} مصروف`
-                },
-                {
-                    title: 'المصروفات العامة',
-                    value: totalGeneralExpenses.toLocaleString() + ' ج.م',
-                    description: `من ${filteredGeneralExpenses.length} مصروف`
-                },
-                {
-                    title: 'عمولات الفنيين',
-                    value: totalTechCommission.toLocaleString() + ' ج.م',
-                    description: `${((totalTechCommission / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات`
-                }
-            ];
-            
-            summaryCards.forEach(card => {
-                const cardElement = document.createElement('div');
-                cardElement.className = 'card';
-                cardElement.innerHTML = `
-                    <h3>${card.title}</h3>
-                    <div class="card-value">${card.value}</div>
-                    <p>${card.description}</p>
-                `;
-                detailedSummary.appendChild(cardElement);
-            });
-            
-            // آخر الفواتير (5 فواتير)
-            const recentOrders = filteredOrders.slice(-5).reverse();
-            const recentOrdersTableBody = document.getElementById('recentOrdersTableBody');
-            const noRecentOrders = document.getElementById('noRecentOrders');
-            
-            recentOrdersTableBody.innerHTML = '';
-            
-            if (recentOrders.length === 0) {
-                noRecentOrders.style.display = 'block';
-                document.getElementById('recentOrdersTable').style.display = 'none';
-            } else {
-                noRecentOrders.style.display = 'none';
-                document.getElementById('recentOrdersTable').style.display = 'table';
+            if (document.getElementById('revenuePeriod')) {
+                document.getElementById('revenuePeriod').textContent = periodText;
+                document.getElementById('ordersPeriod').textContent = periodText;
+                document.getElementById('profitPeriod').textContent = periodText;
+                document.getElementById('expensesPeriod').textContent = periodText;
+                document.getElementById('commissionsPeriod').textContent = periodText;
+                document.getElementById('percentagePeriod').textContent = periodText;
                 
-                recentOrders.forEach(order => {
-                    const tech = technicians.find(t => t.id === order.technicianId);
-                    const techName = tech ? tech.name : 'غير معروف';
+                // تحديث البيانات في لوحة التحكم
+                document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString() + ' ج.م';
+                document.getElementById('totalOrders').textContent = filteredOrders.length;
+                document.getElementById('netProfit').textContent = netProfit.toLocaleString() + ' ج.م';
+                document.getElementById('totalExpenses').textContent = totalExpenses.toLocaleString() + ' ج.م';
+                document.getElementById('activeTechnicians').textContent = technicians.length;
+                document.getElementById('totalAdvances').textContent = netAdvances.toLocaleString() + ' ج.م';
+                document.getElementById('totalCommissions').textContent = totalTechCommission.toLocaleString() + ' ج.م';
+                document.getElementById('profitPercentage').textContent = profitPercentage + '%';
+                
+                // تحديث تفاصيل الملخص
+                const detailedSummary = document.getElementById('detailedSummary');
+                if (detailedSummary) {
+                    detailedSummary.innerHTML = '';
                     
-                    const row = recentOrdersTableBody.insertRow();
-                    row.innerHTML = `
-                        <td>${order.orderNumber}</td>
-                        <td>${formatDate(order.date)}</td>
-                        <td>${order.customerName}</td>
-                        <td>${order.repairType}</td>
-                        <td>${order.amount.toLocaleString()} ج.م</td>
-                        <td>${techName}</td>
-                    `;
-                });
+                    const summaryCards = [
+                        {
+                            title: 'إيرادات الفواتير',
+                            value: totalRevenue.toLocaleString() + ' ج.م',
+                            description: `من ${filteredOrders.length} فاتورة`
+                        },
+                        {
+                            title: 'مصروفات الأوردر',
+                            value: totalOrderExpenses.toLocaleString() + ' ج.م',
+                            description: `من ${filteredOrderExpenses.length} مصروف`
+                        },
+                        {
+                            title: 'المصروفات العامة',
+                            value: totalGeneralExpenses.toLocaleString() + ' ج.م',
+                            description: `من ${filteredGeneralExpenses.length} مصروف`
+                        },
+                        {
+                            title: 'عمولات الفنيين',
+                            value: totalTechCommission.toLocaleString() + ' ج.م',
+                            description: `${((totalTechCommission / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات`
+                        }
+                    ];
+                    
+                    summaryCards.forEach(card => {
+                        const cardElement = document.createElement('div');
+                        cardElement.className = 'card';
+                        cardElement.innerHTML = `
+                            <h3>${card.title}</h3>
+                            <div class="card-value">${card.value}</div>
+                            <p>${card.description}</p>
+                        `;
+                        detailedSummary.appendChild(cardElement);
+                    });
+                }
+                
+                // آخر الفواتير (5 فواتير)
+                const recentOrders = filteredOrders.slice(-5).reverse();
+                const recentOrdersTableBody = document.getElementById('recentOrdersTableBody');
+                const noRecentOrders = document.getElementById('noRecentOrders');
+                
+                if (recentOrdersTableBody && noRecentOrders) {
+                    recentOrdersTableBody.innerHTML = '';
+                    
+                    if (recentOrders.length === 0) {
+                        noRecentOrders.style.display = 'block';
+                        if (document.getElementById('recentOrdersTable')) {
+                            document.getElementById('recentOrdersTable').style.display = 'none';
+                        }
+                    } else {
+                        noRecentOrders.style.display = 'none';
+                        if (document.getElementById('recentOrdersTable')) {
+                            document.getElementById('recentOrdersTable').style.display = 'table';
+                        }
+                        
+                        recentOrders.forEach(order => {
+                            const tech = technicians.find(t => t.id === order.technicianId);
+                            const techName = tech ? tech.name : 'غير معروف';
+                            
+                            const row = recentOrdersTableBody.insertRow();
+                            row.innerHTML = `
+                                <td>${order.orderNumber}</td>
+                                <td>${formatDate(order.date)}</td>
+                                <td>${order.customerName}</td>
+                                <td>${order.repairType}</td>
+                                <td>${order.amount.toLocaleString()} ج.م</td>
+                                <td>${techName}</td>
+                            `;
+                        });
+                    }
+                }
             }
         }
         
@@ -2224,52 +2539,64 @@ function getRoleName(role, userName) {
             const advanceEmployeeSelect = document.getElementById('advanceEmployee');
             const advanceEmployeeFilter = document.getElementById('advanceEmployeeFilter');
             
-            techTableBody.innerHTML = '';
-            technicianSelect.innerHTML = '<option value="">اختر الفني</option>';
-            advanceEmployeeSelect.innerHTML = '<option value="">اختر الموظف</option>';
-            advanceEmployeeFilter.innerHTML = '<option value="">جميع الموظفين</option>';
+            if (techTableBody) techTableBody.innerHTML = '';
+            if (technicianSelect) technicianSelect.innerHTML = '<option value="">اختر الفني</option>';
+            if (advanceEmployeeSelect) advanceEmployeeSelect.innerHTML = '<option value="">اختر الموظف</option>';
+            if (advanceEmployeeFilter) advanceEmployeeFilter.innerHTML = '<option value="">جميع الموظفين</option>';
             
             if (technicians.length === 0) {
-                noTechs.style.display = 'block';
-                document.getElementById('techTable').style.display = 'none';
+                if (noTechs) noTechs.style.display = 'block';
+                if (document.getElementById('techTable')) {
+                    document.getElementById('techTable').style.display = 'none';
+                }
             } else {
-                noTechs.style.display = 'none';
-                document.getElementById('techTable').style.display = 'table';
+                if (noTechs) noTechs.style.display = 'none';
+                if (document.getElementById('techTable')) {
+                    document.getElementById('techTable').style.display = 'table';
+                }
                 
                 technicians.forEach((tech, index) => {
                     // إضافة إلى الجدول
-                    const row = techTableBody.insertRow();
-                    row.innerHTML = `
-                        <td>${index + 1}</td>
-                        <td>${tech.name}</td>
-                        <td>${tech.percentage}%</td>
-                        <td class="action-btns">
-                            <button class="action-btn edit-btn" onclick="editTechnician(${tech.id})">
-                                <i class="fas fa-edit"></i> تعديل
-                            </button>
-                            <button class="action-btn delete-btn" onclick="deleteTechnician(${tech.id})">
-                                <i class="fas fa-trash"></i> حذف
-                            </button>
-                        </td>
-                    `;
+                    if (techTableBody) {
+                        const row = techTableBody.insertRow();
+                        row.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${tech.name}</td>
+                            <td>${tech.percentage}%</td>
+                            <td class="action-btns">
+                                <button class="action-btn edit-btn" onclick="editTechnician(${tech.id})">
+                                    <i class="fas fa-edit"></i> تعديل
+                                </button>
+                                <button class="action-btn delete-btn" onclick="deleteTechnician(${tech.id})">
+                                    <i class="fas fa-trash"></i> حذف
+                                </button>
+                            </td>
+                        `;
+                    }
                     
                     // إضافة إلى القائمة المنسدلة للفواتير
-                    const option = document.createElement('option');
-                    option.value = tech.id;
-                    option.textContent = `${tech.name} (${tech.percentage}%)`;
-                    technicianSelect.appendChild(option);
+                    if (technicianSelect) {
+                        const option = document.createElement('option');
+                        option.value = tech.id;
+                        option.textContent = `${tech.name} (${tech.percentage}%)`;
+                        technicianSelect.appendChild(option);
+                    }
                     
                     // إضافة إلى القائمة المنسدلة للسلف
-                    const option2 = document.createElement('option');
-                    option2.value = tech.name;
-                    option2.textContent = tech.name;
-                    advanceEmployeeSelect.appendChild(option2);
+                    if (advanceEmployeeSelect) {
+                        const option2 = document.createElement('option');
+                        option2.value = tech.name;
+                        option2.textContent = tech.name;
+                        advanceEmployeeSelect.appendChild(option2);
+                    }
                     
                     // إضافة إلى فلتر السلف
-                    const option3 = document.createElement('option');
-                    option3.value = tech.name;
-                    option3.textContent = tech.name;
-                    advanceEmployeeFilter.appendChild(option3);
+                    if (advanceEmployeeFilter) {
+                        const option3 = document.createElement('option');
+                        option3.value = tech.name;
+                        option3.textContent = tech.name;
+                        advanceEmployeeFilter.appendChild(option3);
+                    }
                 });
             }
             
@@ -2281,6 +2608,8 @@ function getRoleName(role, userName) {
         function addTechnician() {
             const nameInput = document.getElementById('techName');
             const percentageInput = document.getElementById('techPercentage');
+            
+            if (!nameInput || !percentageInput) return;
             
             const name = nameInput.value.trim();
             const percentage = parseInt(percentageInput.value);
@@ -2311,15 +2640,19 @@ function getRoleName(role, userName) {
         function editTechnician(id) {
             const tech = technicians.find(t => t.id === id);
             if (tech) {
-                document.getElementById('techName').value = tech.name;
-                document.getElementById('techPercentage').value = tech.percentage;
-                
-                editingTechId = id;
-                
-                // إظهار أزرار التحديث والإلغاء
-                document.getElementById('addTechBtn').classList.add('hidden-by-role');
-                document.getElementById('updateTechBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelTechBtn').classList.remove('hidden-by-role');
+                if (document.getElementById('techName')) {
+                    document.getElementById('techName').value = tech.name;
+                    document.getElementById('techPercentage').value = tech.percentage;
+                    
+                    editingTechId = id;
+                    
+                    // إظهار أزرار التحديث والإلغاء
+                    if (document.getElementById('addTechBtn')) {
+                        document.getElementById('addTechBtn').classList.add('hidden-by-role');
+                        document.getElementById('updateTechBtn').classList.remove('hidden-by-role');
+                        document.getElementById('cancelTechBtn').classList.remove('hidden-by-role');
+                    }
+                }
             }
         }
         
@@ -2329,6 +2662,8 @@ function getRoleName(role, userName) {
             
             const nameInput = document.getElementById('techName');
             const percentageInput = document.getElementById('techPercentage');
+            
+            if (!nameInput || !percentageInput) return;
             
             const name = nameInput.value.trim();
             const percentage = parseInt(percentageInput.value);
@@ -2357,12 +2692,16 @@ function getRoleName(role, userName) {
         // إلغاء تعديل فني
         function cancelEditTechnician() {
             editingTechId = null;
-            document.getElementById('techName').value = '';
-            document.getElementById('techPercentage').value = '';
-            
-            document.getElementById('addTechBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateTechBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelTechBtn').classList.add('hidden-by-role');
+            if (document.getElementById('techName')) {
+                document.getElementById('techName').value = '';
+                document.getElementById('techPercentage').value = '';
+                
+                if (document.getElementById('addTechBtn')) {
+                    document.getElementById('addTechBtn').classList.remove('hidden-by-role');
+                    document.getElementById('updateTechBtn').classList.add('hidden-by-role');
+                    document.getElementById('cancelTechBtn').classList.add('hidden-by-role');
+                }
+            }
         }
         
         // حذف فني
@@ -2380,6 +2719,8 @@ function getRoleName(role, userName) {
         // تحميل العملاء
         function loadCustomers() {
             const customersList = document.getElementById('customersList');
+            if (!customersList) return;
+            
             customersList.innerHTML = '';
             
             if (customers.length === 0) {
@@ -2462,6 +2803,8 @@ function getRoleName(role, userName) {
             const phoneInput = document.getElementById('customerPhoneInput');
             const addressInput = document.getElementById('customerAddressInput');
             
+            if (!nameInput || !phoneInput || !addressInput) return;
+            
             const name = nameInput.value.trim();
             const phone = phoneInput.value.trim();
             const address = addressInput.value.trim();
@@ -2499,16 +2842,20 @@ function getRoleName(role, userName) {
         function editCustomer(id) {
             const customer = customers.find(c => c.id === id);
             if (customer) {
-                document.getElementById('customerNameInput').value = customer.name;
-                document.getElementById('customerPhoneInput').value = customer.phone;
-                document.getElementById('customerAddressInput').value = customer.address || '';
-                
-                editingCustomerId = id;
-                
-                // إظهار أزرار التحديث والإلغاء
-                document.getElementById('saveCustomerBtn').classList.add('hidden-by-role');
-                document.getElementById('updateCustomerBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelCustomerBtn').classList.remove('hidden-by-role');
+                if (document.getElementById('customerNameInput')) {
+                    document.getElementById('customerNameInput').value = customer.name;
+                    document.getElementById('customerPhoneInput').value = customer.phone;
+                    document.getElementById('customerAddressInput').value = customer.address || '';
+                    
+                    editingCustomerId = id;
+                    
+                    // إظهار أزرار التحديث والإلغاء
+                    if (document.getElementById('saveCustomerBtn')) {
+                        document.getElementById('saveCustomerBtn').classList.add('hidden-by-role');
+                        document.getElementById('updateCustomerBtn').classList.remove('hidden-by-role');
+                        document.getElementById('cancelCustomerBtn').classList.remove('hidden-by-role');
+                    }
+                }
             }
         }
         
@@ -2519,6 +2866,8 @@ function getRoleName(role, userName) {
             const nameInput = document.getElementById('customerNameInput');
             const phoneInput = document.getElementById('customerPhoneInput');
             const addressInput = document.getElementById('customerAddressInput');
+            
+            if (!nameInput || !phoneInput || !addressInput) return;
             
             const name = nameInput.value.trim();
             const phone = phoneInput.value.trim();
@@ -2552,13 +2901,17 @@ function getRoleName(role, userName) {
         // إلغاء تعديل عميل
         function cancelEditCustomer() {
             editingCustomerId = null;
-            document.getElementById('customerNameInput').value = '';
-            document.getElementById('customerPhoneInput').value = '';
-            document.getElementById('customerAddressInput').value = '';
-            
-            document.getElementById('saveCustomerBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateCustomerBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelCustomerBtn').classList.add('hidden-by-role');
+            if (document.getElementById('customerNameInput')) {
+                document.getElementById('customerNameInput').value = '';
+                document.getElementById('customerPhoneInput').value = '';
+                document.getElementById('customerAddressInput').value = '';
+                
+                if (document.getElementById('saveCustomerBtn')) {
+                    document.getElementById('saveCustomerBtn').classList.remove('hidden-by-role');
+                    document.getElementById('updateCustomerBtn').classList.add('hidden-by-role');
+                    document.getElementById('cancelCustomerBtn').classList.add('hidden-by-role');
+                }
+            }
         }
         
         // حذف عميل
@@ -2573,10 +2926,12 @@ function getRoleName(role, userName) {
         
         // ملء بيانات العميل تلقائياً عند إدخال رقم الهاتف
         function fillCustomerInfo() {
-            const phone = document.getElementById('customerPhone').value.trim();
+            const phone = document.getElementById('customerPhone') ? document.getElementById('customerPhone').value.trim() : '';
             const autofillDiv = document.getElementById('customerAutofill');
             const nameInput = document.getElementById('customerName');
             const addressInput = document.getElementById('customerAddress');
+            
+            if (!phone || !autofillDiv || !nameInput || !addressInput) return;
             
             if (!phone) {
                 autofillDiv.classList.remove('show');
@@ -2608,14 +2963,20 @@ function getRoleName(role, userName) {
             const ordersTableBody = document.getElementById('ordersTableBody');
             const noOrders = document.getElementById('noOrders');
             
+            if (!ordersTableBody || !noOrders) return;
+            
             ordersTableBody.innerHTML = '';
             
             if (orders.length === 0) {
                 noOrders.style.display = 'block';
-                document.getElementById('ordersTable').style.display = 'none';
+                if (document.getElementById('ordersTable')) {
+                    document.getElementById('ordersTable').style.display = 'none';
+                }
             } else {
                 noOrders.style.display = 'none';
-                document.getElementById('ordersTable').style.display = 'table';
+                if (document.getElementById('ordersTable')) {
+                    document.getElementById('ordersTable').style.display = 'table';
+                }
                 
                 orders.forEach(order => {
                     const tech = technicians.find(t => t.id === order.technicianId);
@@ -2632,10 +2993,10 @@ function getRoleName(role, userName) {
                         <td>${order.amount.toLocaleString()} ج.م</td>
                         <td>${techName}</td>
                         <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editOrder(${order.id})">
+                            <button class="action-btn edit-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editOrder(${order.id})">
                                 <i class="fas fa-edit"></i> تعديل
                             </button>
-                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteOrder(${order.id})">
+                            <button class="action-btn delete-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteOrder(${order.id})">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
                         </td>
@@ -2668,29 +3029,31 @@ function getRoleName(role, userName) {
             const table = document.getElementById('ordersTable');
             
             if (!found && searchText) {
-                noOrders.style.display = 'block';
-                noOrders.innerHTML = `
-                    <i class="fas fa-search"></i>
-                    <p>لا توجد نتائج للبحث "${searchText}"</p>
-                `;
-                table.style.display = 'none';
+                if (noResults) {
+                    noResults.style.display = 'block';
+                    noResults.innerHTML = `
+                        <i class="fas fa-search"></i>
+                        <p>لا توجد نتائج للبحث "${searchText}"</p>
+                    `;
+                }
+                if (table) table.style.display = 'none';
             } else if (found) {
-                noOrders.style.display = 'none';
-                table.style.display = 'table';
+                if (noResults) noResults.style.display = 'none';
+                if (table) table.style.display = 'table';
             }
         }
         
         // حفظ فاتورة جديدة
         function saveOrder() {
-            const orderNumber = document.getElementById('orderNumber').value.trim();
-            const orderDate = document.getElementById('orderDate').value;
-            const customerPhone = document.getElementById('customerPhone').value.trim();
-            const customerName = document.getElementById('customerName').value.trim();
-            const customerAddress = document.getElementById('customerAddress').value.trim();
-            const technicianId = parseInt(document.getElementById('technician').value);
-            const repairType = document.getElementById('repairType').value;
-            const orderAmount = parseInt(document.getElementById('orderAmount').value);
-            const orderDescription = document.getElementById('orderDescription').value.trim();
+            const orderNumber = document.getElementById('orderNumber') ? document.getElementById('orderNumber').value.trim() : '';
+            const orderDate = document.getElementById('orderDate') ? document.getElementById('orderDate').value : '';
+            const customerPhone = document.getElementById('customerPhone') ? document.getElementById('customerPhone').value.trim() : '';
+            const customerName = document.getElementById('customerName') ? document.getElementById('customerName').value.trim() : '';
+            const customerAddress = document.getElementById('customerAddress') ? document.getElementById('customerAddress').value.trim() : '';
+            const technicianId = document.getElementById('technician') ? parseInt(document.getElementById('technician').value) : 0;
+            const repairType = document.getElementById('repairType') ? document.getElementById('repairType').value : '';
+            const orderAmount = document.getElementById('orderAmount') ? parseInt(document.getElementById('orderAmount').value) : 0;
+            const orderDescription = document.getElementById('orderDescription') ? document.getElementById('orderDescription').value.trim() : '';
             
             if (!orderNumber || !orderDate || !customerPhone || !customerName || !technicianId || !repairType || isNaN(orderAmount) || orderAmount <= 0) {
                 alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
@@ -2741,15 +3104,19 @@ function getRoleName(role, userName) {
         
         // مسح نموذج الفاتورة
         function clearOrderForm() {
-            document.getElementById('orderNumber').value = '';
-            document.getElementById('customerPhone').value = '';
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerAddress').value = '';
-            document.getElementById('technician').value = '';
-            document.getElementById('repairType').value = 'ثلاجة وتكييف';
-            document.getElementById('orderAmount').value = '';
-            document.getElementById('orderDescription').value = '';
-            document.getElementById('customerAutofill').classList.remove('show');
+            if (document.getElementById('orderNumber')) {
+                document.getElementById('orderNumber').value = '';
+                document.getElementById('customerPhone').value = '';
+                document.getElementById('customerName').value = '';
+                document.getElementById('customerAddress').value = '';
+                document.getElementById('technician').value = '';
+                document.getElementById('repairType').value = 'ثلاجة وتكييف';
+                document.getElementById('orderAmount').value = '';
+                document.getElementById('orderDescription').value = '';
+                
+                const autofillDiv = document.getElementById('customerAutofill');
+                if (autofillDiv) autofillDiv.classList.remove('show');
+            }
         }
         
         // تحميل مصروفات الأوردر
@@ -2757,14 +3124,20 @@ function getRoleName(role, userName) {
             const expensesTableBody = document.getElementById('expensesTableBody');
             const noExpenses = document.getElementById('noExpenses');
             
+            if (!expensesTableBody || !noExpenses) return;
+            
             expensesTableBody.innerHTML = '';
             
             if (orderExpenses.length === 0) {
                 noExpenses.style.display = 'block';
-                document.getElementById('expensesTable').style.display = 'none';
+                if (document.getElementById('expensesTable')) {
+                    document.getElementById('expensesTable').style.display = 'none';
+                }
             } else {
                 noExpenses.style.display = 'none';
-                document.getElementById('expensesTable').style.display = 'table';
+                if (document.getElementById('expensesTable')) {
+                    document.getElementById('expensesTable').style.display = 'table';
+                }
                 
                 orderExpenses.forEach(expense => {
                     const total = (expense.parts || 0) + (expense.transport || 0) + (expense.other || 0);
@@ -2779,10 +3152,10 @@ function getRoleName(role, userName) {
                         <td>${total.toLocaleString()} ج.م</td>
                         <td>${expense.description}</td>
                         <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editOrderExpense(${expense.id})">
+                            <button class="action-btn edit-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editOrderExpense(${expense.id})">
                                 <i class="fas fa-edit"></i> تعديل
                             </button>
-                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteOrderExpense(${expense.id})">
+                            <button class="action-btn delete-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteOrderExpense(${expense.id})">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
                         </td>
@@ -2793,12 +3166,12 @@ function getRoleName(role, userName) {
         
         // حفظ مصروف أوردر جديد
         function saveOrderExpense() {
-            const orderNumber = document.getElementById('expenseOrderNumber').value;
-            const expenseDate = document.getElementById('expenseDate').value;
-            const partsExpense = parseInt(document.getElementById('partsExpense').value) || 0;
-            const transportExpense = parseInt(document.getElementById('transportExpense').value) || 0;
-            const otherExpense = parseInt(document.getElementById('otherExpense').value) || 0;
-            const expenseDescription = document.getElementById('expenseDescription').value.trim();
+            const orderNumber = document.getElementById('expenseOrderNumber') ? document.getElementById('expenseOrderNumber').value : '';
+            const expenseDate = document.getElementById('expenseDate') ? document.getElementById('expenseDate').value : '';
+            const partsExpense = document.getElementById('partsExpense') ? parseInt(document.getElementById('partsExpense').value) || 0 : 0;
+            const transportExpense = document.getElementById('transportExpense') ? parseInt(document.getElementById('transportExpense').value) || 0 : 0;
+            const otherExpense = document.getElementById('otherExpense') ? parseInt(document.getElementById('otherExpense').value) || 0 : 0;
+            const expenseDescription = document.getElementById('expenseDescription') ? document.getElementById('expenseDescription').value.trim() : '';
             
             if (!orderNumber || !expenseDate || (partsExpense === 0 && transportExpense === 0 && otherExpense === 0)) {
                 alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
@@ -2827,11 +3200,13 @@ function getRoleName(role, userName) {
         
         // مسح نموذج مصروف الأوردر
         function clearExpenseForm() {
-            document.getElementById('expenseOrderNumber').value = '';
-            document.getElementById('partsExpense').value = '';
-            document.getElementById('transportExpense').value = '';
-            document.getElementById('otherExpense').value = '';
-            document.getElementById('expenseDescription').value = '';
+            if (document.getElementById('expenseOrderNumber')) {
+                document.getElementById('expenseOrderNumber').value = '';
+                document.getElementById('partsExpense').value = '';
+                document.getElementById('transportExpense').value = '';
+                document.getElementById('otherExpense').value = '';
+                document.getElementById('expenseDescription').value = '';
+            }
         }
         
         // تحميل المصروفات العامة
@@ -2839,14 +3214,20 @@ function getRoleName(role, userName) {
             const generalExpensesTableBody = document.getElementById('generalExpensesTableBody');
             const noGeneralExpenses = document.getElementById('noGeneralExpenses');
             
+            if (!generalExpensesTableBody || !noGeneralExpenses) return;
+            
             generalExpensesTableBody.innerHTML = '';
             
             if (generalExpenses.length === 0) {
                 noGeneralExpenses.style.display = 'block';
-                document.getElementById('generalExpensesTable').style.display = 'none';
+                if (document.getElementById('generalExpensesTable')) {
+                    document.getElementById('generalExpensesTable').style.display = 'none';
+                }
             } else {
                 noGeneralExpenses.style.display = 'none';
-                document.getElementById('generalExpensesTable').style.display = 'table';
+                if (document.getElementById('generalExpensesTable')) {
+                    document.getElementById('generalExpensesTable').style.display = 'table';
+                }
                 
                 generalExpenses.forEach(expense => {
                     const row = generalExpensesTableBody.insertRow();
@@ -2856,10 +3237,10 @@ function getRoleName(role, userName) {
                         <td>${expense.amount.toLocaleString()} ج.م</td>
                         <td>${expense.description}</td>
                         <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editGeneralExpense(${expense.id})">
+                            <button class="action-btn edit-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editGeneralExpense(${expense.id})">
                                 <i class="fas fa-edit"></i> تعديل
                             </button>
-                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteGeneralExpense(${expense.id})">
+                            <button class="action-btn delete-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteGeneralExpense(${expense.id})">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
                         </td>
@@ -2870,10 +3251,10 @@ function getRoleName(role, userName) {
         
         // حفظ مصروف عام جديد
         function saveGeneralExpense() {
-            const expenseDate = document.getElementById('generalExpenseDate').value;
-            const expenseType = document.getElementById('generalExpenseType').value;
-            const expenseAmount = parseInt(document.getElementById('generalExpenseAmount').value);
-            const expenseDescription = document.getElementById('generalExpenseDescription').value.trim();
+            const expenseDate = document.getElementById('generalExpenseDate') ? document.getElementById('generalExpenseDate').value : '';
+            const expenseType = document.getElementById('generalExpenseType') ? document.getElementById('generalExpenseType').value : '';
+            const expenseAmount = document.getElementById('generalExpenseAmount') ? parseInt(document.getElementById('generalExpenseAmount').value) : 0;
+            const expenseDescription = document.getElementById('generalExpenseDescription') ? document.getElementById('generalExpenseDescription').value.trim() : '';
             
             if (!expenseDate || !expenseType || isNaN(expenseAmount) || expenseAmount <= 0) {
                 alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
@@ -2900,22 +3281,24 @@ function getRoleName(role, userName) {
         
         // مسح نموذج المصروف العام
         function clearGeneralExpenseForm() {
-            document.getElementById('generalExpenseType').value = 'ايجار المركز';
-            document.getElementById('generalExpenseAmount').value = '';
-            document.getElementById('generalExpenseDescription').value = '';
+            if (document.getElementById('generalExpenseType')) {
+                document.getElementById('generalExpenseType').value = 'ايجار المركز';
+                document.getElementById('generalExpenseAmount').value = '';
+                document.getElementById('generalExpenseDescription').value = '';
+            }
         }
         
         // تحميل السلف
         function loadAdvances() {
-            const employeeFilter = document.getElementById('advanceEmployeeFilter').value;
-            const fromDate = document.getElementById('advanceFromDate').value;
-            const toDate = document.getElementById('advanceToDate').value;
+            const employeeFilter = document.getElementById('advanceEmployeeFilter') ? document.getElementById('advanceEmployeeFilter').value : '';
+            const fromDate = document.getElementById('advanceFromDate') ? document.getElementById('advanceFromDate').value : '';
+            const toDate = document.getElementById('advanceToDate') ? document.getElementById('advanceToDate').value : '';
             
             const advancesTableBody = document.getElementById('advancesTableBody');
             const noAdvances = document.getElementById('noAdvances');
             const advanceSummary = document.getElementById('advanceSummary');
             
-            advancesTableBody.innerHTML = '';
+            if (advancesTableBody) advancesTableBody.innerHTML = '';
             
             // تصفية السلف حسب الموظف والتاريخ
             let filteredAdvances = advances;
@@ -2954,50 +3337,58 @@ function getRoleName(role, userName) {
             });
             
             // عرض ملخص الذمة
-            let summaryHTML = '<h4>ملخص الذمة للموظفين</h4>';
-            
-            if (Object.keys(employeeSummary).length === 0) {
-                summaryHTML += '<p>لا توجد بيانات لعرض الملخص.</p>';
-            } else {
-                for (const [employee, data] of Object.entries(employeeSummary)) {
-                    summaryHTML += `
-                        <p><strong>${employee}:</strong> إجمالي السلف: ${data.totalAdvances.toLocaleString()} ج.م | إجمالي التسديدات: ${data.totalPayments.toLocaleString()} ج.م | الرصيد: <span style="color: ${data.balance > 0 ? '#dc3545' : '#1a8c5e'}">${data.balance.toLocaleString()} ج.م</span></p>
-                    `;
+            if (advanceSummary) {
+                let summaryHTML = '<h4>ملخص الذمة للموظفين</h4>';
+                
+                if (Object.keys(employeeSummary).length === 0) {
+                    summaryHTML += '<p>لا توجد بيانات لعرض الملخص.</p>';
+                } else {
+                    for (const [employee, data] of Object.entries(employeeSummary)) {
+                        summaryHTML += `
+                            <p><strong>${employee}:</strong> إجمالي السلف: ${data.totalAdvances.toLocaleString()} ج.م | إجمالي التسديدات: ${data.totalPayments.toLocaleString()} ج.م | الرصيد: <span style="color: ${data.balance > 0 ? '#dc3545' : '#1a8c5e'}">${data.balance.toLocaleString()} ج.م</span></p>
+                        `;
+                    }
                 }
+                
+                advanceSummary.innerHTML = summaryHTML;
             }
             
-            advanceSummary.innerHTML = summaryHTML;
-            
             if (filteredAdvances.length === 0) {
-                noAdvances.style.display = 'block';
-                document.getElementById('advancesTable').style.display = 'none';
+                if (noAdvances) noAdvances.style.display = 'block';
+                if (document.getElementById('advancesTable')) {
+                    document.getElementById('advancesTable').style.display = 'none';
+                }
             } else {
-                noAdvances.style.display = 'none';
-                document.getElementById('advancesTable').style.display = 'table';
+                if (noAdvances) noAdvances.style.display = 'none';
+                if (document.getElementById('advancesTable')) {
+                    document.getElementById('advancesTable').style.display = 'table';
+                }
                 
                 filteredAdvances.forEach(advance => {
-                    const row = advancesTableBody.insertRow();
-                    const typeClass = advance.type === 'سلفة' ? 'card-loss' : 'card-profit';
-                    const typeText = advance.type === 'سلفة' ? 'سلفة' : 'تسديد';
-                    
-                    row.innerHTML = `
-                        <td>${formatDate(advance.date)}</td>
-                        <td>${advance.employee}</td>
-                        <td class="${typeClass}">${advance.amount.toLocaleString()} ج.م</td>
-                        <td>${typeText}</td>
-                        <td>${advance.reason}</td>
-                        <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editAdvance(${advance.id})">
-                                <i class="fas fa-edit"></i> تعديل
-                            </button>
-                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteAdvance(${advance.id})">
-                                <i class="fas fa-trash"></i> حذف
-                            </button>
-                            ${advance.type === 'سلفة' ? `<button class="action-btn pay-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="showPayAdvanceModal('${advance.employee}')">
-                                <i class="fas fa-money-bill-wave"></i> تسديد
-                            </button>` : ''}
-                        </td>
-                    `;
+                    if (advancesTableBody) {
+                        const row = advancesTableBody.insertRow();
+                        const typeClass = advance.type === 'سلفة' ? 'card-loss' : 'card-profit';
+                        const typeText = advance.type === 'سلفة' ? 'سلفة' : 'تسديد';
+                        
+                        row.innerHTML = `
+                            <td>${formatDate(advance.date)}</td>
+                            <td>${advance.employee}</td>
+                            <td class="${typeClass}">${advance.amount.toLocaleString()} ج.م</td>
+                            <td>${typeText}</td>
+                            <td>${advance.reason}</td>
+                            <td class="action-btns">
+                                <button class="action-btn edit-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editAdvance(${advance.id})">
+                                    <i class="fas fa-edit"></i> تعديل
+                                </button>
+                                <button class="action-btn delete-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteAdvance(${advance.id})">
+                                    <i class="fas fa-trash"></i> حذف
+                                </button>
+                                ${advance.type === 'سلفة' ? `<button class="action-btn pay-btn ${currentUser && currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="showPayAdvanceModal('${advance.employee}')">
+                                    <i class="fas fa-money-bill-wave"></i> تسديد
+                                </button>` : ''}
+                            </td>
+                        `;
+                    }
                 });
             }
             
@@ -3006,10 +3397,10 @@ function getRoleName(role, userName) {
         
         // حفظ سلفة جديدة
         function saveAdvance() {
-            const employee = document.getElementById('advanceEmployee').value;
-            const advanceDate = document.getElementById('advanceDate').value;
-            const advanceAmount = parseInt(document.getElementById('advanceAmount').value);
-            const advanceReason = document.getElementById('advanceReason').value.trim();
+            const employee = document.getElementById('advanceEmployee') ? document.getElementById('advanceEmployee').value : '';
+            const advanceDate = document.getElementById('advanceDate') ? document.getElementById('advanceDate').value : '';
+            const advanceAmount = document.getElementById('advanceAmount') ? parseInt(document.getElementById('advanceAmount').value) : 0;
+            const advanceReason = document.getElementById('advanceReason') ? document.getElementById('advanceReason').value.trim() : '';
             
             if (!employee || !advanceDate || isNaN(advanceAmount) || advanceAmount <= 0) {
                 alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
@@ -3036,9 +3427,11 @@ function getRoleName(role, userName) {
         
         // مسح نموذج السلفة
         function clearAdvanceForm() {
-            document.getElementById('advanceEmployee').value = '';
-            document.getElementById('advanceAmount').value = '';
-            document.getElementById('advanceReason').value = '';
+            if (document.getElementById('advanceEmployee')) {
+                document.getElementById('advanceEmployee').value = '';
+                document.getElementById('advanceAmount').value = '';
+                document.getElementById('advanceReason').value = '';
+            }
         }
         
         // إظهار مودال تسديد السلفة
@@ -3062,28 +3455,32 @@ function getRoleName(role, userName) {
             
             currentPayAdvance = employeeName;
             
-            document.getElementById('payEmployeeName').value = employeeName;
-            document.getElementById('payAdvanceAmount').value = balance;
-            document.getElementById('payAmount').value = '';
-            document.getElementById('payNotes').value = '';
-            document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
-            
-            document.getElementById('payAdvanceModal').style.display = 'flex';
+            if (document.getElementById('payEmployeeName')) {
+                document.getElementById('payEmployeeName').value = employeeName;
+                document.getElementById('payAdvanceAmount').value = balance;
+                document.getElementById('payAmount').value = '';
+                document.getElementById('payNotes').value = '';
+                document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
+                
+                document.getElementById('payAdvanceModal').style.display = 'flex';
+            }
         }
         
         // إخفاء مودال تسديد السلفة
         function hidePayAdvanceModal() {
-            document.getElementById('payAdvanceModal').style.display = 'none';
-            currentPayAdvance = null;
+            if (document.getElementById('payAdvanceModal')) {
+                document.getElementById('payAdvanceModal').style.display = 'none';
+                currentPayAdvance = null;
+            }
         }
         
         // تأكيد تسديد السلفة
         function confirmPayAdvance() {
-            const employeeName = document.getElementById('payEmployeeName').value;
-            const payAmount = parseInt(document.getElementById('payAmount').value);
-            const payDate = document.getElementById('payDate').value;
-            const payNotes = document.getElementById('payNotes').value.trim();
-            const balance = parseInt(document.getElementById('payAdvanceAmount').value);
+            const employeeName = document.getElementById('payEmployeeName') ? document.getElementById('payEmployeeName').value : '';
+            const payAmount = document.getElementById('payAmount') ? parseInt(document.getElementById('payAmount').value) : 0;
+            const payDate = document.getElementById('payDate') ? document.getElementById('payDate').value : '';
+            const payNotes = document.getElementById('payNotes') ? document.getElementById('payNotes').value.trim() : '';
+            const balance = document.getElementById('payAdvanceAmount') ? parseInt(document.getElementById('payAdvanceAmount').value) : 0;
             
             if (!payAmount || payAmount <= 0) {
                 alert('الرجاء إدخال مبلغ تسديد صحيح');
@@ -3113,8 +3510,8 @@ function getRoleName(role, userName) {
         
         // تحميل التقارير
         function loadProfitReport() {
-            const fromDate = document.getElementById('reportFromDate').value;
-            const toDate = document.getElementById('reportToDate').value;
+            const fromDate = document.getElementById('reportFromDate') ? document.getElementById('reportFromDate').value : '';
+            const toDate = document.getElementById('reportToDate') ? document.getElementById('reportToDate').value : '';
             
             let filteredOrders = orders;
             let filteredOrderExpenses = orderExpenses;
@@ -3143,15 +3540,19 @@ function getRoleName(role, userName) {
             const noReportData = document.getElementById('noReportData');
             const aggregateReport = document.getElementById('aggregateReport');
             
-            profitReportTableBody.innerHTML = '';
+            if (profitReportTableBody) profitReportTableBody.innerHTML = '';
             
             if (filteredOrders.length === 0) {
-                noReportData.style.display = 'block';
-                document.getElementById('profitReportTable').style.display = 'none';
-                aggregateReport.innerHTML = '';
+                if (noReportData) noReportData.style.display = 'block';
+                if (document.getElementById('profitReportTable')) {
+                    document.getElementById('profitReportTable').style.display = 'none';
+                }
+                if (aggregateReport) aggregateReport.innerHTML = '';
             } else {
-                noReportData.style.display = 'none';
-                document.getElementById('profitReportTable').style.display = 'table';
+                if (noReportData) noReportData.style.display = 'none';
+                if (document.getElementById('profitReportTable')) {
+                    document.getElementById('profitReportTable').style.display = 'table';
+                }
                 
                 let totalRevenue = 0;
                 let totalCommissions = 0;
@@ -3182,44 +3583,48 @@ function getRoleName(role, userName) {
                     totalExpenses += totalOrderExpenses;
                     totalProfit += profit;
                     
-                    const row = profitReportTableBody.insertRow();
-                    row.innerHTML = `
-                        <td>${order.orderNumber}</td>
-                        <td>${formatDate(order.date)}</td>
-                        <td>${order.amount.toLocaleString()} ج.م</td>
-                        <td>${techName}</td>
-                        <td>${techPercentage}%</td>
-                        <td>${totalOrderExpenses.toLocaleString()} ج.م</td>
-                        <td>${profit.toLocaleString()} ج.م</td>
-                        <td>${profitPercentage}%</td>
-                    `;
+                    if (profitReportTableBody) {
+                        const row = profitReportTableBody.insertRow();
+                        row.innerHTML = `
+                            <td>${order.orderNumber}</td>
+                            <td>${formatDate(order.date)}</td>
+                            <td>${order.amount.toLocaleString()} ج.م</td>
+                            <td>${techName}</td>
+                            <td>${commission.toLocaleString()} ج.م</td>
+                            <td>${totalOrderExpenses.toLocaleString()} ج.م</td>
+                            <td>${profit.toLocaleString()} ج.م</td>
+                            <td>${profitPercentage}%</td>
+                        `;
+                    }
                 });
                 
                 // تحديث التقرير المجمع
                 const overallProfitPercentage = totalRevenue > 0 ? ((totalProfit / totalRevenue) * 100).toFixed(1) : 0;
                 
-                aggregateReport.innerHTML = `
-                    <div class="card">
-                        <h3>إجمالي الإيرادات</h3>
-                        <div class="card-value">${totalRevenue.toLocaleString()} ج.م</div>
-                        <p>من ${filteredOrders.length} فاتورة</p>
-                    </div>
-                    <div class="card">
-                        <h3>إجمالي العمولات</h3>
-                        <div class="card-value">${totalCommissions.toLocaleString()} ج.م</div>
-                        <p>${((totalCommissions / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات</p>
-                    </div>
-                    <div class="card">
-                        <h3>إجمالي المصروفات</h3>
-                        <div class="card-value">${totalExpenses.toLocaleString()} ج.م</div>
-                        <p>${((totalExpenses / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات</p>
-                    </div>
-                    <div class="card">
-                        <h3>صافي الربح</h3>
-                        <div class="card-value card-profit">${totalProfit.toLocaleString()} ج.م</div>
-                        <p>نسبة الربحية: ${overallProfitPercentage}%</p>
-                    </div>
-                `;
+                if (aggregateReport) {
+                    aggregateReport.innerHTML = `
+                        <div class="card">
+                            <h3>إجمالي الإيرادات</h3>
+                            <div class="card-value">${totalRevenue.toLocaleString()} ج.م</div>
+                            <p>من ${filteredOrders.length} فاتورة</p>
+                        </div>
+                        <div class="card">
+                            <h3>إجمالي العمولات</h3>
+                            <div class="card-value">${totalCommissions.toLocaleString()} ج.م</div>
+                            <p>${((totalCommissions / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات</p>
+                        </div>
+                        <div class="card">
+                            <h3>إجمالي المصروفات</h3>
+                            <div class="card-value">${totalExpenses.toLocaleString()} ج.م</div>
+                            <p>${((totalExpenses / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات</p>
+                        </div>
+                        <div class="card">
+                            <h3>صافي الربح</h3>
+                            <div class="card-value card-profit">${totalProfit.toLocaleString()} ج.م</div>
+                            <p>نسبة الربحية: ${overallProfitPercentage}%</p>
+                        </div>
+                    `;
+                }
             }
         }
         
@@ -3228,21 +3633,27 @@ function getRoleName(role, userName) {
             const usersTableBody = document.getElementById('usersTableBody');
             const noUsers = document.getElementById('noUsers');
             
+            if (!usersTableBody || !noUsers) return;
+            
             usersTableBody.innerHTML = '';
             
             if (users.length === 0) {
                 noUsers.style.display = 'block';
-                document.getElementById('usersTable').style.display = 'none';
+                if (document.getElementById('usersTable')) {
+                    document.getElementById('usersTable').style.display = 'none';
+                }
             } else {
                 noUsers.style.display = 'none';
-                document.getElementById('usersTable').style.display = 'table';
+                if (document.getElementById('usersTable')) {
+                    document.getElementById('usersTable').style.display = 'table';
+                }
                 
                 users.forEach((user, index) => {
                     const row = usersTableBody.insertRow();
                     row.innerHTML = `
                         <td>${index + 1}</td>
                         <td>${user.name}</td>
-                        <td>${getRoleName(user.role)}</td>
+                        <td>${getRoleName(user.role, user.name)}</td>
                         <td>${user.password}</td>
                         <td class="action-btns">
                             <button class="action-btn edit-btn" onclick="editUser(${user.id})">
@@ -3262,6 +3673,8 @@ function getRoleName(role, userName) {
             const nameInput = document.getElementById('userName');
             const roleInput = document.getElementById('userRole');
             const passwordInput = document.getElementById('userPassword');
+            
+            if (!nameInput || !roleInput || !passwordInput) return;
             
             const name = nameInput.value.trim();
             const role = roleInput.value;
@@ -3283,7 +3696,6 @@ function getRoleName(role, userName) {
             
             saveData();
             loadUsers();
-            loadLoginUsers();
             
             // مسح الحقول
             nameInput.value = '';
@@ -3295,16 +3707,20 @@ function getRoleName(role, userName) {
         function editUser(id) {
             const user = users.find(u => u.id === id);
             if (user) {
-                document.getElementById('userName').value = user.name;
-                document.getElementById('userRole').value = user.role;
-                document.getElementById('userPassword').value = user.password;
-                
-                editingUserId = id;
-                
-                // إظهار أزرار التحديث والإلغاء
-                document.getElementById('addUserBtn').classList.add('hidden-by-role');
-                document.getElementById('updateUserBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelUserBtn').classList.remove('hidden-by-role');
+                if (document.getElementById('userName')) {
+                    document.getElementById('userName').value = user.name;
+                    document.getElementById('userRole').value = user.role;
+                    document.getElementById('userPassword').value = user.password;
+                    
+                    editingUserId = id;
+                    
+                    // إظهار أزرار التحديث والإلغاء
+                    if (document.getElementById('addUserBtn')) {
+                        document.getElementById('addUserBtn').classList.add('hidden-by-role');
+                        document.getElementById('updateUserBtn').classList.remove('hidden-by-role');
+                        document.getElementById('cancelUserBtn').classList.remove('hidden-by-role');
+                    }
+                }
             }
         }
         
@@ -3315,6 +3731,8 @@ function getRoleName(role, userName) {
             const nameInput = document.getElementById('userName');
             const roleInput = document.getElementById('userRole');
             const passwordInput = document.getElementById('userPassword');
+            
+            if (!nameInput || !roleInput || !passwordInput) return;
             
             const name = nameInput.value.trim();
             const role = roleInput.value;
@@ -3333,7 +3751,6 @@ function getRoleName(role, userName) {
                 
                 saveData();
                 loadUsers();
-                loadLoginUsers();
                 
                 // مسح الحقول وإعادة الحالة
                 cancelEditUser();
@@ -3343,13 +3760,17 @@ function getRoleName(role, userName) {
         // إلغاء تعديل مستخدم
         function cancelEditUser() {
             editingUserId = null;
-            document.getElementById('userName').value = '';
-            document.getElementById('userRole').value = 'superAdmin';
-            document.getElementById('userPassword').value = '';
-            
-            document.getElementById('addUserBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateUserBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelUserBtn').classList.add('hidden-by-role');
+            if (document.getElementById('userName')) {
+                document.getElementById('userName').value = '';
+                document.getElementById('userRole').value = 'superAdmin';
+                document.getElementById('userPassword').value = '';
+                
+                if (document.getElementById('addUserBtn')) {
+                    document.getElementById('addUserBtn').classList.remove('hidden-by-role');
+                    document.getElementById('updateUserBtn').classList.add('hidden-by-role');
+                    document.getElementById('cancelUserBtn').classList.add('hidden-by-role');
+                }
+            }
         }
         
         // حذف مستخدم
@@ -3363,13 +3784,14 @@ function getRoleName(role, userName) {
                 users = users.filter(user => user.id !== id);
                 saveData();
                 loadUsers();
-                loadLoginUsers();
             }
         }
         
         // تحميل النسخ الاحتياطية
         function loadBackups() {
             const backupList = document.getElementById('backupList');
+            if (!backupList) return;
+            
             backupList.innerHTML = '';
             
             if (backups.length === 0) {
@@ -3479,40 +3901,51 @@ function getRoleName(role, userName) {
         
         // إظهار نافذة تغيير كلمة المرور
         function showChangePasswordModal() {
-            document.getElementById('changePasswordModal').style.display = 'flex';
+            if (document.getElementById('changePasswordModal')) {
+                document.getElementById('changePasswordModal').style.display = 'flex';
+            }
         }
         
         // إخفاء نافذة تغيير كلمة المرور
         function hideChangePasswordModal() {
-            document.getElementById('changePasswordModal').style.display = 'none';
-            document.getElementById('oldPassword').value = '';
-            document.getElementById('newPassword').value = '';
-            document.getElementById('confirmPassword').value = '';
-            document.getElementById('passwordError').style.display = 'none';
+            if (document.getElementById('changePasswordModal')) {
+                document.getElementById('changePasswordModal').style.display = 'none';
+                document.getElementById('oldPassword').value = '';
+                document.getElementById('newPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+                const passwordError = document.getElementById('passwordError');
+                if (passwordError) passwordError.style.display = 'none';
+            }
         }
         
         // تغيير كلمة المرور
         function changePassword() {
-            const oldPassword = document.getElementById('oldPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+            const oldPassword = document.getElementById('oldPassword') ? document.getElementById('oldPassword').value : '';
+            const newPassword = document.getElementById('newPassword') ? document.getElementById('newPassword').value : '';
+            const confirmPassword = document.getElementById('confirmPassword') ? document.getElementById('confirmPassword').value : '';
             const passwordError = document.getElementById('passwordError');
             
             if (!oldPassword || !newPassword || !confirmPassword) {
-                passwordError.textContent = 'الرجاء إدخال جميع الحقول';
-                passwordError.style.display = 'block';
+                if (passwordError) {
+                    passwordError.textContent = 'الرجاء إدخال جميع الحقول';
+                    passwordError.style.display = 'block';
+                }
                 return;
             }
             
             if (oldPassword !== currentUser.password) {
-                passwordError.textContent = 'كلمة المرور القديمة غير صحيحة';
-                passwordError.style.display = 'block';
+                if (passwordError) {
+                    passwordError.textContent = 'كلمة المرور القديمة غير صحيحة';
+                    passwordError.style.display = 'block';
+                }
                 return;
             }
             
             if (newPassword !== confirmPassword) {
-                passwordError.textContent = 'كلمة المرور الجديدة غير متطابقة';
-                passwordError.style.display = 'block';
+                if (passwordError) {
+                    passwordError.textContent = 'كلمة المرور الجديدة غير متطابقة';
+                    passwordError.style.display = 'block';
+                }
                 return;
             }
             
@@ -3531,6 +3964,8 @@ function getRoleName(role, userName) {
         // تحديث قائمة أرقام الفواتير في شاشة المصروفات
         function updateOrderNumberSelect() {
             const orderNumberSelect = document.getElementById('expenseOrderNumber');
+            if (!orderNumberSelect) return;
+            
             orderNumberSelect.innerHTML = '<option value="">اختر رقم الفاتورة</option>';
             
             orders.forEach(order => {
@@ -3543,11 +3978,57 @@ function getRoleName(role, userName) {
         
         // تنسيق التاريخ
         function formatDate(dateString) {
+            if (!dateString) return '';
             const date = new Date(dateString);
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');
             return `${year}-${month}-${day}`;
+        }
+        
+        // دالة بدء النسخ الاحتياطي التلقائي
+        function startAutoBackup() {
+            // إنشاء نسخة أولية عند بدء التشغيل
+            createAutoBackup();
+            
+            // ضبط المؤقت للنسخ كل ساعة (3600000 مللي ثانية)
+            backupTimer = setInterval(createAutoBackup, 3600000);
+        }
+        
+        // إنشاء نسخة احتياطية تلقائية
+        function createAutoBackup() {
+            const timestamp = new Date().getTime();
+            const dateStr = new Date().toLocaleString('ar-EG');
+            
+            const backupData = {
+                id: timestamp,
+                name: `نسخة تلقائية - ${dateStr}`,
+                date: new Date().toISOString(),
+                data: {
+                    users: JSON.parse(JSON.stringify(users)),
+                    technicians: JSON.parse(JSON.stringify(technicians)),
+                    customers: JSON.parse(JSON.stringify(customers)),
+                    orders: JSON.parse(JSON.stringify(orders)),
+                    orderExpenses: JSON.parse(JSON.stringify(orderExpenses)),
+                    generalExpenses: JSON.parse(JSON.stringify(generalExpenses)),
+                    advances: JSON.parse(JSON.stringify(advances))
+                }
+            };
+            
+            // إضافة النسخة إلى القائمة
+            backups.unshift(backupData);
+            
+            // الاحتفاظ فقط بآخر 10 نسخ
+            if (backups.length > 10) {
+                backups = backups.slice(0, 10);
+            }
+            
+            saveData();
+            
+            // تحديث قائمة النسخ إذا كانت صفحة الإعدادات مفتوحة
+            if (currentUser && currentUser.role === 'superAdmin') {
+                loadBackups();
+            }
         }
         
         // تعريف الدوال التي تحتاج إلى الوصول من أزرار HTML
@@ -3557,7 +4038,7 @@ function getRoleName(role, userName) {
         window.deleteCustomer = deleteCustomer;
         window.editOrder = function(id) {
             const order = orders.find(o => o.id === id);
-            if (order) {
+            if (order && document.getElementById('orderNumber')) {
                 document.getElementById('orderNumber').value = order.orderNumber;
                 document.getElementById('orderDate').value = order.date;
                 document.getElementById('customerPhone').value = order.customerPhone;
@@ -3570,31 +4051,35 @@ function getRoleName(role, userName) {
                 
                 // إظهار بيانات العميل
                 const autofillDiv = document.getElementById('customerAutofill');
-                document.getElementById('autofillName').textContent = order.customerName;
-                document.getElementById('autofillAddress').textContent = order.customerAddress || '-';
-                autofillDiv.classList.add('show');
+                if (autofillDiv) {
+                    document.getElementById('autofillName').textContent = order.customerName;
+                    document.getElementById('autofillAddress').textContent = order.customerAddress || '-';
+                    autofillDiv.classList.add('show');
+                }
                 
                 editingOrderId = id;
                 
                 // إظهار أزرار التحديث والإلغاء
-                document.getElementById('saveOrderBtn').classList.add('hidden-by-role');
-                document.getElementById('updateOrderBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelOrderBtn').classList.remove('hidden-by-role');
+                if (document.getElementById('saveOrderBtn')) {
+                    document.getElementById('saveOrderBtn').classList.add('hidden-by-role');
+                    document.getElementById('updateOrderBtn').classList.remove('hidden-by-role');
+                    document.getElementById('cancelOrderBtn').classList.remove('hidden-by-role');
+                }
             }
         };
         
         window.updateOrder = function() {
             if (!editingOrderId) return;
             
-            const orderNumber = document.getElementById('orderNumber').value.trim();
-            const orderDate = document.getElementById('orderDate').value;
-            const customerPhone = document.getElementById('customerPhone').value.trim();
-            const customerName = document.getElementById('customerName').value.trim();
-            const customerAddress = document.getElementById('customerAddress').value.trim();
-            const technicianId = parseInt(document.getElementById('technician').value);
-            const repairType = document.getElementById('repairType').value;
-            const orderAmount = parseInt(document.getElementById('orderAmount').value);
-            const orderDescription = document.getElementById('orderDescription').value.trim();
+            const orderNumber = document.getElementById('orderNumber') ? document.getElementById('orderNumber').value.trim() : '';
+            const orderDate = document.getElementById('orderDate') ? document.getElementById('orderDate').value : '';
+            const customerPhone = document.getElementById('customerPhone') ? document.getElementById('customerPhone').value.trim() : '';
+            const customerName = document.getElementById('customerName') ? document.getElementById('customerName').value.trim() : '';
+            const customerAddress = document.getElementById('customerAddress') ? document.getElementById('customerAddress').value.trim() : '';
+            const technicianId = document.getElementById('technician') ? parseInt(document.getElementById('technician').value) : 0;
+            const repairType = document.getElementById('repairType') ? document.getElementById('repairType').value : '';
+            const orderAmount = document.getElementById('orderAmount') ? parseInt(document.getElementById('orderAmount').value) : 0;
+            const orderDescription = document.getElementById('orderDescription') ? document.getElementById('orderDescription').value.trim() : '';
             
             if (!orderNumber || !orderDate || !customerPhone || !customerName || !technicianId || !repairType || isNaN(orderAmount) || orderAmount <= 0) {
                 alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
@@ -3632,9 +4117,11 @@ function getRoleName(role, userName) {
             editingOrderId = null;
             clearOrderForm();
             
-            document.getElementById('saveOrderBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateOrderBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelOrderBtn').classList.add('hidden-by-role');
+            if (document.getElementById('saveOrderBtn')) {
+                document.getElementById('saveOrderBtn').classList.remove('hidden-by-role');
+                document.getElementById('updateOrderBtn').classList.add('hidden-by-role');
+                document.getElementById('cancelOrderBtn').classList.add('hidden-by-role');
+            }
         };
         
         window.deleteOrder = function(id) {
@@ -3648,7 +4135,7 @@ function getRoleName(role, userName) {
         
         window.editOrderExpense = function(id) {
             const expense = orderExpenses.find(e => e.id === id);
-            if (expense) {
+            if (expense && document.getElementById('expenseOrderNumber')) {
                 document.getElementById('expenseOrderNumber').value = expense.orderNumber;
                 document.getElementById('expenseDate').value = expense.date;
                 document.getElementById('partsExpense').value = expense.parts || 0;
@@ -3659,21 +4146,23 @@ function getRoleName(role, userName) {
                 editingExpenseId = id;
                 
                 // إظهار أزرار التحديث والإلغاء
-                document.getElementById('saveExpenseBtn').classList.add('hidden-by-role');
-                document.getElementById('updateExpenseBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelExpenseBtn').classList.remove('hidden-by-role');
+                if (document.getElementById('saveExpenseBtn')) {
+                    document.getElementById('saveExpenseBtn').classList.add('hidden-by-role');
+                    document.getElementById('updateExpenseBtn').classList.remove('hidden-by-role');
+                    document.getElementById('cancelExpenseBtn').classList.remove('hidden-by-role');
+                }
             }
         };
         
         window.updateOrderExpense = function() {
             if (!editingExpenseId) return;
             
-            const orderNumber = document.getElementById('expenseOrderNumber').value;
-            const expenseDate = document.getElementById('expenseDate').value;
-            const partsExpense = parseInt(document.getElementById('partsExpense').value) || 0;
-            const transportExpense = parseInt(document.getElementById('transportExpense').value) || 0;
-            const otherExpense = parseInt(document.getElementById('otherExpense').value) || 0;
-            const expenseDescription = document.getElementById('expenseDescription').value.trim();
+            const orderNumber = document.getElementById('expenseOrderNumber') ? document.getElementById('expenseOrderNumber').value : '';
+            const expenseDate = document.getElementById('expenseDate') ? document.getElementById('expenseDate').value : '';
+            const partsExpense = document.getElementById('partsExpense') ? parseInt(document.getElementById('partsExpense').value) || 0 : 0;
+            const transportExpense = document.getElementById('transportExpense') ? parseInt(document.getElementById('transportExpense').value) || 0 : 0;
+            const otherExpense = document.getElementById('otherExpense') ? parseInt(document.getElementById('otherExpense').value) || 0 : 0;
+            const expenseDescription = document.getElementById('expenseDescription') ? document.getElementById('expenseDescription').value.trim() : '';
             
             if (!orderNumber || !expenseDate || (partsExpense === 0 && transportExpense === 0 && otherExpense === 0)) {
                 alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
@@ -3702,9 +4191,11 @@ function getRoleName(role, userName) {
             editingExpenseId = null;
             clearExpenseForm();
             
-            document.getElementById('saveExpenseBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateExpenseBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelExpenseBtn').classList.add('hidden-by-role');
+            if (document.getElementById('saveExpenseBtn')) {
+                document.getElementById('saveExpenseBtn').classList.remove('hidden-by-role');
+                document.getElementById('updateExpenseBtn').classList.add('hidden-by-role');
+                document.getElementById('cancelExpenseBtn').classList.add('hidden-by-role');
+            }
         };
         
         window.deleteOrderExpense = function(id) {
@@ -3718,7 +4209,7 @@ function getRoleName(role, userName) {
         
         window.editGeneralExpense = function(id) {
             const expense = generalExpenses.find(e => e.id === id);
-            if (expense) {
+            if (expense && document.getElementById('generalExpenseDate')) {
                 document.getElementById('generalExpenseDate').value = expense.date;
                 document.getElementById('generalExpenseType').value = expense.type;
                 document.getElementById('generalExpenseAmount').value = expense.amount;
@@ -3727,19 +4218,21 @@ function getRoleName(role, userName) {
                 editingGeneralExpenseId = id;
                 
                 // إظهار أزرار التحديث والإلغاء
-                document.getElementById('saveGeneralExpenseBtn').classList.add('hidden-by-role');
-                document.getElementById('updateGeneralExpenseBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelGeneralExpenseBtn').classList.remove('hidden-by-role');
+                if (document.getElementById('saveGeneralExpenseBtn')) {
+                    document.getElementById('saveGeneralExpenseBtn').classList.add('hidden-by-role');
+                    document.getElementById('updateGeneralExpenseBtn').classList.remove('hidden-by-role');
+                    document.getElementById('cancelGeneralExpenseBtn').classList.remove('hidden-by-role');
+                }
             }
         };
         
         window.updateGeneralExpense = function() {
             if (!editingGeneralExpenseId) return;
             
-            const expenseDate = document.getElementById('generalExpenseDate').value;
-            const expenseType = document.getElementById('generalExpenseType').value;
-            const expenseAmount = parseInt(document.getElementById('generalExpenseAmount').value);
-            const expenseDescription = document.getElementById('generalExpenseDescription').value.trim();
+            const expenseDate = document.getElementById('generalExpenseDate') ? document.getElementById('generalExpenseDate').value : '';
+            const expenseType = document.getElementById('generalExpenseType') ? document.getElementById('generalExpenseType').value : '';
+            const expenseAmount = document.getElementById('generalExpenseAmount') ? parseInt(document.getElementById('generalExpenseAmount').value) : 0;
+            const expenseDescription = document.getElementById('generalExpenseDescription') ? document.getElementById('generalExpenseDescription').value.trim() : '';
             
             if (!expenseDate || !expenseType || isNaN(expenseAmount) || expenseAmount <= 0) {
                 alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
@@ -3766,9 +4259,11 @@ function getRoleName(role, userName) {
             editingGeneralExpenseId = null;
             clearGeneralExpenseForm();
             
-            document.getElementById('saveGeneralExpenseBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateGeneralExpenseBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelGeneralExpenseBtn').classList.add('hidden-by-role');
+            if (document.getElementById('saveGeneralExpenseBtn')) {
+                document.getElementById('saveGeneralExpenseBtn').classList.remove('hidden-by-role');
+                document.getElementById('updateGeneralExpenseBtn').classList.add('hidden-by-role');
+                document.getElementById('cancelGeneralExpenseBtn').classList.add('hidden-by-role');
+            }
         };
         
         window.deleteGeneralExpense = function(id) {
@@ -3782,7 +4277,7 @@ function getRoleName(role, userName) {
         
         window.editAdvance = function(id) {
             const advance = advances.find(a => a.id === id);
-            if (advance) {
+            if (advance && document.getElementById('advanceEmployee')) {
                 document.getElementById('advanceEmployee').value = advance.employee;
                 document.getElementById('advanceDate').value = advance.date;
                 document.getElementById('advanceAmount').value = advance.amount;
@@ -3791,19 +4286,21 @@ function getRoleName(role, userName) {
                 editingAdvanceId = id;
                 
                 // إظهار أزرار التحديث والإلغاء
-                document.getElementById('saveAdvanceBtn').classList.add('hidden-by-role');
-                document.getElementById('updateAdvanceBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelAdvanceBtn').classList.remove('hidden-by-role');
+                if (document.getElementById('saveAdvanceBtn')) {
+                    document.getElementById('saveAdvanceBtn').classList.add('hidden-by-role');
+                    document.getElementById('updateAdvanceBtn').classList.remove('hidden-by-role');
+                    document.getElementById('cancelAdvanceBtn').classList.remove('hidden-by-role');
+                }
             }
         };
         
         window.updateAdvance = function() {
             if (!editingAdvanceId) return;
             
-            const employee = document.getElementById('advanceEmployee').value;
-            const advanceDate = document.getElementById('advanceDate').value;
-            const advanceAmount = parseInt(document.getElementById('advanceAmount').value);
-            const advanceReason = document.getElementById('advanceReason').value.trim();
+            const employee = document.getElementById('advanceEmployee') ? document.getElementById('advanceEmployee').value : '';
+            const advanceDate = document.getElementById('advanceDate') ? document.getElementById('advanceDate').value : '';
+            const advanceAmount = document.getElementById('advanceAmount') ? parseInt(document.getElementById('advanceAmount').value) : 0;
+            const advanceReason = document.getElementById('advanceReason') ? document.getElementById('advanceReason').value.trim() : '';
             
             if (!employee || !advanceDate || isNaN(advanceAmount) || advanceAmount <= 0) {
                 alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
@@ -3829,9 +4326,11 @@ function getRoleName(role, userName) {
             editingAdvanceId = null;
             clearAdvanceForm();
             
-            document.getElementById('saveAdvanceBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateAdvanceBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelAdvanceBtn').classList.add('hidden-by-role');
+            if (document.getElementById('saveAdvanceBtn')) {
+                document.getElementById('saveAdvanceBtn').classList.remove('hidden-by-role');
+                document.getElementById('updateAdvanceBtn').classList.add('hidden-by-role');
+                document.getElementById('cancelAdvanceBtn').classList.add('hidden-by-role');
+            }
         };
         
         window.deleteAdvance = function(id) {
