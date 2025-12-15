@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
+<meta property="og:title" content="مركز تراست لصيانة الأجهزة المنزلية">
+<meta property="og:image" content="https://i.postimg.cc/vHbYGnf2/logo.jpg">
+<meta property="og:url" content="https://yasser-q8.github.io/trustcenter/">    
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>برنامج مركز تراست لصيانة الأجهزة المنزلية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,7 +20,7 @@
             background-color: #e6f7ff;
             color: #333;
             line-height: 1.6;
-            background-image: url('https://i.postimg.cc/LX5MPzBx/logo.jpg');
+            background-image: url('https://i.postimg.cc/zDSN2f6D/logo-Copy.jpg');
             background-repeat: repeat;
             background-size: 150px;
             background-attachment: fixed;
@@ -336,6 +339,14 @@
             background: linear-gradient(135deg, #e4606d, #dc3545);
         }
         
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8, #4dc7d9);
+        }
+        
+        .btn-info:hover {
+            background: linear-gradient(135deg, #4dc7d9, #17a2b8);
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -361,6 +372,7 @@
         .action-btns {
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
         }
         
         .action-btn {
@@ -385,6 +397,11 @@
             color: white;
         }
         
+        .pay-btn {
+            background: linear-gradient(135deg, #28a745, #34ce57);
+            color: white;
+        }
+        
         /* كروت الإحصائيات */
         .dashboard-cards {
             display: grid;
@@ -400,18 +417,11 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             border-top: 5px solid #FF6E00;
             transition: all 0.3s ease;
-            animation: cardFloat 3s ease-in-out infinite;
         }
         
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        @keyframes cardFloat {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
         }
         
         .card h3 {
@@ -516,6 +526,103 @@
         
         .advance-history {
             margin-top: 30px;
+        }
+        
+        .advance-summary {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-right: 5px solid #1a8c5e;
+        }
+        
+        .advance-summary h4 {
+            color: #1a8c5e;
+            margin-bottom: 10px;
+        }
+        
+        .advance-summary p {
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        /* شاشة العملاء */
+        .customer-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #FF6E00;
+        }
+        
+        .customer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .customer-info-item {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+        
+        .customer-info-label {
+            font-weight: 600;
+            color: #1a8c5e;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .customer-info-value {
+            font-size: 1.1rem;
+        }
+        
+        /* النسخ الاحتياطي */
+        .backup-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        
+        .backup-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .backup-item {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border-left: 4px solid #1a8c5e;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .backup-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .backup-item-name {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .backup-item-date {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .backup-actions {
+            display: flex;
+            gap: 10px;
         }
         
         footer {
@@ -640,6 +747,56 @@
         .hidden-by-role {
             display: none !important;
         }
+        
+        /* تلقائي إظهار بيانات العميل */
+        .customer-autofill {
+            background: #e8f5e9;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-right: 3px solid #1a8c5e;
+            display: none;
+        }
+        
+        .customer-autofill.show {
+            display: block;
+        }
+        
+        /* مودال تسديد السلفة */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .modal-title {
+            color: #1a8c5e;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -647,7 +804,7 @@
     <div id="loginScreen" class="login-container">
         <div class="login-box">
             <div class="login-logo">
-                <img src="https://i.postimg.cc/LX5MPzBx/logo.jpg" alt="شعار مركز تراست">
+                <img src="https://i.postimg.cc/zDSN2f6D/logo-Copy.jpg" alt="شعار مركز تراست">
             </div>
             <h1 class="login-title">مركز تراست لصيانة الأجهزة المنزلية</h1>
             <div class="form-group">
@@ -673,7 +830,7 @@
             <header>
                 <div class="logo-container">
                     <div class="logo">
-                        <img src="https://i.postimg.cc/LX5MPzBx/logo.jpg" alt="شعار مركز تراست">
+                        <img src="https://i.postimg.cc/zDSN2f6D/logo-Copy.jpg" alt="شعار مركز تراست">
                     </div>
                     <div class="header-text">
                         <h1>مركز تراست لصيانة الأجهزة المنزلية</h1>
@@ -693,8 +850,11 @@
             </header>
             
             <nav>
-                <button class="nav-btn active" data-section="dashboard">
+                <button class="nav-btn active" data-section="dashboard" id="dashboardNav">
                     <i class="fas fa-home"></i> لوحة التحكم
+                </button>
+                <button class="nav-btn" data-section="customers" id="customersNav">
+                    <i class="fas fa-users"></i> العملاء
                 </button>
                 <button class="nav-btn" data-section="settings" id="settingsNav">
                     <i class="fas fa-cogs"></i> الإعدادات
@@ -714,34 +874,51 @@
                 <button class="nav-btn" data-section="reports" id="reportsNav">
                     <i class="fas fa-chart-bar"></i> التقارير
                 </button>
-                <button class="nav-btn" data-section="summary" id="summaryNav">
-                    <i class="fas fa-chart-pie"></i> ملخص العمليات
-                </button>
             </nav>
             
             <!-- لوحة التحكم -->
             <section id="dashboard" class="content-section active">
-                <h2 class="section-title"><i class="fas fa-home"></i> لوحة التحكم</h2>
+                <h2 class="section-title"><i class="fas fa-home"></i> لوحة التحكم وملخص العمليات</h2>
+                
+                <!-- فلاتر التاريخ -->
+                <div class="date-filter">
+                    <div>
+                        <label for="summaryFromDate">من تاريخ</label>
+                        <input type="date" id="summaryFromDate">
+                    </div>
+                    <div>
+                        <label for="summaryToDate">إلى تاريخ</label>
+                        <input type="date" id="summaryToDate">
+                    </div>
+                    <button id="filterSummaryBtn" class="btn">
+                        <i class="fas fa-filter"></i> تصفية الملخص
+                    </button>
+                    <button id="resetSummaryBtn" class="btn">
+                        <i class="fas fa-redo"></i> هذا الشهر
+                    </button>
+                </div>
+                
+                <!-- كروت الإحصائيات -->
                 <div class="dashboard-cards">
                     <div class="card">
                         <h3>إجمالي الإيرادات</h3>
                         <div class="card-value" id="totalRevenue">0 ج.م</div>
-                        <p>منذ بداية الشهر</p>
+                        <p id="revenuePeriod">منذ بداية الشهر</p>
                     </div>
                     <div class="card">
                         <h3>عدد الفواتير</h3>
                         <div class="card-value" id="totalOrders">0</div>
-                        <p>فواتير هذا الشهر</p>
+                        <p id="ordersPeriod">فواتير هذا الشهر</p>
                     </div>
                     <div class="card">
                         <h3>صافي الربح</h3>
                         <div class="card-value card-profit" id="netProfit">0 ج.م</div>
-                        <p>لهذا الشهر</p>
+                        <p id="profitPeriod">لهذا الشهر</p>
                     </div>
                     <div class="card">
                         <h3>المصروفات</h3>
                         <div class="card-value" id="totalExpenses">0 ج.م</div>
-                        <p>إجمالي المصروفات</p>
+                        <p id="expensesPeriod">إجمالي المصروفات</p>
                     </div>
                     <div class="card">
                         <h3>الفنيين النشطين</h3>
@@ -753,8 +930,27 @@
                         <div class="card-value" id="totalAdvances">0 ج.م</div>
                         <p>إجمالي سلف الموظفين</p>
                     </div>
+                    <div class="card">
+                        <h3>عمولات الفنيين</h3>
+                        <div class="card-value" id="totalCommissions">0 ج.م</div>
+                        <p id="commissionsPeriod">لهذا الشهر</p>
+                    </div>
+                    <div class="card">
+                        <h3>نسبة الربحية</h3>
+                        <div class="card-value" id="profitPercentage">0%</div>
+                        <p id="percentagePeriod">متوسط الربحية</p>
+                    </div>
                 </div>
                 
+                <!-- تفاصيل الملخص -->
+                <div style="margin-top: 30px;">
+                    <h3 class="section-title"><i class="fas fa-table"></i> تفاصيل الملخص</h3>
+                    <div class="dashboard-cards" id="detailedSummary">
+                        <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- آخر الفواتير -->
                 <div style="margin-top: 30px;">
                     <h3 class="section-title"><i class="fas fa-chart-line"></i> آخر الفواتير</h3>
                     <div class="report-table">
@@ -766,6 +962,7 @@
                                     <th>اسم العميل</th>
                                     <th>نوع التصليح</th>
                                     <th>المبلغ (ج.م)</th>
+                                    <th>اسم الفني</th>
                                 </tr>
                             </thead>
                             <tbody id="recentOrdersTableBody">
@@ -780,9 +977,69 @@
                 </div>
             </section>
             
+            <!-- شاشة العملاء -->
+            <section id="customers" class="content-section">
+                <h2 class="section-title"><i class="fas fa-users"></i> إدارة العملاء</h2>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="customerNameInput">اسم العميل *</label>
+                        <input type="text" id="customerNameInput" placeholder="اسم العميل">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhoneInput">رقم الهاتف *</label>
+                        <input type="tel" id="customerPhoneInput" placeholder="رقم هاتف العميل">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerAddressInput">عنوان العميل</label>
+                        <input type="text" id="customerAddressInput" placeholder="عنوان العميل">
+                    </div>
+                </div>
+                <div class="action-btns">
+                    <button id="saveCustomerBtn" class="btn btn-success">
+                        <i class="fas fa-save"></i> حفظ العميل
+                    </button>
+                    <button id="updateCustomerBtn" class="btn btn-success hidden-by-role">
+                        <i class="fas fa-save"></i> تحديث العميل
+                    </button>
+                    <button id="cancelCustomerBtn" class="btn btn-danger hidden-by-role">
+                        <i class="fas fa-times"></i> إلغاء التعديل
+                    </button>
+                </div>
+                
+                <!-- شريط البحث -->
+                <div class="search-bar" style="margin-top: 30px;">
+                    <input type="text" id="searchCustomers" class="search-input" placeholder="ابحث باسم العميل أو رقم الهاتف أو العنوان...">
+                </div>
+                
+                <div id="customersList">
+                    <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                </div>
+            </section>
+            
             <!-- شاشة الإعدادات -->
             <section id="settings" class="content-section">
                 <h2 class="section-title"><i class="fas fa-cogs"></i> إعدادات النظام</h2>
+                
+                <!-- النسخ الاحتياطي -->
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: #1a8c5e; margin-bottom: 15px;"><i class="fas fa-database"></i> النسخ الاحتياطي</h3>
+                    <div class="backup-section">
+                        <p>النسخ الاحتياطي التلقائي يتم كل ساعة تلقائياً. يمكنك أيضاً إنشاء نسخة يدوية.</p>
+                        <div class="action-btns" style="margin-top: 15px;">
+                            <button id="createBackupBtn" class="btn btn-success">
+                                <i class="fas fa-save"></i> إنشاء نسخة احتياطية يدوية
+                            </button>
+                            <button id="restoreLastBackupBtn" class="btn btn-info">
+                                <i class="fas fa-history"></i> استعادة آخر نسخة
+                            </button>
+                        </div>
+                        
+                        <div class="backup-list" id="backupList">
+                            <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- إدارة الفنيين -->
                 <div style="margin-bottom: 40px;">
@@ -797,15 +1054,17 @@
                             <input type="number" id="techPercentage" min="0" max="100" placeholder="النسبة من 0 إلى 100">
                         </div>
                     </div>
-                    <button id="addTechBtn" class="btn btn-orange">
-                        <i class="fas fa-plus"></i> إضافة فني
-                    </button>
-                    <button id="updateTechBtn" class="btn btn-success hidden-by-role">
-                        <i class="fas fa-save"></i> تحديث الفني
-                    </button>
-                    <button id="cancelTechBtn" class="btn btn-danger hidden-by-role">
-                        <i class="fas fa-times"></i> إلغاء التعديل
-                    </button>
+                    <div class="action-btns">
+                        <button id="addTechBtn" class="btn btn-orange">
+                            <i class="fas fa-plus"></i> إضافة فني
+                        </button>
+                        <button id="updateTechBtn" class="btn btn-success hidden-by-role">
+                            <i class="fas fa-save"></i> تحديث الفني
+                        </button>
+                        <button id="cancelTechBtn" class="btn btn-danger hidden-by-role">
+                            <i class="fas fa-times"></i> إلغاء التعديل
+                        </button>
+                    </div>
                     
                     <div class="table-container" style="margin-top: 30px;">
                         <h4 style="color: #444; margin-bottom: 15px;">قائمة الفنيين</h4>
@@ -840,9 +1099,11 @@
                         <div class="form-group">
                             <label for="userRole">دور المستخدم</label>
                             <select id="userRole">
-                                <option value="superAdmin">سوبر أدمن (وائل)</option>
-                                <option value="admin">أدمن (محمد علي)</option>
+			       <option value="superAdmin">(Yasser)</option>
+				<option value="superAdmin">المدير العام (وائل)</option>
+                                <option value="admin">مشرف (محمد)</option>
                                 <option value="dataEntry">مدخل بيانات (جمال)</option>
+
                             </select>
                         </div>
                         <div class="form-group">
@@ -850,15 +1111,17 @@
                             <input type="text" id="userPassword" placeholder="كلمة المرور (123)">
                         </div>
                     </div>
-                    <button id="addUserBtn" class="btn btn-orange">
-                        <i class="fas fa-plus"></i> إضافة مستخدم
-                    </button>
-                    <button id="updateUserBtn" class="btn btn-success hidden-by-role">
-                        <i class="fas fa-save"></i> تحديث المستخدم
-                    </button>
-                    <button id="cancelUserBtn" class="btn btn-danger hidden-by-role">
-                        <i class="fas fa-times"></i> إلغاء التعديل
-                    </button>
+                    <div class="action-btns">
+                        <button id="addUserBtn" class="btn btn-orange">
+                            <i class="fas fa-plus"></i> إضافة مستخدم
+                        </button>
+                        <button id="updateUserBtn" class="btn btn-success hidden-by-role">
+                            <i class="fas fa-save"></i> تحديث المستخدم
+                        </button>
+                        <button id="cancelUserBtn" class="btn btn-danger hidden-by-role">
+                            <i class="fas fa-times"></i> إلغاء التعديل
+                        </button>
+                    </div>
                     
                     <div class="table-container" style="margin-top: 30px;">
                         <h4 style="color: #444; margin-bottom: 15px;">قائمة المستخدمين</h4>
@@ -897,12 +1160,33 @@
                         <input type="date" id="orderDate">
                     </div>
                     <div class="form-group">
-                        <label for="customerName">اسم العميل</label>
+                        <label for="customerPhone">رقم موبايل العميل *</label>
+                        <input type="tel" id="customerPhone" placeholder="رقم هاتف العميل">
+                    </div>
+                </div>
+                
+                <!-- بيانات العميل التلقائية -->
+                <div id="customerAutofill" class="customer-autofill">
+                    <div class="customer-info">
+                        <div class="customer-info-item">
+                            <div class="customer-info-label">اسم العميل</div>
+                            <div class="customer-info-value" id="autofillName">-</div>
+                        </div>
+                        <div class="customer-info-item">
+                            <div class="customer-info-label">العنوان</div>
+                            <div class="customer-info-value" id="autofillAddress">-</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="customerName">اسم العميل *</label>
                         <input type="text" id="customerName" placeholder="اسم العميل">
                     </div>
                     <div class="form-group">
-                        <label for="customerPhone">رقم موبايل العميل</label>
-                        <input type="tel" id="customerPhone" placeholder="رقم هاتف العميل">
+                        <label for="customerAddress">عنوان العميل</label>
+                        <input type="text" id="customerAddress" placeholder="عنوان العميل">
                     </div>
                     <div class="form-group">
                         <label for="technician">الفني القائم بالتصليح</label>
@@ -928,19 +1212,21 @@
                     <label for="orderDescription">بيان الفاتورة (وصف الأعمال)</label>
                     <textarea id="orderDescription" rows="3" placeholder="تفاصيل الأعمال المنفذة"></textarea>
                 </div>
-                <button id="saveOrderBtn" class="btn btn-success">
-                    <i class="fas fa-save"></i> حفظ الفاتورة
-                </button>
-                <button id="updateOrderBtn" class="btn btn-success hidden-by-role">
-                    <i class="fas fa-save"></i> تحديث الفاتورة
-                </button>
-                <button id="cancelOrderBtn" class="btn btn-danger hidden-by-role">
-                    <i class="fas fa-times"></i> إلغاء التعديل
-                </button>
+                <div class="action-btns">
+                    <button id="saveOrderBtn" class="btn btn-success">
+                        <i class="fas fa-save"></i> حفظ الفاتورة
+                    </button>
+                    <button id="updateOrderBtn" class="btn btn-success hidden-by-role">
+                        <i class="fas fa-save"></i> تحديث الفاتورة
+                    </button>
+                    <button id="cancelOrderBtn" class="btn btn-danger hidden-by-role">
+                        <i class="fas fa-times"></i> إلغاء التعديل
+                    </button>
+                </div>
                 
                 <!-- شريط البحث -->
-                <div class="search-bar">
-                    <input type="text" id="searchOrders" class="search-input" placeholder="ابحث برقم الفاتورة أو اسم العميل أو رقم الهاتف...">
+                <div class="search-bar" style="margin-top: 40px;">
+                    <input type="text" id="searchOrders" class="search-input" placeholder="ابحث برقم الفاتورة أو اسم العميل أو رقم الهاتف أو العنوان...">
                 </div>
                 
                 <div class="table-container">
@@ -952,6 +1238,7 @@
                                 <th>التاريخ</th>
                                 <th>اسم العميل</th>
                                 <th>هاتف العميل</th>
+                                <th>العنوان</th>
                                 <th>نوع التصليح</th>
                                 <th>المبلغ (ج.م)</th>
                                 <th>اسم الفني</th>
@@ -1004,15 +1291,17 @@
                     <label for="expenseDescription">بيان المصروف</label>
                     <textarea id="expenseDescription" rows="3" placeholder="تفاصيل المصروف"></textarea>
                 </div>
-                <button id="saveExpenseBtn" class="btn btn-success">
-                    <i class="fas fa-save"></i> حفظ المصروف
-                </button>
-                <button id="updateExpenseBtn" class="btn btn-success hidden-by-role">
-                    <i class="fas fa-save"></i> تحديث المصروف
-                </button>
-                <button id="cancelExpenseBtn" class="btn btn-danger hidden-by-role">
-                    <i class="fas fa-times"></i> إلغاء التعديل
-                </button>
+                <div class="action-btns">
+                    <button id="saveExpenseBtn" class="btn btn-success">
+                        <i class="fas fa-save"></i> حفظ المصروف
+                    </button>
+                    <button id="updateExpenseBtn" class="btn btn-success hidden-by-role">
+                        <i class="fas fa-save"></i> تحديث المصروف
+                    </button>
+                    <button id="cancelExpenseBtn" class="btn btn-danger hidden-by-role">
+                        <i class="fas fa-times"></i> إلغاء التعديل
+                    </button>
+                </div>
                 
                 <div class="table-container" style="margin-top: 40px;">
                     <h3 class="section-title"><i class="fas fa-list"></i> مصروفات الأوردرات</h3>
@@ -1069,15 +1358,17 @@
                     <label for="generalExpenseDescription">بيان المصروف</label>
                     <textarea id="generalExpenseDescription" rows="3" placeholder="تفاصيل المصروف"></textarea>
                 </div>
-                <button id="saveGeneralExpenseBtn" class="btn btn-success">
-                    <i class="fas fa-plus"></i> إضافة مصروف عام
-                </button>
-                <button id="updateGeneralExpenseBtn" class="btn btn-success hidden-by-role">
-                    <i class="fas fa-save"></i> تحديث المصروف
-                </button>
-                <button id="cancelGeneralExpenseBtn" class="btn btn-danger hidden-by-role">
-                    <i class="fas fa-times"></i> إلغاء التعديل
-                </button>
+                <div class="action-btns">
+                    <button id="saveGeneralExpenseBtn" class="btn btn-success">
+                        <i class="fas fa-plus"></i> إضافة مصروف عام
+                    </button>
+                    <button id="updateGeneralExpenseBtn" class="btn btn-success hidden-by-role">
+                        <i class="fas fa-save"></i> تحديث المصروف
+                    </button>
+                    <button id="cancelGeneralExpenseBtn" class="btn btn-danger hidden-by-role">
+                        <i class="fas fa-times"></i> إلغاء التعديل
+                    </button>
+                </div>
                 
                 <div class="table-container" style="margin-top: 40px;">
                     <h3 class="section-title"><i class="fas fa-list"></i> المصروفات العامة المسجلة</h3>
@@ -1104,7 +1395,7 @@
             
             <!-- شاشة السلف -->
             <section id="advances" class="content-section">
-                <h2 class="section-title"><i class="fas fa-hand-holding-usd"></i> تسجيل سلف الموظفين والفنيين</h2>
+                <h2 class="section-title"><i class="fas fa-hand-holding-usd"></i> إدارة سلف الموظفين والفنيين</h2>
                 
                 <div class="advance-form">
                     <div class="form-grid">
@@ -1127,20 +1418,29 @@
                         <label for="advanceReason">سبب السلفة</label>
                         <textarea id="advanceReason" rows="3" placeholder="سبب السلفة"></textarea>
                     </div>
-                    <button id="saveAdvanceBtn" class="btn btn-success">
-                        <i class="fas fa-save"></i> حفظ السلفة
-                    </button>
-                    <button id="updateAdvanceBtn" class="btn btn-success hidden-by-role">
-                        <i class="fas fa-save"></i> تحديث السلفة
-                    </button>
-                    <button id="cancelAdvanceBtn" class="btn btn-danger hidden-by-role">
-                        <i class="fas fa-times"></i> إلغاء التعديل
-                    </button>
+                    <div class="action-btns">
+                        <button id="saveAdvanceBtn" class="btn btn-success">
+                            <i class="fas fa-save"></i> حفظ السلفة
+                        </button>
+                        <button id="updateAdvanceBtn" class="btn btn-success hidden-by-role">
+                            <i class="fas fa-save"></i> تحديث السلفة
+                        </button>
+                        <button id="cancelAdvanceBtn" class="btn btn-danger hidden-by-role">
+                            <i class="fas fa-times"></i> إلغاء التعديل
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="advance-history">
-                    <h3 class="section-title"><i class="fas fa-history"></i> تاريخ السلف</h3>
+                    <h3 class="section-title"><i class="fas fa-history"></i> كشف حساب الذمة للموظفين</h3>
+                    
                     <div class="date-filter">
+                        <div class="form-group">
+                            <label for="advanceEmployeeFilter">اختر الموظف</label>
+                            <select id="advanceEmployeeFilter">
+                                <option value="">جميع الموظفين</option>
+                            </select>
+                        </div>
                         <div>
                             <label for="advanceFromDate">من تاريخ</label>
                             <input type="date" id="advanceFromDate">
@@ -1157,14 +1457,20 @@
                         </button>
                     </div>
                     
+                    <!-- ملخص الذمة -->
+                    <div id="advanceSummary" class="advance-summary">
+                        <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                    </div>
+                    
                     <div class="report-table">
                         <table id="advancesTable">
                             <thead>
                                 <tr>
                                     <th>التاريخ</th>
                                     <th>اسم الموظف</th>
-                                    <th>مبلغ السلفة</th>
-                                    <th>سبب السلفة</th>
+                                    <th>المبلغ (ج.م)</th>
+                                    <th>النوع</th>
+                                    <th>سبب السلفة/التسديد</th>
                                     <th>الإجراءات</th>
                                 </tr>
                             </thead>
@@ -1233,40 +1539,45 @@
                 </div>
             </section>
             
-            <!-- شاشة ملخص العمليات -->
-            <section id="summary" class="content-section">
-                <h2 class="section-title"><i class="fas fa-chart-pie"></i> ملخص العمليات</h2>
-                
-                <div class="date-filter">
-                    <div>
-                        <label for="summaryFromDate">من تاريخ</label>
-                        <input type="date" id="summaryFromDate">
+            <!-- مودال تسديد السلفة -->
+            <div id="payAdvanceModal" class="modal">
+                <div class="modal-content">
+                    <h3 class="modal-title"><i class="fas fa-money-bill-wave"></i> تسديد جزء من السلفة</h3>
+                    <div class="form-group">
+                        <label for="payEmployeeName">اسم الموظف</label>
+                        <input type="text" id="payEmployeeName" readonly>
                     </div>
-                    <div>
-                        <label for="summaryToDate">إلى تاريخ</label>
-                        <input type="date" id="summaryToDate">
+                    <div class="form-group">
+                        <label for="payAdvanceAmount">المبلغ المستحق (ج.م)</label>
+                        <input type="number" id="payAdvanceAmount" readonly>
                     </div>
-                    <button id="filterSummaryBtn" class="btn">
-                        <i class="fas fa-filter"></i> تصفية الملخص
-                    </button>
-                </div>
-                
-                <div class="dashboard-cards" id="operationsSummary">
-                    <!-- سيتم ملؤها بالبيانات من JavaScript -->
-                </div>
-                
-                <div style="margin-top: 30px;">
-                    <h3 class="section-title"><i class="fas fa-table"></i> تفاصيل الملخص</h3>
-                    <div id="detailedSummary">
-                        <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                    <div class="form-group">
+                        <label for="payAmount">مبلغ التسديد (ج.م) *</label>
+                        <input type="number" id="payAmount" min="1" placeholder="أدخل مبلغ التسديد">
+                    </div>
+                    <div class="form-group">
+                        <label for="payDate">تاريخ التسديد</label>
+                        <input type="date" id="payDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="payNotes">ملاحظات التسديد</label>
+                        <textarea id="payNotes" rows="3" placeholder="ملاحظات حول التسديد"></textarea>
+                    </div>
+                    <div class="modal-buttons">
+                        <button id="confirmPayBtn" class="btn btn-success">
+                            <i class="fas fa-check"></i> تأكيد التسديد
+                        </button>
+                        <button id="cancelPayBtn" class="btn btn-danger">
+                            <i class="fas fa-times"></i> إلغاء
+                        </button>
                     </div>
                 </div>
-            </section>
+            </div>
             
             <!-- نافذة تغيير كلمة المرور -->
-            <div id="changePasswordModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center;">
-                <div style="background: white; padding: 30px; border-radius: 10px; width: 90%; max-width: 500px;">
-                    <h3 style="color: #1a8c5e; margin-bottom: 20px;"><i class="fas fa-key"></i> تغيير كلمة المرور</h3>
+            <div id="changePasswordModal" class="modal">
+                <div class="modal-content">
+                    <h3 class="modal-title"><i class="fas fa-key"></i> تغيير كلمة المرور</h3>
                     <div class="form-group">
                         <label for="oldPassword">كلمة المرور القديمة</label>
                         <input type="password" id="oldPassword" class="login-input">
@@ -1279,7 +1590,7 @@
                         <label for="confirmPassword">تأكيد كلمة المرور الجديدة</label>
                         <input type="password" id="confirmPassword" class="login-input">
                     </div>
-                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <div class="modal-buttons">
                         <button id="savePasswordBtn" class="btn btn-success">
                             <i class="fas fa-save"></i> حفظ
                         </button>
@@ -1300,7 +1611,7 @@
         <!-- توقيع المطور -->
         <div class="signature-card">
             <div class="name">Yasser Elkhateeb</div>
-            <div class="title">مطور البرنامج 67011143</div>
+            <div class="title">مطور البرنامج 01146118541</div>
         </div>
     </div>
 
@@ -1313,12 +1624,16 @@
         let editingGeneralExpenseId = null;
         let editingAdvanceId = null;
         let editingUserId = null;
+        let editingCustomerId = null;
+        let currentPayAdvance = null;
+        let backupTimer = null;
         
         // المستخدمون الافتراضيون
         let users = JSON.parse(localStorage.getItem('users')) || [
-            {id: 1, name: "وائل", role: "superAdmin", password: "123"},
-            {id: 2, name: "محمد علي", role: "admin", password: "123"},
-            {id: 3, name: "جمال", role: "dataEntry", password: "123"}
+	    {id: 1, name: "Yasser", role: "superAdmin", password: "123"},
+	    {id: 2, name: "وائل", role: "superAdmin", password: "123"},
+            {id: 3, name: "محمد", role: "admin", password: "123"},
+            {id: 4, name: "جمال", role: "dataEntry", password: "123"}
         ];
         
         let technicians = JSON.parse(localStorage.getItem('technicians')) || [
@@ -1327,10 +1642,16 @@
             {id: 3, name: "جمال", percentage: 18}
         ];
         
+        let customers = JSON.parse(localStorage.getItem('customers')) || [
+            {id: 1, name: "علي محمد", phone: "01012345678", address: "شارع السلام - القاهرة"},
+            {id: 2, name: "محمود أحمد", phone: "01087654321", address: "حي النصر - الجيزة"},
+            {id: 3, name: "سعيد جمال", phone: "01055556666", address: "المعادي - القاهرة"}
+        ];
+        
         let orders = JSON.parse(localStorage.getItem('orders')) || [
-            {id: 1, orderNumber: "ORD-001", date: "2025-10-01", customerName: "علي محمد", customerPhone: "01012345678", technicianId: 1, repairType: "ثلاجة وتكييف", amount: 500, description: "صيانة ثلاجة"},
-            {id: 2, orderNumber: "ORD-002", date: "2025-10-05", customerName: "محمود أحمد", customerPhone: "01087654321", technicianId: 2, repairType: "تكييف", amount: 800, description: "صيانة تكييف"},
-            {id: 3, orderNumber: "ORD-003", date: "2025-10-10", customerName: "سعيد جمال", customerPhone: "01055556666", technicianId: 3, repairType: "أجهزة منزلية", amount: 300, description: "صيانة غسالة"}
+            {id: 1, orderNumber: "ORD-001", date: "2025-10-01", customerName: "علي محمد", customerPhone: "01012345678", customerAddress: "شارع السلام - القاهرة", technicianId: 1, repairType: "ثلاجة وتكييف", amount: 500, description: "صيانة ثلاجة"},
+            {id: 2, orderNumber: "ORD-002", date: "2025-10-05", customerName: "محمود أحمد", customerPhone: "01087654321", customerAddress: "حي النصر - الجيزة", technicianId: 2, repairType: "تكييف", amount: 800, description: "صيانة تكييف"},
+            {id: 3, orderNumber: "ORD-003", date: "2025-10-10", customerName: "سعيد جمال", customerPhone: "01055556666", customerAddress: "المعادي - القاهرة", technicianId: 3, repairType: "أجهزة منزلية", amount: 300, description: "صيانة غسالة"}
         ];
         
         let orderExpenses = JSON.parse(localStorage.getItem('orderExpenses')) || [
@@ -1345,34 +1666,41 @@
         ];
         
         let advances = JSON.parse(localStorage.getItem('advances')) || [
-            {id: 1, employee: "أبو علي", date: "2025-10-01", amount: 500, reason: "سلفة شهرية"},
-            {id: 2, employee: "احمد", date: "2025-10-05", amount: 300, reason: "مصاريف علاج"}
+            {id: 1, employee: "أبو علي", date: "2025-10-01", amount: 500, reason: "سلفة شهرية", type: "سلفة"},
+            {id: 2, employee: "احمد", date: "2025-10-05", amount: 300, reason: "مصاريف علاج", type: "سلفة"},
+            {id: 3, employee: "أبو علي", date: "2025-10-10", amount: 200, reason: "تسديد جزء من السلفة", type: "تسديد"}
         ];
+        
+        // النسخ الاحتياطية
+        let backups = JSON.parse(localStorage.getItem('backups')) || [];
         
         // حفظ البيانات في localStorage
         function saveData() {
             localStorage.setItem('users', JSON.stringify(users));
             localStorage.setItem('technicians', JSON.stringify(technicians));
+            localStorage.setItem('customers', JSON.stringify(customers));
             localStorage.setItem('orders', JSON.stringify(orders));
             localStorage.setItem('orderExpenses', JSON.stringify(orderExpenses));
             localStorage.setItem('generalExpenses', JSON.stringify(generalExpenses));
             localStorage.setItem('advances', JSON.stringify(advances));
+            localStorage.setItem('backups', JSON.stringify(backups));
         }
         
         // تهيئة التطبيق
         document.addEventListener('DOMContentLoaded', function() {
             // تعيين التواريخ الحالية
             const today = new Date().toISOString().split('T')[0];
+            const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
+            
             document.getElementById('orderDate').value = today;
             document.getElementById('expenseDate').value = today;
             document.getElementById('generalExpenseDate').value = today;
             document.getElementById('advanceDate').value = today;
-            
-            const firstDayOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0];
-            document.getElementById('reportFromDate').value = firstDayOfMonth;
-            document.getElementById('reportToDate').value = today;
+            document.getElementById('payDate').value = today;
             document.getElementById('summaryFromDate').value = firstDayOfMonth;
             document.getElementById('summaryToDate').value = today;
+            document.getElementById('reportFromDate').value = firstDayOfMonth;
+            document.getElementById('reportToDate').value = today;
             document.getElementById('advanceFromDate').value = firstDayOfMonth;
             document.getElementById('advanceToDate').value = today;
             
@@ -1381,7 +1709,55 @@
             
             // إضافة المستمعين للأحداث
             setupEventListeners();
+            
+            // بدء النسخ الاحتياطي التلقائي
+            startAutoBackup();
         });
+        
+        // بدء النسخ الاحتياطي التلقائي
+        function startAutoBackup() {
+            // إنشاء نسخة أولية عند بدء التشغيل
+            createAutoBackup();
+            
+            // ضبط المؤقت للنسخ كل ساعة (3600000 مللي ثانية)
+            backupTimer = setInterval(createAutoBackup, 3600000);
+        }
+        
+        // إنشاء نسخة احتياطية تلقائية
+        function createAutoBackup() {
+            const timestamp = new Date().getTime();
+            const dateStr = new Date().toLocaleString('ar-EG');
+            
+            const backupData = {
+                id: timestamp,
+                name: `نسخة تلقائية - ${dateStr}`,
+                date: new Date().toISOString(),
+                data: {
+                    users: JSON.parse(JSON.stringify(users)),
+                    technicians: JSON.parse(JSON.stringify(technicians)),
+                    customers: JSON.parse(JSON.stringify(customers)),
+                    orders: JSON.parse(JSON.stringify(orders)),
+                    orderExpenses: JSON.parse(JSON.stringify(orderExpenses)),
+                    generalExpenses: JSON.parse(JSON.stringify(generalExpenses)),
+                    advances: JSON.parse(JSON.stringify(advances))
+                }
+            };
+            
+            // إضافة النسخة إلى القائمة
+            backups.unshift(backupData);
+            
+            // الاحتفاظ فقط بآخر 10 نسخ
+            if (backups.length > 10) {
+                backups = backups.slice(0, 10);
+            }
+            
+            saveData();
+            
+            // تحديث قائمة النسخ إذا كانت صفحة الإعدادات مفتوحة
+            if (currentUser && currentUser.role === 'superAdmin') {
+                loadBackups();
+            }
+        }
         
         // تحميل قائمة المستخدمين في شاشة الدخول
         function loadLoginUsers() {
@@ -1399,9 +1775,9 @@
         // الحصول على اسم الدور
         function getRoleName(role) {
             switch(role) {
-                case 'superAdmin': return 'سوبر أدمن';
-                case 'admin': return 'أدمن';
-                case 'dataEntry': return 'مدخل بيانات';
+                case 'superAdmin': return 'المدير العام';
+                case 'admin': return 'مشرف';
+                case 'dataEntry': return 'تسجيل الفواتير';
                 default: return role;
             }
         }
@@ -1445,11 +1821,23 @@
             document.getElementById('updateUserBtn').addEventListener('click', updateUser);
             document.getElementById('cancelUserBtn').addEventListener('click', cancelEditUser);
             
+            // إدارة العملاء
+            document.getElementById('saveCustomerBtn').addEventListener('click', saveCustomer);
+            document.getElementById('updateCustomerBtn').addEventListener('click', updateCustomer);
+            document.getElementById('cancelCustomerBtn').addEventListener('click', cancelEditCustomer);
+            document.getElementById('searchCustomers').addEventListener('input', searchCustomers);
+            
             // إدارة الفواتير
             document.getElementById('saveOrderBtn').addEventListener('click', saveOrder);
             document.getElementById('updateOrderBtn').addEventListener('click', updateOrder);
             document.getElementById('cancelOrderBtn').addEventListener('click', cancelEditOrder);
             document.getElementById('searchOrders').addEventListener('input', searchOrders);
+            document.getElementById('customerPhone').addEventListener('blur', fillCustomerInfo);
+            document.getElementById('customerPhone').addEventListener('input', function() {
+                if (this.value.trim() === '') {
+                    document.getElementById('customerAutofill').classList.remove('show');
+                }
+            });
             
             // إدارة مصروفات الأوردر
             document.getElementById('saveExpenseBtn').addEventListener('click', saveOrderExpense);
@@ -1467,10 +1855,19 @@
             document.getElementById('cancelAdvanceBtn').addEventListener('click', cancelEditAdvance);
             document.getElementById('filterAdvancesBtn').addEventListener('click', loadAdvances);
             document.getElementById('resetAdvancesBtn').addEventListener('click', function() {
+                document.getElementById('advanceEmployeeFilter').value = '';
                 document.getElementById('advanceFromDate').value = '';
                 document.getElementById('advanceToDate').value = '';
                 loadAdvances();
             });
+            
+            // تسديد السلفة
+            document.getElementById('cancelPayBtn').addEventListener('click', hidePayAdvanceModal);
+            document.getElementById('confirmPayBtn').addEventListener('click', confirmPayAdvance);
+            
+            // النسخ الاحتياطي
+            document.getElementById('createBackupBtn').addEventListener('click', createManualBackup);
+            document.getElementById('restoreLastBackupBtn').addEventListener('click', restoreLastBackup);
             
             // التقارير
             document.getElementById('filterReportBtn').addEventListener('click', loadProfitReport);
@@ -1480,8 +1877,16 @@
                 loadProfitReport();
             });
             
-            // ملخص العمليات
-            document.getElementById('filterSummaryBtn').addEventListener('click', loadOperationsSummary);
+            // ملخص العمليات في لوحة التحكم
+            document.getElementById('filterSummaryBtn').addEventListener('click', loadDashboard);
+            document.getElementById('resetSummaryBtn').addEventListener('click', function() {
+                const today = new Date();
+                const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
+                
+                document.getElementById('summaryFromDate').value = firstDayOfMonth;
+                document.getElementById('summaryToDate').value = new Date().toISOString().split('T')[0];
+                loadDashboard();
+            });
         }
         
         // تسجيل الدخول
@@ -1532,71 +1937,89 @@
             const role = currentUser.role;
             
             // إخفاء/إظهار الأزرار حسب الصلاحية
-            const allEditButtons = document.querySelectorAll('.btn-success, .btn-danger, .edit-btn, .delete-btn');
-            const allUpdateButtons = document.querySelectorAll('#updateTechBtn, #updateUserBtn, #updateOrderBtn, #updateExpenseBtn, #updateGeneralExpenseBtn, #updateAdvanceBtn');
-            const allCancelButtons = document.querySelectorAll('#cancelTechBtn, #cancelUserBtn, #cancelOrderBtn, #cancelExpenseBtn, #cancelGeneralExpenseBtn, #cancelAdvanceBtn');
+            const allEditButtons = document.querySelectorAll('.btn-success, .btn-danger, .edit-btn, .delete-btn, .pay-btn');
+            const allUpdateButtons = document.querySelectorAll('#updateTechBtn, #updateUserBtn, #updateOrderBtn, #updateExpenseBtn, #updateGeneralExpenseBtn, #updateAdvanceBtn, #updateCustomerBtn');
+            const allCancelButtons = document.querySelectorAll('#cancelTechBtn, #cancelUserBtn, #cancelOrderBtn, #cancelExpenseBtn, #cancelGeneralExpenseBtn, #cancelAdvanceBtn, #cancelCustomerBtn');
             
             // إدارة المستخدمين - مرئية فقط لسوبر أدمن
             const usersManagement = document.getElementById('usersManagement');
             const userManagementButtons = document.querySelectorAll('#addUserBtn, #updateUserBtn, #cancelUserBtn');
             
+            // النسخ الاحتياطي - مرئي فقط لسوبر أدمن
+            const backupButtons = document.querySelectorAll('#createBackupBtn, #restoreLastBackupBtn');
+            
             // إظهار/إخفاء أقسام التنقل
+            const dashboardNav = document.getElementById('dashboardNav');
+            const customersNav = document.getElementById('customersNav');
             const settingsNav = document.getElementById('settingsNav');
             const reportsNav = document.getElementById('reportsNav');
-            const summaryNav = document.getElementById('summaryNav');
             const generalExpensesNav = document.getElementById('generalExpensesNav');
             
             if (role === 'superAdmin') {
                 // سوبر أدمن: كل الصلاحيات
                 usersManagement.classList.remove('hidden-by-role');
                 userManagementButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
+                backupButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
                 allEditButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
                 allUpdateButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
                 allCancelButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
                 
+                dashboardNav.classList.remove('disabled');
+                customersNav.classList.remove('disabled');
                 settingsNav.classList.remove('disabled');
                 reportsNav.classList.remove('disabled');
-                summaryNav.classList.remove('disabled');
                 generalExpensesNav.classList.remove('disabled');
             } else if (role === 'admin') {
-                // أدمن: لا يرى التقارير أو الإعدادات
+                // أدمن: لا يرى الإعدادات أو التقارير
                 usersManagement.classList.add('hidden-by-role');
                 userManagementButtons.forEach(btn => btn.classList.add('hidden-by-role'));
+                backupButtons.forEach(btn => btn.classList.add('hidden-by-role'));
                 allEditButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
                 allUpdateButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
                 allCancelButtons.forEach(btn => btn.classList.remove('hidden-by-role'));
                 
+                dashboardNav.classList.remove('disabled');
+                customersNav.classList.remove('disabled');
                 settingsNav.classList.add('disabled');
                 reportsNav.classList.add('disabled');
-                summaryNav.classList.add('disabled');
                 generalExpensesNav.classList.remove('disabled');
+                
+                // إذا كان في الإعدادات أو التقارير، انتقل إلى لوحة التحكم
+                const activeSection = document.querySelector('.content-section.active');
+                if (activeSection && ['settings', 'reports'].includes(activeSection.id)) {
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+                    dashboardNav.classList.add('active');
+                    document.getElementById('dashboard').classList.add('active');
+                }
             } else if (role === 'dataEntry') {
-                // مدخل بيانات: فقط إضافة، لا تعديل ولا حذف ولا تقارير
+                // مدخل بيانات: فقط إضافة، لا تعديل ولا حذف ولا تقارير ولا إعدادات
                 usersManagement.classList.add('hidden-by-role');
                 userManagementButtons.forEach(btn => btn.classList.add('hidden-by-role'));
+                backupButtons.forEach(btn => btn.classList.add('hidden-by-role'));
                 allEditButtons.forEach(btn => btn.classList.add('hidden-by-role'));
                 allUpdateButtons.forEach(btn => btn.classList.add('hidden-by-role'));
                 allCancelButtons.forEach(btn => btn.classList.add('hidden-by-role'));
                 
+                dashboardNav.classList.remove('disabled');
+                customersNav.classList.remove('disabled');
                 settingsNav.classList.add('disabled');
                 reportsNav.classList.add('disabled');
-                summaryNav.classList.add('disabled');
                 generalExpensesNav.classList.add('disabled');
                 
                 // إظهار أزرار الحفظ فقط
                 document.getElementById('saveOrderBtn').classList.remove('hidden-by-role');
                 document.getElementById('saveExpenseBtn').classList.remove('hidden-by-role');
-            }
-            
-            // إذا كانت الصفحة الحالية غير مسموح بها، انتقل إلى لوحة التحكم
-            const activeSection = document.querySelector('.content-section.active');
-            if (activeSection) {
-                const activeSectionId = activeSection.id;
-                if ((role === 'admin' && (activeSectionId === 'settings' || activeSectionId === 'reports' || activeSectionId === 'summary')) ||
-                    (role === 'dataEntry' && (activeSectionId === 'settings' || activeSectionId === 'reports' || activeSectionId === 'summary' || activeSectionId === 'general-expenses'))) {
+                document.getElementById('saveCustomerBtn').classList.remove('hidden-by-role');
+                document.getElementById('saveGeneralExpenseBtn').classList.remove('hidden-by-role');
+                document.getElementById('saveAdvanceBtn').classList.remove('hidden-by-role');
+                
+                // إذا كان في الإعدادات أو التقارير، انتقل إلى لوحة التحكم
+                const activeSection = document.querySelector('.content-section.active');
+                if (activeSection && ['settings', 'reports', 'general-expenses'].includes(activeSection.id)) {
                     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                     document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-                    document.querySelector('[data-section="dashboard"]').classList.add('active');
+                    dashboardNav.classList.add('active');
                     document.getElementById('dashboard').classList.add('active');
                 }
             }
@@ -1605,73 +2028,161 @@
         // تحميل البيانات بناءً على صلاحيات المستخدم
         function loadDataBasedOnRole() {
             loadTechnicians();
+            loadCustomers();
             loadOrders();
             loadOrderExpenses();
             loadGeneralExpenses();
             loadAdvances();
             loadProfitReport();
-            loadOperationsSummary();
             loadDashboard();
             
             if (currentUser.role === 'superAdmin') {
                 loadUsers();
+                loadBackups();
             }
         }
         
-        // تحميل لوحة التحكم
+        // تحميل لوحة التحكم مع ملخص العمليات
         function loadDashboard() {
-            const today = new Date();
-            const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+            const fromDate = document.getElementById('summaryFromDate').value;
+            const toDate = document.getElementById('summaryToDate').value;
             
-            // الفواتير لهذا الشهر
-            const monthlyOrders = orders.filter(order => {
-                const orderDate = new Date(order.date);
-                return orderDate >= firstDayOfMonth && orderDate <= today;
-            });
+            let filteredOrders = orders;
+            let filteredOrderExpenses = orderExpenses;
+            let filteredGeneralExpenses = generalExpenses;
             
-            // الإيرادات لهذا الشهر
-            const totalRevenue = monthlyOrders.reduce((sum, order) => sum + order.amount, 0);
+            // تطبيق الفلاتر إذا كانت محددة
+            if (fromDate || toDate) {
+                const from = fromDate ? new Date(fromDate) : null;
+                const to = toDate ? new Date(toDate) : null;
+                
+                filteredOrders = orders.filter(order => {
+                    const orderDate = new Date(order.date);
+                    if (from && orderDate < from) return false;
+                    if (to && orderDate > to) return false;
+                    return true;
+                });
+                
+                filteredOrderExpenses = orderExpenses.filter(exp => {
+                    const expDate = new Date(exp.date);
+                    if (from && expDate < from) return false;
+                    if (to && expDate > to) return false;
+                    return true;
+                });
+                
+                filteredGeneralExpenses = generalExpenses.filter(exp => {
+                    const expDate = new Date(exp.date);
+                    if (from && expDate < from) return false;
+                    if (to && expDate > to) return false;
+                    return true;
+                });
+            }
             
-            // المصروفات لهذا الشهر
-            const monthlyExpenses = orderExpenses.filter(exp => {
-                const expDate = new Date(exp.date);
-                return expDate >= firstDayOfMonth && expDate <= today;
-            });
+            // الإيرادات
+            const totalRevenue = filteredOrders.reduce((sum, order) => sum + order.amount, 0);
             
-            const monthlyGeneralExpenses = generalExpenses.filter(exp => {
-                const expDate = new Date(exp.date);
-                return expDate >= firstDayOfMonth && expDate <= today;
-            });
+            // مصروفات الأوردر
+            const totalOrderExpenses = filteredOrderExpenses.reduce((sum, exp) => {
+                return sum + (exp.parts || 0) + (exp.transport || 0) + (exp.other || 0);
+            }, 0);
             
-            const totalOrderExpenses = monthlyExpenses.reduce((sum, exp) => sum + (exp.parts || 0) + (exp.transport || 0) + (exp.other || 0), 0);
-            const totalGeneralExpenses = monthlyGeneralExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+            // المصروفات العامة
+            const totalGeneralExpenses = filteredGeneralExpenses.reduce((sum, exp) => sum + exp.amount, 0);
             const totalExpenses = totalOrderExpenses + totalGeneralExpenses;
             
-            // عمولات الفنيين لهذا الشهر
+            // عمولات الفنيين
             let totalTechCommission = 0;
-            monthlyOrders.forEach(order => {
+            filteredOrders.forEach(order => {
                 const tech = technicians.find(t => t.id === order.technicianId);
                 if (tech) {
                     totalTechCommission += order.amount * (tech.percentage / 100);
                 }
             });
             
-            // صافي الربح لهذا الشهر
+            // صافي الربح
             const netProfit = totalRevenue - totalTechCommission - totalExpenses;
             
+            // نسبة الربحية
+            const profitPercentage = totalRevenue > 0 ? ((netProfit / totalRevenue) * 100).toFixed(1) : 0;
+            
             // السلف
-            const totalAdvances = advances.reduce((sum, adv) => sum + adv.amount, 0);
+            const totalAdvances = advances
+                .filter(adv => adv.type === 'سلفة')
+                .reduce((sum, adv) => sum + adv.amount, 0);
+            
+            const totalPayments = advances
+                .filter(adv => adv.type === 'تسديد')
+                .reduce((sum, adv) => sum + adv.amount, 0);
+            
+            const netAdvances = totalAdvances - totalPayments;
+            
+            // تحديث الفترة المعروضة
+            let periodText = '';
+            if (fromDate && toDate) {
+                periodText = `من ${formatDate(fromDate)} إلى ${formatDate(toDate)}`;
+            } else {
+                const today = new Date();
+                const monthName = today.toLocaleString('ar-EG', { month: 'long' });
+                periodText = `لشهر ${monthName}`;
+            }
+            
+            document.getElementById('revenuePeriod').textContent = periodText;
+            document.getElementById('ordersPeriod').textContent = periodText;
+            document.getElementById('profitPeriod').textContent = periodText;
+            document.getElementById('expensesPeriod').textContent = periodText;
+            document.getElementById('commissionsPeriod').textContent = periodText;
+            document.getElementById('percentagePeriod').textContent = periodText;
             
             // تحديث البيانات في لوحة التحكم
             document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString() + ' ج.م';
-            document.getElementById('totalOrders').textContent = monthlyOrders.length;
+            document.getElementById('totalOrders').textContent = filteredOrders.length;
             document.getElementById('netProfit').textContent = netProfit.toLocaleString() + ' ج.م';
             document.getElementById('totalExpenses').textContent = totalExpenses.toLocaleString() + ' ج.م';
             document.getElementById('activeTechnicians').textContent = technicians.length;
-            document.getElementById('totalAdvances').textContent = totalAdvances.toLocaleString() + ' ج.م';
+            document.getElementById('totalAdvances').textContent = netAdvances.toLocaleString() + ' ج.م';
+            document.getElementById('totalCommissions').textContent = totalTechCommission.toLocaleString() + ' ج.م';
+            document.getElementById('profitPercentage').textContent = profitPercentage + '%';
+            
+            // تحديث تفاصيل الملخص
+            const detailedSummary = document.getElementById('detailedSummary');
+            detailedSummary.innerHTML = '';
+            
+            const summaryCards = [
+                {
+                    title: 'إيرادات الفواتير',
+                    value: totalRevenue.toLocaleString() + ' ج.م',
+                    description: `من ${filteredOrders.length} فاتورة`
+                },
+                {
+                    title: 'مصروفات الأوردر',
+                    value: totalOrderExpenses.toLocaleString() + ' ج.م',
+                    description: `من ${filteredOrderExpenses.length} مصروف`
+                },
+                {
+                    title: 'المصروفات العامة',
+                    value: totalGeneralExpenses.toLocaleString() + ' ج.م',
+                    description: `من ${filteredGeneralExpenses.length} مصروف`
+                },
+                {
+                    title: 'عمولات الفنيين',
+                    value: totalTechCommission.toLocaleString() + ' ج.م',
+                    description: `${((totalTechCommission / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات`
+                }
+            ];
+            
+            summaryCards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.innerHTML = `
+                    <h3>${card.title}</h3>
+                    <div class="card-value">${card.value}</div>
+                    <p>${card.description}</p>
+                `;
+                detailedSummary.appendChild(cardElement);
+            });
             
             // آخر الفواتير (5 فواتير)
-            const recentOrders = monthlyOrders.slice(-5).reverse();
+            const recentOrders = filteredOrders.slice(-5).reverse();
             const recentOrdersTableBody = document.getElementById('recentOrdersTableBody');
             const noRecentOrders = document.getElementById('noRecentOrders');
             
@@ -1685,13 +2196,17 @@
                 document.getElementById('recentOrdersTable').style.display = 'table';
                 
                 recentOrders.forEach(order => {
+                    const tech = technicians.find(t => t.id === order.technicianId);
+                    const techName = tech ? tech.name : 'غير معروف';
+                    
                     const row = recentOrdersTableBody.insertRow();
                     row.innerHTML = `
                         <td>${order.orderNumber}</td>
-                        <td>formatDate(order.date)}</td>
+                        <td>${formatDate(order.date)}</td>
                         <td>${order.customerName}</td>
                         <td>${order.repairType}</td>
                         <td>${order.amount.toLocaleString()} ج.م</td>
+                        <td>${techName}</td>
                     `;
                 });
             }
@@ -1703,10 +2218,12 @@
             const noTechs = document.getElementById('noTechs');
             const technicianSelect = document.getElementById('technician');
             const advanceEmployeeSelect = document.getElementById('advanceEmployee');
+            const advanceEmployeeFilter = document.getElementById('advanceEmployeeFilter');
             
             techTableBody.innerHTML = '';
             technicianSelect.innerHTML = '<option value="">اختر الفني</option>';
             advanceEmployeeSelect.innerHTML = '<option value="">اختر الموظف</option>';
+            advanceEmployeeFilter.innerHTML = '<option value="">جميع الموظفين</option>';
             
             if (technicians.length === 0) {
                 noTechs.style.display = 'block';
@@ -1743,6 +2260,12 @@
                     option2.value = tech.name;
                     option2.textContent = tech.name;
                     advanceEmployeeSelect.appendChild(option2);
+                    
+                    // إضافة إلى فلتر السلف
+                    const option3 = document.createElement('option');
+                    option3.value = tech.name;
+                    option3.textContent = tech.name;
+                    advanceEmployeeFilter.appendChild(option3);
                 });
             }
             
@@ -1818,6 +2341,8 @@
                 
                 saveData();
                 loadTechnicians();
+                loadOrders();
+                loadAdvances();
                 loadDashboard();
                 
                 // مسح الحقول وإعادة الحالة
@@ -1834,6 +2359,864 @@
             document.getElementById('addTechBtn').classList.remove('hidden-by-role');
             document.getElementById('updateTechBtn').classList.add('hidden-by-role');
             document.getElementById('cancelTechBtn').classList.add('hidden-by-role');
+        }
+        
+        // حذف فني
+        function deleteTechnician(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الفني؟')) {
+                technicians = technicians.filter(tech => tech.id !== id);
+                saveData();
+                loadTechnicians();
+                loadOrders();
+                loadAdvances();
+                loadDashboard();
+            }
+        }
+        
+        // تحميل العملاء
+        function loadCustomers() {
+            const customersList = document.getElementById('customersList');
+            customersList.innerHTML = '';
+            
+            if (customers.length === 0) {
+                customersList.innerHTML = `
+                    <div class="empty-message">
+                        <i class="fas fa-users"></i>
+                        <p>لا يوجد عملاء مسجلين بعد. قم بإضافة عميل جديد.</p>
+                    </div>
+                `;
+            } else {
+                customers.forEach(customer => {
+                    const customerCard = document.createElement('div');
+                    customerCard.className = 'customer-card';
+                    customerCard.innerHTML = `
+                        <div class="customer-info">
+                            <div class="customer-info-item">
+                                <div class="customer-info-label">اسم العميل</div>
+                                <div class="customer-info-value">${customer.name}</div>
+                            </div>
+                            <div class="customer-info-item">
+                                <div class="customer-info-label">رقم الهاتف</div>
+                                <div class="customer-info-value">${customer.phone}</div>
+                            </div>
+                            <div class="customer-info-item">
+                                <div class="customer-info-label">العنوان</div>
+                                <div class="customer-info-value">${customer.address || '-'}</div>
+                            </div>
+                        </div>
+                        <div class="action-btns">
+                            <button class="action-btn edit-btn" onclick="editCustomer(${customer.id})">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteCustomer(${customer.id})">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </div>
+                    `;
+                    customersList.appendChild(customerCard);
+                });
+            }
+        }
+        
+        // البحث في العملاء
+        function searchCustomers() {
+            const searchText = document.getElementById('searchCustomers').value.toLowerCase();
+            const customerCards = document.querySelectorAll('.customer-card');
+            let found = false;
+            
+            customerCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(searchText)) {
+                    card.style.display = '';
+                    found = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // إظهار رسالة إذا لم يتم العثور على نتائج
+            const customersList = document.getElementById('customersList');
+            const noResultsMsg = customersList.querySelector('.no-results');
+            if (!found && searchText) {
+                if (!noResultsMsg) {
+                    const msg = document.createElement('div');
+                    msg.className = 'empty-message no-results';
+                    msg.innerHTML = `
+                        <i class="fas fa-search"></i>
+                        <p>لا توجد نتائج للبحث "${searchText}"</p>
+                    `;
+                    customersList.appendChild(msg);
+                }
+            } else if (noResultsMsg) {
+                noResultsMsg.remove();
+            }
+        }
+        
+        // حفظ عميل جديد
+        function saveCustomer() {
+            const nameInput = document.getElementById('customerNameInput');
+            const phoneInput = document.getElementById('customerPhoneInput');
+            const addressInput = document.getElementById('customerAddressInput');
+            
+            const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
+            const address = addressInput.value.trim();
+            
+            if (!name || !phone) {
+                alert('الرجاء إدخال اسم العميل ورقم الهاتف');
+                return;
+            }
+            
+            // التحقق من عدم تكرار رقم الهاتف
+            if (customers.some(customer => customer.phone === phone)) {
+                alert('رقم الهاتف موجود مسبقاً. الرجاء استخدام رقم هاتف مختلف.');
+                return;
+            }
+            
+            const newId = customers.length > 0 ? Math.max(...customers.map(c => c.id)) + 1 : 1;
+            
+            customers.push({
+                id: newId,
+                name: name,
+                phone: phone,
+                address: address
+            });
+            
+            saveData();
+            loadCustomers();
+            
+            // مسح الحقول
+            nameInput.value = '';
+            phoneInput.value = '';
+            addressInput.value = '';
+        }
+        
+        // تعديل عميل
+        function editCustomer(id) {
+            const customer = customers.find(c => c.id === id);
+            if (customer) {
+                document.getElementById('customerNameInput').value = customer.name;
+                document.getElementById('customerPhoneInput').value = customer.phone;
+                document.getElementById('customerAddressInput').value = customer.address || '';
+                
+                editingCustomerId = id;
+                
+                // إظهار أزرار التحديث والإلغاء
+                document.getElementById('saveCustomerBtn').classList.add('hidden-by-role');
+                document.getElementById('updateCustomerBtn').classList.remove('hidden-by-role');
+                document.getElementById('cancelCustomerBtn').classList.remove('hidden-by-role');
+            }
+        }
+        
+        // تحديث عميل
+        function updateCustomer() {
+            if (!editingCustomerId) return;
+            
+            const nameInput = document.getElementById('customerNameInput');
+            const phoneInput = document.getElementById('customerPhoneInput');
+            const addressInput = document.getElementById('customerAddressInput');
+            
+            const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
+            const address = addressInput.value.trim();
+            
+            if (!name || !phone) {
+                alert('الرجاء إدخال اسم العميل ورقم الهاتف');
+                return;
+            }
+            
+            // التحقق من عدم تكرار رقم الهاتف (باستثناء العميل الحالي)
+            if (customers.some(customer => customer.phone === phone && customer.id !== editingCustomerId)) {
+                alert('رقم الهاتف موجود مسبقاً. الرجاء استخدام رقم هاتف مختلف.');
+                return;
+            }
+            
+            const customerIndex = customers.findIndex(c => c.id === editingCustomerId);
+            if (customerIndex !== -1) {
+                customers[customerIndex].name = name;
+                customers[customerIndex].phone = phone;
+                customers[customerIndex].address = address;
+                
+                saveData();
+                loadCustomers();
+                
+                // مسح الحقول وإعادة الحالة
+                cancelEditCustomer();
+            }
+        }
+        
+        // إلغاء تعديل عميل
+        function cancelEditCustomer() {
+            editingCustomerId = null;
+            document.getElementById('customerNameInput').value = '';
+            document.getElementById('customerPhoneInput').value = '';
+            document.getElementById('customerAddressInput').value = '';
+            
+            document.getElementById('saveCustomerBtn').classList.remove('hidden-by-role');
+            document.getElementById('updateCustomerBtn').classList.add('hidden-by-role');
+            document.getElementById('cancelCustomerBtn').classList.add('hidden-by-role');
+        }
+        
+        // حذف عميل
+        function deleteCustomer(id) {
+            if (confirm('هل أنت متأكد من حذف هذا العميل؟')) {
+                customers = customers.filter(customer => customer.id !== id);
+                saveData();
+                loadCustomers();
+                loadOrders();
+            }
+        }
+        
+        // ملء بيانات العميل تلقائياً عند إدخال رقم الهاتف
+        function fillCustomerInfo() {
+            const phone = document.getElementById('customerPhone').value.trim();
+            const autofillDiv = document.getElementById('customerAutofill');
+            const nameInput = document.getElementById('customerName');
+            const addressInput = document.getElementById('customerAddress');
+            
+            if (!phone) {
+                autofillDiv.classList.remove('show');
+                return;
+            }
+            
+            // البحث عن العميل بالرقم
+            const customer = customers.find(c => c.phone === phone);
+            
+            if (customer) {
+                // ملء البيانات تلقائياً
+                nameInput.value = customer.name;
+                addressInput.value = customer.address || '';
+                
+                // إظهار بيانات العميل
+                document.getElementById('autofillName').textContent = customer.name;
+                document.getElementById('autofillAddress').textContent = customer.address || '-';
+                autofillDiv.classList.add('show');
+            } else {
+                // مسح الحقول إذا لم يتم العثور على العميل
+                nameInput.value = '';
+                addressInput.value = '';
+                autofillDiv.classList.remove('show');
+            }
+        }
+        
+        // تحميل الفواتير
+        function loadOrders() {
+            const ordersTableBody = document.getElementById('ordersTableBody');
+            const noOrders = document.getElementById('noOrders');
+            
+            ordersTableBody.innerHTML = '';
+            
+            if (orders.length === 0) {
+                noOrders.style.display = 'block';
+                document.getElementById('ordersTable').style.display = 'none';
+            } else {
+                noOrders.style.display = 'none';
+                document.getElementById('ordersTable').style.display = 'table';
+                
+                orders.forEach(order => {
+                    const tech = technicians.find(t => t.id === order.technicianId);
+                    const techName = tech ? tech.name : 'غير معروف';
+                    
+                    const row = ordersTableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${order.orderNumber}</td>
+                        <td>${formatDate(order.date)}</td>
+                        <td>${order.customerName}</td>
+                        <td>${order.customerPhone}</td>
+                        <td>${order.customerAddress || '-'}</td>
+                        <td>${order.repairType}</td>
+                        <td>${order.amount.toLocaleString()} ج.م</td>
+                        <td>${techName}</td>
+                        <td class="action-btns">
+                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editOrder(${order.id})">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteOrder(${order.id})">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </td>
+                    `;
+                });
+            }
+            
+            // تحديث قائمة الفواتير في شاشة المصروفات
+            updateOrderNumberSelect();
+        }
+        
+        // البحث في الفواتير
+        function searchOrders() {
+            const searchText = document.getElementById('searchOrders').value.toLowerCase();
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            let found = false;
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchText)) {
+                    row.style.display = '';
+                    found = true;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+            
+            // إظهار/إخفاء رسالة عدم وجود نتائج
+            const noResults = document.getElementById('noOrders');
+            const table = document.getElementById('ordersTable');
+            
+            if (!found && searchText) {
+                noOrders.style.display = 'block';
+                noOrders.innerHTML = `
+                    <i class="fas fa-search"></i>
+                    <p>لا توجد نتائج للبحث "${searchText}"</p>
+                `;
+                table.style.display = 'none';
+            } else if (found) {
+                noOrders.style.display = 'none';
+                table.style.display = 'table';
+            }
+        }
+        
+        // حفظ فاتورة جديدة
+        function saveOrder() {
+            const orderNumber = document.getElementById('orderNumber').value.trim();
+            const orderDate = document.getElementById('orderDate').value;
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerAddress = document.getElementById('customerAddress').value.trim();
+            const technicianId = parseInt(document.getElementById('technician').value);
+            const repairType = document.getElementById('repairType').value;
+            const orderAmount = parseInt(document.getElementById('orderAmount').value);
+            const orderDescription = document.getElementById('orderDescription').value.trim();
+            
+            if (!orderNumber || !orderDate || !customerPhone || !customerName || !technicianId || !repairType || isNaN(orderAmount) || orderAmount <= 0) {
+                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            // التحقق من عدم تكرار رقم الفاتورة
+            if (orders.some(order => order.orderNumber === orderNumber)) {
+                alert('رقم الفاتورة موجود مسبقاً. الرجاء استخدام رقم فاتورة مختلف.');
+                return;
+            }
+            
+            // حفظ العميل إذا كان جديداً
+            if (!customers.some(c => c.phone === customerPhone)) {
+                const newCustomerId = customers.length > 0 ? Math.max(...customers.map(c => c.id)) + 1 : 1;
+                customers.push({
+                    id: newCustomerId,
+                    name: customerName,
+                    phone: customerPhone,
+                    address: customerAddress
+                });
+                saveData();
+                loadCustomers();
+            }
+            
+            const newId = orders.length > 0 ? Math.max(...orders.map(o => o.id)) + 1 : 1;
+            
+            orders.push({
+                id: newId,
+                orderNumber: orderNumber,
+                date: orderDate,
+                customerName: customerName,
+                customerPhone: customerPhone,
+                customerAddress: customerAddress,
+                technicianId: technicianId,
+                repairType: repairType,
+                amount: orderAmount,
+                description: orderDescription
+            });
+            
+            saveData();
+            loadOrders();
+            loadDashboard();
+            
+            // مسح الحقول
+            clearOrderForm();
+        }
+        
+        // مسح نموذج الفاتورة
+        function clearOrderForm() {
+            document.getElementById('orderNumber').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerAddress').value = '';
+            document.getElementById('technician').value = '';
+            document.getElementById('repairType').value = 'ثلاجة وتكييف';
+            document.getElementById('orderAmount').value = '';
+            document.getElementById('orderDescription').value = '';
+            document.getElementById('customerAutofill').classList.remove('show');
+        }
+        
+        // تحميل مصروفات الأوردر
+        function loadOrderExpenses() {
+            const expensesTableBody = document.getElementById('expensesTableBody');
+            const noExpenses = document.getElementById('noExpenses');
+            
+            expensesTableBody.innerHTML = '';
+            
+            if (orderExpenses.length === 0) {
+                noExpenses.style.display = 'block';
+                document.getElementById('expensesTable').style.display = 'none';
+            } else {
+                noExpenses.style.display = 'none';
+                document.getElementById('expensesTable').style.display = 'table';
+                
+                orderExpenses.forEach(expense => {
+                    const total = (expense.parts || 0) + (expense.transport || 0) + (expense.other || 0);
+                    
+                    const row = expensesTableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${expense.orderNumber}</td>
+                        <td>${formatDate(expense.date)}</td>
+                        <td>${(expense.parts || 0).toLocaleString()} ج.م</td>
+                        <td>${(expense.transport || 0).toLocaleString()} ج.م</td>
+                        <td>${(expense.other || 0).toLocaleString()} ج.م</td>
+                        <td>${total.toLocaleString()} ج.م</td>
+                        <td>${expense.description}</td>
+                        <td class="action-btns">
+                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editOrderExpense(${expense.id})">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteOrderExpense(${expense.id})">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </td>
+                    `;
+                });
+            }
+        }
+        
+        // حفظ مصروف أوردر جديد
+        function saveOrderExpense() {
+            const orderNumber = document.getElementById('expenseOrderNumber').value;
+            const expenseDate = document.getElementById('expenseDate').value;
+            const partsExpense = parseInt(document.getElementById('partsExpense').value) || 0;
+            const transportExpense = parseInt(document.getElementById('transportExpense').value) || 0;
+            const otherExpense = parseInt(document.getElementById('otherExpense').value) || 0;
+            const expenseDescription = document.getElementById('expenseDescription').value.trim();
+            
+            if (!orderNumber || !expenseDate || (partsExpense === 0 && transportExpense === 0 && otherExpense === 0)) {
+                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            const newId = orderExpenses.length > 0 ? Math.max(...orderExpenses.map(e => e.id)) + 1 : 1;
+            
+            orderExpenses.push({
+                id: newId,
+                orderNumber: orderNumber,
+                date: expenseDate,
+                parts: partsExpense,
+                transport: transportExpense,
+                other: otherExpense,
+                description: expenseDescription
+            });
+            
+            saveData();
+            loadOrderExpenses();
+            loadDashboard();
+            
+            // مسح الحقول
+            clearExpenseForm();
+        }
+        
+        // مسح نموذج مصروف الأوردر
+        function clearExpenseForm() {
+            document.getElementById('expenseOrderNumber').value = '';
+            document.getElementById('partsExpense').value = '';
+            document.getElementById('transportExpense').value = '';
+            document.getElementById('otherExpense').value = '';
+            document.getElementById('expenseDescription').value = '';
+        }
+        
+        // تحميل المصروفات العامة
+        function loadGeneralExpenses() {
+            const generalExpensesTableBody = document.getElementById('generalExpensesTableBody');
+            const noGeneralExpenses = document.getElementById('noGeneralExpenses');
+            
+            generalExpensesTableBody.innerHTML = '';
+            
+            if (generalExpenses.length === 0) {
+                noGeneralExpenses.style.display = 'block';
+                document.getElementById('generalExpensesTable').style.display = 'none';
+            } else {
+                noGeneralExpenses.style.display = 'none';
+                document.getElementById('generalExpensesTable').style.display = 'table';
+                
+                generalExpenses.forEach(expense => {
+                    const row = generalExpensesTableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${formatDate(expense.date)}</td>
+                        <td>${expense.type}</td>
+                        <td>${expense.amount.toLocaleString()} ج.م</td>
+                        <td>${expense.description}</td>
+                        <td class="action-btns">
+                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editGeneralExpense(${expense.id})">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteGeneralExpense(${expense.id})">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                        </td>
+                    `;
+                });
+            }
+        }
+        
+        // حفظ مصروف عام جديد
+        function saveGeneralExpense() {
+            const expenseDate = document.getElementById('generalExpenseDate').value;
+            const expenseType = document.getElementById('generalExpenseType').value;
+            const expenseAmount = parseInt(document.getElementById('generalExpenseAmount').value);
+            const expenseDescription = document.getElementById('generalExpenseDescription').value.trim();
+            
+            if (!expenseDate || !expenseType || isNaN(expenseAmount) || expenseAmount <= 0) {
+                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            const newId = generalExpenses.length > 0 ? Math.max(...generalExpenses.map(e => e.id)) + 1 : 1;
+            
+            generalExpenses.push({
+                id: newId,
+                date: expenseDate,
+                type: expenseType,
+                amount: expenseAmount,
+                description: expenseDescription
+            });
+            
+            saveData();
+            loadGeneralExpenses();
+            loadDashboard();
+            
+            // مسح الحقول
+            clearGeneralExpenseForm();
+        }
+        
+        // مسح نموذج المصروف العام
+        function clearGeneralExpenseForm() {
+            document.getElementById('generalExpenseType').value = 'ايجار المركز';
+            document.getElementById('generalExpenseAmount').value = '';
+            document.getElementById('generalExpenseDescription').value = '';
+        }
+        
+        // تحميل السلف
+        function loadAdvances() {
+            const employeeFilter = document.getElementById('advanceEmployeeFilter').value;
+            const fromDate = document.getElementById('advanceFromDate').value;
+            const toDate = document.getElementById('advanceToDate').value;
+            
+            const advancesTableBody = document.getElementById('advancesTableBody');
+            const noAdvances = document.getElementById('noAdvances');
+            const advanceSummary = document.getElementById('advanceSummary');
+            
+            advancesTableBody.innerHTML = '';
+            
+            // تصفية السلف حسب الموظف والتاريخ
+            let filteredAdvances = advances;
+            
+            if (employeeFilter) {
+                filteredAdvances = filteredAdvances.filter(advance => advance.employee === employeeFilter);
+            }
+            
+            if (fromDate || toDate) {
+                filteredAdvances = filteredAdvances.filter(advance => {
+                    const advanceDate = new Date(advance.date);
+                    const from = fromDate ? new Date(fromDate) : null;
+                    const to = toDate ? new Date(toDate) : null;
+                    
+                    if (from && advanceDate < from) return false;
+                    if (to && advanceDate > to) return false;
+                    
+                    return true;
+                });
+            }
+            
+            // حساب إجمالي السلف والتسديدات لكل موظف
+            const employeeSummary = {};
+            filteredAdvances.forEach(advance => {
+                if (!employeeSummary[advance.employee]) {
+                    employeeSummary[advance.employee] = { totalAdvances: 0, totalPayments: 0, balance: 0 };
+                }
+                
+                if (advance.type === 'سلفة') {
+                    employeeSummary[advance.employee].totalAdvances += advance.amount;
+                } else if (advance.type === 'تسديد') {
+                    employeeSummary[advance.employee].totalPayments += advance.amount;
+                }
+                
+                employeeSummary[advance.employee].balance = employeeSummary[advance.employee].totalAdvances - employeeSummary[advance.employee].totalPayments;
+            });
+            
+            // عرض ملخص الذمة
+            let summaryHTML = '<h4>ملخص الذمة للموظفين</h4>';
+            
+            if (Object.keys(employeeSummary).length === 0) {
+                summaryHTML += '<p>لا توجد بيانات لعرض الملخص.</p>';
+            } else {
+                for (const [employee, data] of Object.entries(employeeSummary)) {
+                    summaryHTML += `
+                        <p><strong>${employee}:</strong> إجمالي السلف: ${data.totalAdvances.toLocaleString()} ج.م | إجمالي التسديدات: ${data.totalPayments.toLocaleString()} ج.م | الرصيد: <span style="color: ${data.balance > 0 ? '#dc3545' : '#1a8c5e'}">${data.balance.toLocaleString()} ج.م</span></p>
+                    `;
+                }
+            }
+            
+            advanceSummary.innerHTML = summaryHTML;
+            
+            if (filteredAdvances.length === 0) {
+                noAdvances.style.display = 'block';
+                document.getElementById('advancesTable').style.display = 'none';
+            } else {
+                noAdvances.style.display = 'none';
+                document.getElementById('advancesTable').style.display = 'table';
+                
+                filteredAdvances.forEach(advance => {
+                    const row = advancesTableBody.insertRow();
+                    const typeClass = advance.type === 'سلفة' ? 'card-loss' : 'card-profit';
+                    const typeText = advance.type === 'سلفة' ? 'سلفة' : 'تسديد';
+                    
+                    row.innerHTML = `
+                        <td>${formatDate(advance.date)}</td>
+                        <td>${advance.employee}</td>
+                        <td class="${typeClass}">${advance.amount.toLocaleString()} ج.م</td>
+                        <td>${typeText}</td>
+                        <td>${advance.reason}</td>
+                        <td class="action-btns">
+                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editAdvance(${advance.id})">
+                                <i class="fas fa-edit"></i> تعديل
+                            </button>
+                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteAdvance(${advance.id})">
+                                <i class="fas fa-trash"></i> حذف
+                            </button>
+                            ${advance.type === 'سلفة' ? `<button class="action-btn pay-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="showPayAdvanceModal('${advance.employee}')">
+                                <i class="fas fa-money-bill-wave"></i> تسديد
+                            </button>` : ''}
+                        </td>
+                    `;
+                });
+            }
+            
+            loadDashboard();
+        }
+        
+        // حفظ سلفة جديدة
+        function saveAdvance() {
+            const employee = document.getElementById('advanceEmployee').value;
+            const advanceDate = document.getElementById('advanceDate').value;
+            const advanceAmount = parseInt(document.getElementById('advanceAmount').value);
+            const advanceReason = document.getElementById('advanceReason').value.trim();
+            
+            if (!employee || !advanceDate || isNaN(advanceAmount) || advanceAmount <= 0) {
+                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            const newId = advances.length > 0 ? Math.max(...advances.map(a => a.id)) + 1 : 1;
+            
+            advances.push({
+                id: newId,
+                employee: employee,
+                date: advanceDate,
+                amount: advanceAmount,
+                reason: advanceReason,
+                type: 'سلفة'
+            });
+            
+            saveData();
+            loadAdvances();
+            
+            // مسح الحقول
+            clearAdvanceForm();
+        }
+        
+        // مسح نموذج السلفة
+        function clearAdvanceForm() {
+            document.getElementById('advanceEmployee').value = '';
+            document.getElementById('advanceAmount').value = '';
+            document.getElementById('advanceReason').value = '';
+        }
+        
+        // إظهار مودال تسديد السلفة
+        function showPayAdvanceModal(employeeName) {
+            // حساب إجمالي السلف والتسديدات للموظف
+            const employeeAdvances = advances.filter(a => a.employee === employeeName);
+            const totalAdvances = employeeAdvances
+                .filter(a => a.type === 'سلفة')
+                .reduce((sum, a) => sum + a.amount, 0);
+            
+            const totalPayments = employeeAdvances
+                .filter(a => a.type === 'تسديد')
+                .reduce((sum, a) => sum + a.amount, 0);
+            
+            const balance = totalAdvances - totalPayments;
+            
+            if (balance <= 0) {
+                alert('لا يوجد سلف مستحقة لهذا الموظف');
+                return;
+            }
+            
+            currentPayAdvance = employeeName;
+            
+            document.getElementById('payEmployeeName').value = employeeName;
+            document.getElementById('payAdvanceAmount').value = balance;
+            document.getElementById('payAmount').value = '';
+            document.getElementById('payNotes').value = '';
+            document.getElementById('payDate').value = new Date().toISOString().split('T')[0];
+            
+            document.getElementById('payAdvanceModal').style.display = 'flex';
+        }
+        
+        // إخفاء مودال تسديد السلفة
+        function hidePayAdvanceModal() {
+            document.getElementById('payAdvanceModal').style.display = 'none';
+            currentPayAdvance = null;
+        }
+        
+        // تأكيد تسديد السلفة
+        function confirmPayAdvance() {
+            const employeeName = document.getElementById('payEmployeeName').value;
+            const payAmount = parseInt(document.getElementById('payAmount').value);
+            const payDate = document.getElementById('payDate').value;
+            const payNotes = document.getElementById('payNotes').value.trim();
+            const balance = parseInt(document.getElementById('payAdvanceAmount').value);
+            
+            if (!payAmount || payAmount <= 0) {
+                alert('الرجاء إدخال مبلغ تسديد صحيح');
+                return;
+            }
+            
+            if (payAmount > balance) {
+                alert('مبلغ التسديد لا يمكن أن يكون أكبر من المبلغ المستحق');
+                return;
+            }
+            
+            const newId = advances.length > 0 ? Math.max(...advances.map(a => a.id)) + 1 : 1;
+            
+            advances.push({
+                id: newId,
+                employee: employeeName,
+                date: payDate,
+                amount: payAmount,
+                reason: payNotes || 'تسديد جزء من السلفة',
+                type: 'تسديد'
+            });
+            
+            saveData();
+            loadAdvances();
+            hidePayAdvanceModal();
+        }
+        
+        // تحميل التقارير
+        function loadProfitReport() {
+            const fromDate = document.getElementById('reportFromDate').value;
+            const toDate = document.getElementById('reportToDate').value;
+            
+            let filteredOrders = orders;
+            let filteredOrderExpenses = orderExpenses;
+            
+            // تطبيق الفلاتر إذا كانت محددة
+            if (fromDate || toDate) {
+                const from = fromDate ? new Date(fromDate) : null;
+                const to = toDate ? new Date(toDate) : null;
+                
+                filteredOrders = orders.filter(order => {
+                    const orderDate = new Date(order.date);
+                    if (from && orderDate < from) return false;
+                    if (to && orderDate > to) return false;
+                    return true;
+                });
+                
+                filteredOrderExpenses = orderExpenses.filter(exp => {
+                    const expDate = new Date(exp.date);
+                    if (from && expDate < from) return false;
+                    if (to && expDate > to) return false;
+                    return true;
+                });
+            }
+            
+            const profitReportTableBody = document.getElementById('profitReportTableBody');
+            const noReportData = document.getElementById('noReportData');
+            const aggregateReport = document.getElementById('aggregateReport');
+            
+            profitReportTableBody.innerHTML = '';
+            
+            if (filteredOrders.length === 0) {
+                noReportData.style.display = 'block';
+                document.getElementById('profitReportTable').style.display = 'none';
+                aggregateReport.innerHTML = '';
+            } else {
+                noReportData.style.display = 'none';
+                document.getElementById('profitReportTable').style.display = 'table';
+                
+                let totalRevenue = 0;
+                let totalCommissions = 0;
+                let totalExpenses = 0;
+                let totalProfit = 0;
+                
+                filteredOrders.forEach(order => {
+                    const tech = technicians.find(t => t.id === order.technicianId);
+                    const techName = tech ? tech.name : 'غير معروف';
+                    const techPercentage = tech ? tech.percentage : 0;
+                    
+                    // حساب مصروفات هذا الأوردر
+                    const orderExpenses = filteredOrderExpenses.filter(exp => exp.orderNumber === order.orderNumber);
+                    const totalOrderExpenses = orderExpenses.reduce((sum, exp) => {
+                        return sum + (exp.parts || 0) + (exp.transport || 0) + (exp.other || 0);
+                    }, 0);
+                    
+                    // حساب العمولة
+                    const commission = order.amount * (techPercentage / 100);
+                    
+                    // حساب الربح
+                    const profit = order.amount - commission - totalOrderExpenses;
+                    const profitPercentage = order.amount > 0 ? ((profit / order.amount) * 100).toFixed(1) : 0;
+                    
+                    // تحديث الإجماليات
+                    totalRevenue += order.amount;
+                    totalCommissions += commission;
+                    totalExpenses += totalOrderExpenses;
+                    totalProfit += profit;
+                    
+                    const row = profitReportTableBody.insertRow();
+                    row.innerHTML = `
+                        <td>${order.orderNumber}</td>
+                        <td>${formatDate(order.date)}</td>
+                        <td>${order.amount.toLocaleString()} ج.م</td>
+                        <td>${techName}</td>
+                        <td>${techPercentage}%</td>
+                        <td>${totalOrderExpenses.toLocaleString()} ج.م</td>
+                        <td>${profit.toLocaleString()} ج.م</td>
+                        <td>${profitPercentage}%</td>
+                    `;
+                });
+                
+                // تحديث التقرير المجمع
+                const overallProfitPercentage = totalRevenue > 0 ? ((totalProfit / totalRevenue) * 100).toFixed(1) : 0;
+                
+                aggregateReport.innerHTML = `
+                    <div class="card">
+                        <h3>إجمالي الإيرادات</h3>
+                        <div class="card-value">${totalRevenue.toLocaleString()} ج.م</div>
+                        <p>من ${filteredOrders.length} فاتورة</p>
+                    </div>
+                    <div class="card">
+                        <h3>إجمالي العمولات</h3>
+                        <div class="card-value">${totalCommissions.toLocaleString()} ج.م</div>
+                        <p>${((totalCommissions / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات</p>
+                    </div>
+                    <div class="card">
+                        <h3>إجمالي المصروفات</h3>
+                        <div class="card-value">${totalExpenses.toLocaleString()} ج.م</div>
+                        <p>${((totalExpenses / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات</p>
+                    </div>
+                    <div class="card">
+                        <h3>صافي الربح</h3>
+                        <div class="card-value card-profit">${totalProfit.toLocaleString()} ج.م</div>
+                        <p>نسبة الربحية: ${overallProfitPercentage}%</p>
+                    </div>
+                `;
+            }
         }
         
         // تحميل المستخدمين
@@ -1965,949 +3348,129 @@
             document.getElementById('cancelUserBtn').classList.add('hidden-by-role');
         }
         
-        // تحميل الفواتير
-        function loadOrders() {
-            const ordersTableBody = document.getElementById('ordersTableBody');
-            const noOrders = document.getElementById('noOrders');
+        // حذف مستخدم
+        function deleteUser(id) {
+            if (id === currentUser.id) {
+                alert('لا يمكن حذف المستخدم الحالي');
+                return;
+            }
             
-            ordersTableBody.innerHTML = '';
+            if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
+                users = users.filter(user => user.id !== id);
+                saveData();
+                loadUsers();
+                loadLoginUsers();
+            }
+        }
+        
+        // تحميل النسخ الاحتياطية
+        function loadBackups() {
+            const backupList = document.getElementById('backupList');
+            backupList.innerHTML = '';
             
-            if (orders.length === 0) {
-                noOrders.style.display = 'block';
-                document.getElementById('ordersTable').style.display = 'none';
+            if (backups.length === 0) {
+                backupList.innerHTML = '<p>لا توجد نسخ احتياطية بعد.</p>';
             } else {
-                noOrders.style.display = 'none';
-                document.getElementById('ordersTable').style.display = 'table';
-                
-                orders.forEach(order => {
-                    const tech = technicians.find(t => t.id === order.technicianId);
-                    const techName = tech ? tech.name : 'غير معروف';
+                backups.forEach(backup => {
+                    const backupDate = new Date(backup.date);
+                    const dateStr = backupDate.toLocaleString('ar-EG');
                     
-                    const row = ordersTableBody.insertRow();
-                    row.innerHTML = `
-                        <td>${order.orderNumber}</td>
-                        <td>${formatDate(order.date)}</td>
-                        <td>${order.customerName}</td>
-                        <td>${order.customerPhone}</td>
-                        <td>${order.repairType}</td>
-                        <td>${order.amount.toLocaleString()} ج.م</td>
-                        <td>${techName}</td>
-                        <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editOrder(${order.id})">
-                                <i class="fas fa-edit"></i> تعديل
+                    const backupItem = document.createElement('div');
+                    backupItem.className = 'backup-item';
+                    backupItem.innerHTML = `
+                        <div class="backup-item-info">
+                            <div class="backup-item-name">${backup.name}</div>
+                            <div class="backup-item-date">${dateStr}</div>
+                        </div>
+                        <div class="backup-actions">
+                            <button class="action-btn edit-btn" onclick="restoreBackup(${backup.id})">
+                                <i class="fas fa-history"></i> استعادة
                             </button>
-                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteOrder(${order.id})">
+                            <button class="action-btn delete-btn" onclick="deleteBackup(${backup.id})">
                                 <i class="fas fa-trash"></i> حذف
                             </button>
-                        </td>
+                        </div>
                     `;
-                });
-            }
-            
-            // تحديث قائمة الفواتير في شاشة المصروفات
-            updateOrderNumberSelect();
-        }
-        
-        // البحث في الفواتير
-        function searchOrders() {
-            const searchText = document.getElementById('searchOrders').value.toLowerCase();
-            const rows = document.querySelectorAll('#ordersTableBody tr');
-            
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(searchText) ? '' : 'none';
-            });
-        }
-        
-        // حفظ فاتورة جديدة
-        function saveOrder() {
-            const orderNumber = document.getElementById('orderNumber').value.trim();
-            const orderDate = document.getElementById('orderDate').value;
-            const customerName = document.getElementById('customerName').value.trim();
-            const customerPhone = document.getElementById('customerPhone').value.trim();
-            const technicianId = parseInt(document.getElementById('technician').value);
-            const repairType = document.getElementById('repairType').value;
-            const orderAmount = parseInt(document.getElementById('orderAmount').value);
-            const orderDescription = document.getElementById('orderDescription').value.trim();
-            
-            if (!orderNumber || !orderDate || !customerName || !customerPhone || !technicianId || !repairType || isNaN(orderAmount) || orderAmount <= 0) {
-                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            // التحقق من عدم تكرار رقم الفاتورة
-            if (orders.some(order => order.orderNumber === orderNumber)) {
-                alert('رقم الفاتورة موجود مسبقاً. الرجاء استخدام رقم فاتورة مختلف.');
-                return;
-            }
-            
-            const newId = orders.length > 0 ? Math.max(...orders.map(o => o.id)) + 1 : 1;
-            
-            orders.push({
-                id: newId,
-                orderNumber: orderNumber,
-                date: orderDate,
-                customerName: customerName,
-                customerPhone: customerPhone,
-                technicianId: technicianId,
-                repairType: repairType,
-                amount: orderAmount,
-                description: orderDescription
-            });
-            
-            saveData();
-            loadOrders();
-            loadDashboard();
-            
-            // مسح الحقول
-            clearOrderForm();
-        }
-        
-        // تعديل فاتورة
-        function editOrder(id) {
-            const order = orders.find(o => o.id === id);
-            if (order) {
-                document.getElementById('orderNumber').value = order.orderNumber;
-                document.getElementById('orderDate').value = order.date;
-                document.getElementById('customerName').value = order.customerName;
-                document.getElementById('customerPhone').value = order.customerPhone;
-                document.getElementById('technician').value = order.technicianId;
-                document.getElementById('repairType').value = order.repairType;
-                document.getElementById('orderAmount').value = order.amount;
-                document.getElementById('orderDescription').value = order.description;
-                
-                editingOrderId = id;
-                
-                // إظهار أزرار التحديث والإلغاء
-                document.getElementById('saveOrderBtn').classList.add('hidden-by-role');
-                document.getElementById('updateOrderBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelOrderBtn').classList.remove('hidden-by-role');
-            }
-        }
-        
-        // تحديث فاتورة
-        function updateOrder() {
-            if (!editingOrderId) return;
-            
-            const orderNumber = document.getElementById('orderNumber').value.trim();
-            const orderDate = document.getElementById('orderDate').value;
-            const customerName = document.getElementById('customerName').value.trim();
-            const customerPhone = document.getElementById('customerPhone').value.trim();
-            const technicianId = parseInt(document.getElementById('technician').value);
-            const repairType = document.getElementById('repairType').value;
-            const orderAmount = parseInt(document.getElementById('orderAmount').value);
-            const orderDescription = document.getElementById('orderDescription').value.trim();
-            
-            if (!orderNumber || !orderDate || !customerName || !customerPhone || !technicianId || !repairType || isNaN(orderAmount) || orderAmount <= 0) {
-                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            // التحقق من عدم تكرار رقم الفاتورة (باستثناء الفاتورة الحالية)
-            if (orders.some(order => order.orderNumber === orderNumber && order.id !== editingOrderId)) {
-                alert('رقم الفاتورة موجود مسبقاً. الرجاء استخدام رقم فاتورة مختلف.');
-                return;
-            }
-            
-            const orderIndex = orders.findIndex(o => o.id === editingOrderId);
-            if (orderIndex !== -1) {
-                orders[orderIndex].orderNumber = orderNumber;
-                orders[orderIndex].date = orderDate;
-                orders[orderIndex].customerName = customerName;
-                orders[orderIndex].customerPhone = customerPhone;
-                orders[orderIndex].technicianId = technicianId;
-                orders[orderIndex].repairType = repairType;
-                orders[orderIndex].amount = orderAmount;
-                orders[orderIndex].description = orderDescription;
-                
-                saveData();
-                loadOrders();
-                loadDashboard();
-                
-                // مسح الحقول وإعادة الحالة
-                cancelEditOrder();
-            }
-        }
-        
-        // إلغاء تعديل فاتورة
-        function cancelEditOrder() {
-            editingOrderId = null;
-            clearOrderForm();
-            
-            document.getElementById('saveOrderBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateOrderBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelOrderBtn').classList.add('hidden-by-role');
-        }
-        
-        // مسح نموذج الفاتورة
-        function clearOrderForm() {
-            document.getElementById('orderNumber').value = '';
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerPhone').value = '';
-            document.getElementById('technician').value = '';
-            document.getElementById('orderAmount').value = '';
-            document.getElementById('orderDescription').value = '';
-        }
-        
-        // تحديث قائمة أرقام الفواتير في شاشة المصروفات
-        function updateOrderNumberSelect() {
-            const orderNumberSelect = document.getElementById('expenseOrderNumber');
-            orderNumberSelect.innerHTML = '<option value="">اختر رقم الفاتورة</option>';
-            
-            orders.forEach(order => {
-                const option = document.createElement('option');
-                option.value = order.orderNumber;
-                option.textContent = `${order.orderNumber} (${formatDate(order.date)})`;
-                orderNumberSelect.appendChild(option);
-            });
-        }
-        
-        // تحميل مصروفات الأوردر
-        function loadOrderExpenses() {
-            const expensesTableBody = document.getElementById('expensesTableBody');
-            const noExpenses = document.getElementById('noExpenses');
-            
-            expensesTableBody.innerHTML = '';
-            
-            if (orderExpenses.length === 0) {
-                noExpenses.style.display = 'block';
-                document.getElementById('expensesTable').style.display = 'none';
-            } else {
-                noExpenses.style.display = 'none';
-                document.getElementById('expensesTable').style.display = 'table';
-                
-                orderExpenses.forEach(expense => {
-                    const total = (expense.parts || 0) + (expense.transport || 0) + (expense.other || 0);
-                    
-                    const row = expensesTableBody.insertRow();
-                    row.innerHTML = `
-                        <td>${expense.orderNumber}</td>
-                        <td>${formatDate(expense.date)}</td>
-                        <td>${(expense.parts || 0).toLocaleString()} ج.م</td>
-                        <td>${(expense.transport || 0).toLocaleString()} ج.م</td>
-                        <td>${(expense.other || 0).toLocaleString()} ج.م</td>
-                        <td>${total.toLocaleString()} ج.م</td>
-                        <td>${expense.description}</td>
-                        <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editOrderExpense(${expense.id})">
-                                <i class="fas fa-edit"></i> تعديل
-                            </button>
-                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteOrderExpense(${expense.id})">
-                                <i class="fas fa-trash"></i> حذف
-                            </button>
-                        </td>
-                    `;
+                    backupList.appendChild(backupItem);
                 });
             }
         }
         
-        // حفظ مصروف أوردر
-        function saveOrderExpense() {
-            const orderNumber = document.getElementById('expenseOrderNumber').value;
-            const expenseDate = document.getElementById('expenseDate').value;
-            const partsExpense = parseInt(document.getElementById('partsExpense').value) || 0;
-            const transportExpense = parseInt(document.getElementById('transportExpense').value) || 0;
-            const otherExpense = parseInt(document.getElementById('otherExpense').value) || 0;
-            const expenseDescription = document.getElementById('expenseDescription').value.trim();
+        // إنشاء نسخة احتياطية يدوية
+        function createManualBackup() {
+            const timestamp = new Date().getTime();
+            const dateStr = new Date().toLocaleString('ar-EG');
             
-            if (!orderNumber || !expenseDate || (partsExpense === 0 && transportExpense === 0 && otherExpense === 0)) {
-                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            const newId = orderExpenses.length > 0 ? Math.max(...orderExpenses.map(e => e.id)) + 1 : 1;
-            
-            orderExpenses.push({
-                id: newId,
-                orderNumber: orderNumber,
-                date: expenseDate,
-                parts: partsExpense,
-                transport: transportExpense,
-                other: otherExpense,
-                description: expenseDescription
-            });
-            
-            saveData();
-            loadOrderExpenses();
-            loadDashboard();
-            
-            // مسح الحقول
-            clearExpenseForm();
-        }
-        
-        // تعديل مصروف أوردر
-        function editOrderExpense(id) {
-            const expense = orderExpenses.find(e => e.id === id);
-            if (expense) {
-                document.getElementById('expenseOrderNumber').value = expense.orderNumber;
-                document.getElementById('expenseDate').value = expense.date;
-                document.getElementById('partsExpense').value = expense.parts || 0;
-                document.getElementById('transportExpense').value = expense.transport || 0;
-                document.getElementById('otherExpense').value = expense.other || 0;
-                document.getElementById('expenseDescription').value = expense.description;
-                
-                editingExpenseId = id;
-                
-                // إظهار أزرار التحديث والإلغاء
-                document.getElementById('saveExpenseBtn').classList.add('hidden-by-role');
-                document.getElementById('updateExpenseBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelExpenseBtn').classList.remove('hidden-by-role');
-            }
-        }
-        
-        // تحديث مصروف أوردر
-        function updateOrderExpense() {
-            if (!editingExpenseId) return;
-            
-            const orderNumber = document.getElementById('expenseOrderNumber').value;
-            const expenseDate = document.getElementById('expenseDate').value;
-            const partsExpense = parseInt(document.getElementById('partsExpense').value) || 0;
-            const transportExpense = parseInt(document.getElementById('transportExpense').value) || 0;
-            const otherExpense = parseInt(document.getElementById('otherExpense').value) || 0;
-            const expenseDescription = document.getElementById('expenseDescription').value.trim();
-            
-            if (!orderNumber || !expenseDate || (partsExpense === 0 && transportExpense === 0 && otherExpense === 0)) {
-                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            const expenseIndex = orderExpenses.findIndex(e => e.id === editingExpenseId);
-            if (expenseIndex !== -1) {
-                orderExpenses[expenseIndex].orderNumber = orderNumber;
-                orderExpenses[expenseIndex].date = expenseDate;
-                orderExpenses[expenseIndex].parts = partsExpense;
-                orderExpenses[expenseIndex].transport = transportExpense;
-                orderExpenses[expenseIndex].other = otherExpense;
-                orderExpenses[expenseIndex].description = expenseDescription;
-                
-                saveData();
-                loadOrderExpenses();
-                loadDashboard();
-                
-                // مسح الحقول وإعادة الحالة
-                cancelEditExpense();
-            }
-        }
-        
-        // إلغاء تعديل مصروف أوردر
-        function cancelEditExpense() {
-            editingExpenseId = null;
-            clearExpenseForm();
-            
-            document.getElementById('saveExpenseBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateExpenseBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelExpenseBtn').classList.add('hidden-by-role');
-        }
-        
-        // مسح نموذج المصروف
-        function clearExpenseForm() {
-            document.getElementById('expenseOrderNumber').value = '';
-            document.getElementById('partsExpense').value = '';
-            document.getElementById('transportExpense').value = '';
-            document.getElementById('otherExpense').value = '';
-            document.getElementById('expenseDescription').value = '';
-        }
-        
-        // تحميل المصروفات العامة
-        function loadGeneralExpenses() {
-            const generalExpensesTableBody = document.getElementById('generalExpensesTableBody');
-            const noGeneralExpenses = document.getElementById('noGeneralExpenses');
-            
-            generalExpensesTableBody.innerHTML = '';
-            
-            if (generalExpenses.length === 0) {
-                noGeneralExpenses.style.display = 'block';
-                document.getElementById('generalExpensesTable').style.display = 'none';
-            } else {
-                noGeneralExpenses.style.display = 'none';
-                document.getElementById('generalExpensesTable').style.display = 'table';
-                
-                generalExpenses.forEach(expense => {
-                    const row = generalExpensesTableBody.insertRow();
-                    row.innerHTML = `
-                        <td>${formatDate(expense.date)}</td>
-                        <td>${expense.type}</td>
-                        <td>${expense.amount.toLocaleString()} ج.م</td>
-                        <td>${expense.description}</td>
-                        <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editGeneralExpense(${expense.id})">
-                                <i class="fas fa-edit"></i> تعديل
-                            </button>
-                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteGeneralExpense(${expense.id})">
-                                <i class="fas fa-trash"></i> حذف
-                            </button>
-                        </td>
-                    `;
-                });
-            }
-        }
-        
-        // حفظ مصروف عام
-        function saveGeneralExpense() {
-            const expenseDate = document.getElementById('generalExpenseDate').value;
-            const expenseType = document.getElementById('generalExpenseType').value;
-            const expenseAmount = parseInt(document.getElementById('generalExpenseAmount').value);
-            const expenseDescription = document.getElementById('generalExpenseDescription').value.trim();
-            
-            if (!expenseDate || !expenseType || isNaN(expenseAmount) || expenseAmount <= 0) {
-                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            const newId = generalExpenses.length > 0 ? Math.max(...generalExpenses.map(e => e.id)) + 1 : 1;
-            
-            generalExpenses.push({
-                id: newId,
-                date: expenseDate,
-                type: expenseType,
-                amount: expenseAmount,
-                description: expenseDescription
-            });
-            
-            saveData();
-            loadGeneralExpenses();
-            loadDashboard();
-            
-            // مسح الحقول
-            clearGeneralExpenseForm();
-        }
-        
-        // تعديل مصروف عام
-        function editGeneralExpense(id) {
-            const expense = generalExpenses.find(e => e.id === id);
-            if (expense) {
-                document.getElementById('generalExpenseDate').value = expense.date;
-                document.getElementById('generalExpenseType').value = expense.type;
-                document.getElementById('generalExpenseAmount').value = expense.amount;
-                document.getElementById('generalExpenseDescription').value = expense.description;
-                
-                editingGeneralExpenseId = id;
-                
-                // إظهار أزرار التحديث والإلغاء
-                document.getElementById('saveGeneralExpenseBtn').classList.add('hidden-by-role');
-                document.getElementById('updateGeneralExpenseBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelGeneralExpenseBtn').classList.remove('hidden-by-role');
-            }
-        }
-        
-        // تحديث مصروف عام
-        function updateGeneralExpense() {
-            if (!editingGeneralExpenseId) return;
-            
-            const expenseDate = document.getElementById('generalExpenseDate').value;
-            const expenseType = document.getElementById('generalExpenseType').value;
-            const expenseAmount = parseInt(document.getElementById('generalExpenseAmount').value);
-            const expenseDescription = document.getElementById('generalExpenseDescription').value.trim();
-            
-            if (!expenseDate || !expenseType || isNaN(expenseAmount) || expenseAmount <= 0) {
-                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            const expenseIndex = generalExpenses.findIndex(e => e.id === editingGeneralExpenseId);
-            if (expenseIndex !== -1) {
-                generalExpenses[expenseIndex].date = expenseDate;
-                generalExpenses[expenseIndex].type = expenseType;
-                generalExpenses[expenseIndex].amount = expenseAmount;
-                generalExpenses[expenseIndex].description = expenseDescription;
-                
-                saveData();
-                loadGeneralExpenses();
-                loadDashboard();
-                
-                // مسح الحقول وإعادة الحالة
-                cancelEditGeneralExpense();
-            }
-        }
-        
-        // إلغاء تعديل مصروف عام
-        function cancelEditGeneralExpense() {
-            editingGeneralExpenseId = null;
-            clearGeneralExpenseForm();
-            
-            document.getElementById('saveGeneralExpenseBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateGeneralExpenseBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelGeneralExpenseBtn').classList.add('hidden-by-role');
-        }
-        
-        // مسح نموذج المصروف العام
-        function clearGeneralExpenseForm() {
-            document.getElementById('generalExpenseType').value = 'ايجار المركز';
-            document.getElementById('generalExpenseAmount').value = '';
-            document.getElementById('generalExpenseDescription').value = '';
-        }
-        
-        // تحميل السلف
-        function loadAdvances() {
-            const fromDate = document.getElementById('advanceFromDate').value;
-            const toDate = document.getElementById('advanceToDate').value;
-            
-            const advancesTableBody = document.getElementById('advancesTableBody');
-            const noAdvances = document.getElementById('noAdvances');
-            
-            advancesTableBody.innerHTML = '';
-            
-            // تصفية السلف حسب التاريخ
-            let filteredAdvances = advances;
-            if (fromDate || toDate) {
-                filteredAdvances = advances.filter(advance => {
-                    const advanceDate = new Date(advance.date);
-                    const from = fromDate ? new Date(fromDate) : null;
-                    const to = toDate ? new Date(toDate) : null;
-                    
-                    if (from && advanceDate < from) return false;
-                    if (to && advanceDate > to) return false;
-                    
-                    return true;
-                });
-            }
-            
-            if (filteredAdvances.length === 0) {
-                noAdvances.style.display = 'block';
-                document.getElementById('advancesTable').style.display = 'none';
-            } else {
-                noAdvances.style.display = 'none';
-                document.getElementById('advancesTable').style.display = 'table';
-                
-                filteredAdvances.forEach(advance => {
-                    const row = advancesTableBody.insertRow();
-                    row.innerHTML = `
-                        <td>${formatDate(advance.date)}</td>
-                        <td>${advance.employee}</td>
-                        <td>${advance.amount.toLocaleString()} ج.م</td>
-                        <td>${advance.reason}</td>
-                        <td class="action-btns">
-                            <button class="action-btn edit-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="editAdvance(${advance.id})">
-                                <i class="fas fa-edit"></i> تعديل
-                            </button>
-                            <button class="action-btn delete-btn ${currentUser.role === 'dataEntry' ? 'hidden-by-role' : ''}" onclick="deleteAdvance(${advance.id})">
-                                <i class="fas fa-trash"></i> حذف
-                            </button>
-                        </td>
-                    `;
-                });
-            }
-            
-            loadDashboard();
-        }
-        
-        // حفظ سلفة
-        function saveAdvance() {
-            const employee = document.getElementById('advanceEmployee').value;
-            const advanceDate = document.getElementById('advanceDate').value;
-            const advanceAmount = parseInt(document.getElementById('advanceAmount').value);
-            const advanceReason = document.getElementById('advanceReason').value.trim();
-            
-            if (!employee || !advanceDate || isNaN(advanceAmount) || advanceAmount <= 0) {
-                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            const newId = advances.length > 0 ? Math.max(...advances.map(a => a.id)) + 1 : 1;
-            
-            advances.push({
-                id: newId,
-                employee: employee,
-                date: advanceDate,
-                amount: advanceAmount,
-                reason: advanceReason
-            });
-            
-            saveData();
-            loadAdvances();
-            
-            // مسح الحقول
-            clearAdvanceForm();
-        }
-        
-        // تعديل سلفة
-        function editAdvance(id) {
-            const advance = advances.find(a => a.id === id);
-            if (advance) {
-                document.getElementById('advanceEmployee').value = advance.employee;
-                document.getElementById('advanceDate').value = advance.date;
-                document.getElementById('advanceAmount').value = advance.amount;
-                document.getElementById('advanceReason').value = advance.reason;
-                
-                editingAdvanceId = id;
-                
-                // إظهار أزرار التحديث والإلغاء
-                document.getElementById('saveAdvanceBtn').classList.add('hidden-by-role');
-                document.getElementById('updateAdvanceBtn').classList.remove('hidden-by-role');
-                document.getElementById('cancelAdvanceBtn').classList.remove('hidden-by-role');
-            }
-        }
-        
-        // تحديث سلفة
-        function updateAdvance() {
-            if (!editingAdvanceId) return;
-            
-            const employee = document.getElementById('advanceEmployee').value;
-            const advanceDate = document.getElementById('advanceDate').value;
-            const advanceAmount = parseInt(document.getElementById('advanceAmount').value);
-            const advanceReason = document.getElementById('advanceReason').value.trim();
-            
-            if (!employee || !advanceDate || isNaN(advanceAmount) || advanceAmount <= 0) {
-                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            const advanceIndex = advances.findIndex(a => a.id === editingAdvanceId);
-            if (advanceIndex !== -1) {
-                advances[advanceIndex].employee = employee;
-                advances[advanceIndex].date = advanceDate;
-                advances[advanceIndex].amount = advanceAmount;
-                advances[advanceIndex].reason = advanceReason;
-                
-                saveData();
-                loadAdvances();
-                
-                // مسح الحقول وإعادة الحالة
-                cancelEditAdvance();
-            }
-        }
-        
-        // إلغاء تعديل سلفة
-        function cancelEditAdvance() {
-            editingAdvanceId = null;
-            clearAdvanceForm();
-            
-            document.getElementById('saveAdvanceBtn').classList.remove('hidden-by-role');
-            document.getElementById('updateAdvanceBtn').classList.add('hidden-by-role');
-            document.getElementById('cancelAdvanceBtn').classList.add('hidden-by-role');
-        }
-        
-        // مسح نموذج السلفة
-        function clearAdvanceForm() {
-            document.getElementById('advanceEmployee').value = '';
-            document.getElementById('advanceAmount').value = '';
-            document.getElementById('advanceReason').value = '';
-        }
-        
-        // تحميل تقرير الربحية
-        function loadProfitReport() {
-            const fromDate = document.getElementById('reportFromDate').value;
-            const toDate = document.getElementById('reportToDate').value;
-            
-            const reportTableBody = document.getElementById('profitReportTableBody');
-            const noReportData = document.getElementById('noReportData');
-            const aggregateReport = document.getElementById('aggregateReport');
-            
-            reportTableBody.innerHTML = '';
-            
-            // تصفية الفواتير حسب التاريخ
-            let filteredOrders = orders;
-            if (fromDate || toDate) {
-                filteredOrders = orders.filter(order => {
-                    const orderDate = new Date(order.date);
-                    const from = fromDate ? new Date(fromDate) : null;
-                    const to = toDate ? new Date(toDate) : null;
-                    
-                    if (from && orderDate < from) return false;
-                    if (to && orderDate > to) return false;
-                    
-                    return true;
-                });
-            }
-            
-            if (filteredOrders.length === 0) {
-                noReportData.style.display = 'block';
-                document.getElementById('profitReportTable').style.display = 'none';
-                aggregateReport.innerHTML = '<p>لا توجد بيانات لعرض التقرير المجمع.</p>';
-                return;
-            }
-            
-            noReportData.style.display = 'none';
-            document.getElementById('profitReportTable').style.display = 'table';
-            
-            let totalRevenue = 0;
-            let totalTechCommission = 0;
-            let totalOrderExpenses = 0;
-            let totalNetProfit = 0;
-            
-            filteredOrders.forEach(order => {
-                const tech = technicians.find(t => t.id === order.technicianId);
-                const techName = tech ? tech.name : 'غير معروف';
-                const techPercentage = tech ? tech.percentage : 0;
-                
-                // حساب عمولة الفني
-                const techCommission = order.amount * (techPercentage / 100);
-                
-                // حساب مصروفات هذا الأوردر
-                const orderExpensesTotal = orderExpenses
-                    .filter(exp => exp.orderNumber === order.orderNumber)
-                    .reduce((sum, exp) => sum + (exp.parts || 0) + (exp.transport || 0) + (exp.other || 0), 0);
-                
-                // حساب صافي الربح
-                const netProfit = order.amount - techCommission - orderExpensesTotal;
-                
-                // حساب نسبة الربح
-                const profitPercentage = order.amount > 0 ? (netProfit / order.amount * 100).toFixed(2) : 0;
-                
-                // تحديث المجاميع
-                totalRevenue += order.amount;
-                totalTechCommission += techCommission;
-                totalOrderExpenses += orderExpensesTotal;
-                totalNetProfit += netProfit;
-                
-                // إضافة الصف إلى الجدول
-                const row = reportTableBody.insertRow();
-                row.innerHTML = `
-                    <td>${order.orderNumber}</td>
-                    <td>${formatDate(order.date)}</td>
-                    <td>${order.amount.toLocaleString()} ج.م</td>
-                    <td>${techName}</td>
-                    <td>${techCommission.toLocaleString()} ج.م</td>
-                    <td>${orderExpensesTotal.toLocaleString()} ج.م</td>
-                    <td class="${netProfit >= 0 ? 'card-profit' : 'card-loss'}">${netProfit.toLocaleString()} ج.م</td>
-                    <td>${profitPercentage}%</td>
-                `;
-            });
-            
-            // حساب المصروفات العامة في الفترة
-            let filteredGeneralExpenses = generalExpenses;
-            if (fromDate || toDate) {
-                filteredGeneralExpenses = generalExpenses.filter(expense => {
-                    const expenseDate = new Date(expense.date);
-                    const from = fromDate ? new Date(fromDate) : null;
-                    const to = toDate ? new Date(toDate) : null;
-                    
-                    if (from && expenseDate < from) return false;
-                    if (to && expenseDate > to) return false;
-                    
-                    return true;
-                });
-            }
-            
-            const totalGeneralExpenses = filteredGeneralExpenses.reduce((sum, exp) => sum + exp.amount, 0);
-            
-            // حساب صافي الربح النهائي بعد المصروفات العامة
-            const finalNetProfit = totalNetProfit - totalGeneralExpenses;
-            
-            // عرض التقرير المجمع
-            aggregateReport.innerHTML = `
-                <div class="card">
-                    <h3>الإيرادات (الفواتير)</h3>
-                    <div class="card-value">${totalRevenue.toLocaleString()} ج.م</div>
-                    <p>إجمالي قيمة الفواتير</p>
-                </div>
-                <div class="card">
-                    <h3>عمولات الفنيين</h3>
-                    <div class="card-value">${totalTechCommission.toLocaleString()} ج.م</div>
-                    <p>إجمالي عمولات الفنيين</p>
-                </div>
-                <div class="card">
-                    <h3>مصروفات التشغيل</h3>
-                    <div class="card-value">${totalOrderExpenses.toLocaleString()} ج.م</div>
-                    <p>إجمالي مصروفات الأوردرات</p>
-                </div>
-                <div class="card">
-                    <h3>المصروفات العامة</h3>
-                    <div class="card-value">${totalGeneralExpenses.toLocaleString()} ج.م</div>
-                    <p>إجمالي المصروفات العامة</p>
-                </div>
-                <div class="card">
-                    <h3>صافي الربح</h3>
-                    <div class="card-value ${finalNetProfit >= 0 ? 'card-profit' : 'card-loss'}">${finalNetProfit.toLocaleString()} ج.م</div>
-                    <p>الإيرادات - (عمولات الفنيين + المصروفات)</p>
-                </div>
-            `;
-        }
-        
-        // تحميل ملخص العمليات
-        function loadOperationsSummary() {
-            const fromDate = document.getElementById('summaryFromDate').value;
-            const toDate = document.getElementById('summaryToDate').value;
-            
-            const operationsSummary = document.getElementById('operationsSummary');
-            const detailedSummary = document.getElementById('detailedSummary');
-            
-            // تصفية الفواتير حسب التاريخ
-            let filteredOrders = orders;
-            if (fromDate || toDate) {
-                filteredOrders = orders.filter(order => {
-                    const orderDate = new Date(order.date);
-                    const from = fromDate ? new Date(fromDate) : null;
-                    const to = toDate ? new Date(toDate) : null;
-                    
-                    if (from && orderDate < from) return false;
-                    if (to && orderDate > to) return false;
-                    
-                    return true;
-                });
-            }
-            
-            // تصفية المصروفات حسب التاريخ
-            let filteredOrderExpenses = orderExpenses;
-            let filteredGeneralExpenses = generalExpenses;
-            
-            if (fromDate || toDate) {
-                filteredOrderExpenses = orderExpenses.filter(expense => {
-                    const expenseDate = new Date(expense.date);
-                    const from = fromDate ? new Date(fromDate) : null;
-                    const to = toDate ? new Date(toDate) : null;
-                    
-                    if (from && expenseDate < from) return false;
-                    if (to && expenseDate > to) return false;
-                    
-                    return true;
-                });
-                
-                filteredGeneralExpenses = generalExpenses.filter(expense => {
-                    const expenseDate = new Date(expense.date);
-                    const from = fromDate ? new Date(fromDate) : null;
-                    const to = toDate ? new Date(toDate) : null;
-                    
-                    if (from && expenseDate < from) return false;
-                    if (to && expenseDate > to) return false;
-                    
-                    return true;
-                });
-            }
-            
-            // حساب الإيرادات حسب النوع
-            const revenueByType = {};
-            filteredOrders.forEach(order => {
-                if (!revenueByType[order.repairType]) {
-                    revenueByType[order.repairType] = 0;
+            const backupData = {
+                id: timestamp,
+                name: `نسخة يدوية - ${dateStr}`,
+                date: new Date().toISOString(),
+                data: {
+                    users: JSON.parse(JSON.stringify(users)),
+                    technicians: JSON.parse(JSON.stringify(technicians)),
+                    customers: JSON.parse(JSON.stringify(customers)),
+                    orders: JSON.parse(JSON.stringify(orders)),
+                    orderExpenses: JSON.parse(JSON.stringify(orderExpenses)),
+                    generalExpenses: JSON.parse(JSON.stringify(generalExpenses)),
+                    advances: JSON.parse(JSON.stringify(advances))
                 }
-                revenueByType[order.repairType] += order.amount;
-            });
-            
-            // حساب مصروفات التشغيل حسب النوع
-            const orderExpensesByType = {
-                "قطع غيار": 0,
-                "مواصلات": 0,
-                "أخرى": 0
             };
             
-            filteredOrderExpenses.forEach(expense => {
-                orderExpensesByType["قطع غيار"] += expense.parts || 0;
-                orderExpensesByType["مواصلات"] += expense.transport || 0;
-                orderExpensesByType["أخرى"] += expense.other || 0;
-            });
+            // إضافة النسخة إلى القائمة
+            backups.unshift(backupData);
             
-            // حساب عمولات الفنيين
-            const techCommissions = {};
-            filteredOrders.forEach(order => {
-                const tech = technicians.find(t => t.id === order.technicianId);
-                if (tech) {
-                    if (!techCommissions[tech.name]) {
-                        techCommissions[tech.name] = 0;
-                    }
-                    techCommissions[tech.name] += order.amount * (tech.percentage / 100);
-                }
-            });
-            
-            // حساب المصروفات العامة حسب النوع
-            const generalExpensesByType = {};
-            filteredGeneralExpenses.forEach(expense => {
-                if (!generalExpensesByType[expense.type]) {
-                    generalExpensesByType[expense.type] = 0;
-                }
-                generalExpensesByType[expense.type] += expense.amount;
-            });
-            
-            // حساب المجاميع
-            const totalRevenue = filteredOrders.reduce((sum, order) => sum + order.amount, 0);
-            const totalOrderExpenses = filteredOrderExpenses.reduce((sum, exp) => sum + (exp.parts || 0) + (exp.transport || 0) + (exp.other || 0), 0);
-            const totalTechCommission = Object.values(techCommissions).reduce((sum, val) => sum + val, 0);
-            const totalGeneralExpenses = filteredGeneralExpenses.reduce((sum, exp) => sum + exp.amount, 0);
-            const netProfit = totalRevenue - totalTechCommission - totalOrderExpenses - totalGeneralExpenses;
-            
-            // عرض ملخص العمليات
-            operationsSummary.innerHTML = `
-                <div class="card">
-                    <h3>الإيرادات</h3>
-                    <div class="card-value">${totalRevenue.toLocaleString()} ج.م</div>
-                    <p>إجمالي الفواتير</p>
-                </div>
-                <div class="card">
-                    <h3>مصروفات التشغيل</h3>
-                    <div class="card-value">${totalOrderExpenses.toLocaleString()} ج.م</div>
-                    <p>مصروفات الأوردرات</p>
-                </div>
-                <div class="card">
-                    <h3>عمولات الفنيين</h3>
-                    <div class="card-value">${totalTechCommission.toLocaleString()} ج.م</div>
-                    <p>إجمالي عمولات الفنيين</p>
-                </div>
-                <div class="card">
-                    <h3>المصروفات العامة</h3>
-                    <div class="card-value">${totalGeneralExpenses.toLocaleString()} ج.م</div>
-                    <p>إجمالي المصروفات العامة</p>
-                </div>
-                <div class="card">
-                    <h3>صافي الربح</h3>
-                    <div class="card-value ${netProfit >= 0 ? 'card-profit' : 'card-loss'}">${netProfit.toLocaleString()} ج.م</div>
-                    <p>النتيجة النهائية</p>
-                </div>
-            `;
-            
-            // عرض التفاصيل
-            let detailedHTML = `
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                        <h4 style="color: #1a8c5e; margin-bottom: 10px;">الإيرادات حسب النوع</h4>
-                        <ul style="list-style: none; padding: 0;">
-            `;
-            
-            // إيرادات حسب النوع
-            for (const [type, amount] of Object.entries(revenueByType)) {
-                detailedHTML += `<li style="padding: 5px 0; border-bottom: 1px solid #eee;">${type}: <strong>${amount.toLocaleString()} ج.م</strong></li>`;
+            // الاحتفاظ فقط بآخر 10 نسخ
+            if (backups.length > 10) {
+                backups = backups.slice(0, 10);
             }
             
-            detailedHTML += `
-                        </ul>
-                    </div>
-                    
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                        <h4 style="color: #1a8c5e; margin-bottom: 10px;">مصروفات التشغيل</h4>
-                        <ul style="list-style: none; padding: 0;">
-            `;
+            saveData();
+            loadBackups();
             
-            // مصروفات التشغيل حسب النوع
-            for (const [type, amount] of Object.entries(orderExpensesByType)) {
-                if (amount > 0) {
-                    detailedHTML += `<li style="padding: 5px 0; border-bottom: 1px solid #eee;">${type}: <strong>${amount.toLocaleString()} ج.م</strong></li>`;
-                }
+            alert('تم إنشاء نسخة احتياطية بنجاح');
+        }
+        
+        // استعادة آخر نسخة
+        function restoreLastBackup() {
+            if (backups.length === 0) {
+                alert('لا توجد نسخ احتياطية');
+                return;
             }
             
-            detailedHTML += `
-                        </ul>
-                    </div>
-                    
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                        <h4 style="color: #1a8c5e; margin-bottom: 10px;">عمولات الفنيين</h4>
-                        <ul style="list-style: none; padding: 0;">
-            `;
-            
-            // عمولات الفنيين
-            for (const [name, amount] of Object.entries(techCommissions)) {
-                detailedHTML += `<li style="padding: 5px 0; border-bottom: 1px solid #eee;">${name}: <strong>${amount.toLocaleString()} ج.م</strong></li>`;
+            if (confirm('هل أنت متأكد من استعادة آخر نسخة احتياطية؟ سيتم استبدال جميع البيانات الحالية.')) {
+                const lastBackup = backups[0];
+                restoreBackup(lastBackup.id);
             }
+        }
+        
+        // استعادة نسخة محددة
+        function restoreBackup(backupId) {
+            const backup = backups.find(b => b.id === backupId);
+            if (!backup) return;
             
-            detailedHTML += `
-                        </ul>
-                    </div>
-                    
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                        <h4 style="color: #1a8c5e; margin-bottom: 10px;">المصروفات العامة</h4>
-                        <ul style="list-style: none; padding: 0;">
-            `;
-            
-            // المصروفات العامة
-            for (const [type, amount] of Object.entries(generalExpensesByType)) {
-                detailedHTML += `<li style="padding: 5px 0; border-bottom: 1px solid #eee;">${type}: <strong>${amount.toLocaleString()} ج.م</strong></li>`;
+            if (confirm(`هل أنت متأكد من استعادة النسخة "${backup.name}"؟ سيتم استبدال جميع البيانات الحالية.`)) {
+                users = JSON.parse(JSON.stringify(backup.data.users));
+                technicians = JSON.parse(JSON.stringify(backup.data.technicians));
+                customers = JSON.parse(JSON.stringify(backup.data.customers));
+                orders = JSON.parse(JSON.stringify(backup.data.orders));
+                orderExpenses = JSON.parse(JSON.stringify(backup.data.orderExpenses));
+                generalExpenses = JSON.parse(JSON.stringify(backup.data.generalExpenses));
+                advances = JSON.parse(JSON.stringify(backup.data.advances));
+                
+                saveData();
+                loadDataBasedOnRole();
+                
+                alert('تم استعادة النسخة الاحتياطية بنجاح');
             }
-            
-            detailedHTML += `
-                        </ul>
-                    </div>
-                </div>
-            `;
-            
-            detailedSummary.innerHTML = detailedHTML;
+        }
+        
+        // حذف نسخة احتياطية
+        function deleteBackup(id) {
+            if (confirm('هل أنت متأكد من حذف هذه النسخة الاحتياطية؟')) {
+                backups = backups.filter(backup => backup.id !== id);
+                saveData();
+                loadBackups();
+            }
         }
         
         // إظهار نافذة تغيير كلمة المرور
@@ -2961,72 +3524,20 @@
             }
         }
         
-        // حذف فني
-        function deleteTechnician(id) {
-            if (confirm('هل أنت متأكد من حذف هذا الفني؟')) {
-                technicians = technicians.filter(tech => tech.id !== id);
-                saveData();
-                loadTechnicians();
-                loadOrders();
-                loadDashboard();
-            }
-        }
-        
-        // حذف مستخدم
-        function deleteUser(id) {
-            if (id === currentUser.id) {
-                alert('لا يمكن حذف المستخدم الحالي');
-                return;
-            }
+        // تحديث قائمة أرقام الفواتير في شاشة المصروفات
+        function updateOrderNumberSelect() {
+            const orderNumberSelect = document.getElementById('expenseOrderNumber');
+            orderNumberSelect.innerHTML = '<option value="">اختر رقم الفاتورة</option>';
             
-            if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
-                users = users.filter(user => user.id !== id);
-                saveData();
-                loadUsers();
-                loadLoginUsers();
-            }
+            orders.forEach(order => {
+                const option = document.createElement('option');
+                option.value = order.orderNumber;
+                option.textContent = `${order.orderNumber} (${formatDate(order.date)})`;
+                orderNumberSelect.appendChild(option);
+            });
         }
         
-        // حذف فاتورة
-        function deleteOrder(id) {
-            if (confirm('هل أنت متأكد من حذف هذه الفاتورة؟')) {
-                orders = orders.filter(order => order.id !== id);
-                saveData();
-                loadOrders();
-                loadDashboard();
-            }
-        }
-        
-        // حذف مصروف أوردر
-        function deleteOrderExpense(id) {
-            if (confirm('هل أنت متأكد من حذف هذا المصروف؟')) {
-                orderExpenses = orderExpenses.filter(expense => expense.id !== id);
-                saveData();
-                loadOrderExpenses();
-                loadDashboard();
-            }
-        }
-        
-        // حذف مصروف عام
-        function deleteGeneralExpense(id) {
-            if (confirm('هل أنت متأكد من حذف هذا المصروف العام؟')) {
-                generalExpenses = generalExpenses.filter(expense => expense.id !== id);
-                saveData();
-                loadGeneralExpenses();
-                loadDashboard();
-            }
-        }
-        
-        // حذف سلفة
-        function deleteAdvance(id) {
-            if (confirm('هل أنت متأكد من حذف هذه السلفة؟')) {
-                advances = advances.filter(advance => advance.id !== id);
-                saveData();
-                loadAdvances();
-            }
-        }
-        
-        // وظائف مساعدة
+        // تنسيق التاريخ
         function formatDate(dateString) {
             const date = new Date(dateString);
             const year = date.getFullYear();
@@ -3035,19 +3546,304 @@
             return `${year}-${month}-${day}`;
         }
         
-        // جعل الدوال متاحة عالمياً للاستخدام في الأزرار
+        // تعريف الدوال التي تحتاج إلى الوصول من أزرار HTML
+        window.fillCustomerInfo = fillCustomerInfo;
         window.editTechnician = editTechnician;
-        window.deleteTechnician = deleteTechnician;
+        window.editCustomer = editCustomer;
+        window.deleteCustomer = deleteCustomer;
+        window.editOrder = function(id) {
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                document.getElementById('orderNumber').value = order.orderNumber;
+                document.getElementById('orderDate').value = order.date;
+                document.getElementById('customerPhone').value = order.customerPhone;
+                document.getElementById('customerName').value = order.customerName;
+                document.getElementById('customerAddress').value = order.customerAddress || '';
+                document.getElementById('technician').value = order.technicianId;
+                document.getElementById('repairType').value = order.repairType;
+                document.getElementById('orderAmount').value = order.amount;
+                document.getElementById('orderDescription').value = order.description;
+                
+                // إظهار بيانات العميل
+                const autofillDiv = document.getElementById('customerAutofill');
+                document.getElementById('autofillName').textContent = order.customerName;
+                document.getElementById('autofillAddress').textContent = order.customerAddress || '-';
+                autofillDiv.classList.add('show');
+                
+                editingOrderId = id;
+                
+                // إظهار أزرار التحديث والإلغاء
+                document.getElementById('saveOrderBtn').classList.add('hidden-by-role');
+                document.getElementById('updateOrderBtn').classList.remove('hidden-by-role');
+                document.getElementById('cancelOrderBtn').classList.remove('hidden-by-role');
+            }
+        };
+        
+        window.updateOrder = function() {
+            if (!editingOrderId) return;
+            
+            const orderNumber = document.getElementById('orderNumber').value.trim();
+            const orderDate = document.getElementById('orderDate').value;
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerAddress = document.getElementById('customerAddress').value.trim();
+            const technicianId = parseInt(document.getElementById('technician').value);
+            const repairType = document.getElementById('repairType').value;
+            const orderAmount = parseInt(document.getElementById('orderAmount').value);
+            const orderDescription = document.getElementById('orderDescription').value.trim();
+            
+            if (!orderNumber || !orderDate || !customerPhone || !customerName || !technicianId || !repairType || isNaN(orderAmount) || orderAmount <= 0) {
+                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            // التحقق من عدم تكرار رقم الفاتورة (باستثناء الفاتورة الحالية)
+            if (orders.some(order => order.orderNumber === orderNumber && order.id !== editingOrderId)) {
+                alert('رقم الفاتورة موجود مسبقاً. الرجاء استخدام رقم فاتورة مختلف.');
+                return;
+            }
+            
+            const orderIndex = orders.findIndex(o => o.id === editingOrderId);
+            if (orderIndex !== -1) {
+                orders[orderIndex].orderNumber = orderNumber;
+                orders[orderIndex].date = orderDate;
+                orders[orderIndex].customerName = customerName;
+                orders[orderIndex].customerPhone = customerPhone;
+                orders[orderIndex].customerAddress = customerAddress;
+                orders[orderIndex].technicianId = technicianId;
+                orders[orderIndex].repairType = repairType;
+                orders[orderIndex].amount = orderAmount;
+                orders[orderIndex].description = orderDescription;
+                
+                saveData();
+                loadOrders();
+                loadDashboard();
+                
+                // مسح الحقول وإعادة الحالة
+                cancelEditOrder();
+            }
+        };
+        
+        window.cancelEditOrder = function() {
+            editingOrderId = null;
+            clearOrderForm();
+            
+            document.getElementById('saveOrderBtn').classList.remove('hidden-by-role');
+            document.getElementById('updateOrderBtn').classList.add('hidden-by-role');
+            document.getElementById('cancelOrderBtn').classList.add('hidden-by-role');
+        };
+        
+        window.deleteOrder = function(id) {
+            if (confirm('هل أنت متأكد من حذف هذه الفاتورة؟')) {
+                orders = orders.filter(order => order.id !== id);
+                saveData();
+                loadOrders();
+                loadDashboard();
+            }
+        };
+        
+        window.editOrderExpense = function(id) {
+            const expense = orderExpenses.find(e => e.id === id);
+            if (expense) {
+                document.getElementById('expenseOrderNumber').value = expense.orderNumber;
+                document.getElementById('expenseDate').value = expense.date;
+                document.getElementById('partsExpense').value = expense.parts || 0;
+                document.getElementById('transportExpense').value = expense.transport || 0;
+                document.getElementById('otherExpense').value = expense.other || 0;
+                document.getElementById('expenseDescription').value = expense.description;
+                
+                editingExpenseId = id;
+                
+                // إظهار أزرار التحديث والإلغاء
+                document.getElementById('saveExpenseBtn').classList.add('hidden-by-role');
+                document.getElementById('updateExpenseBtn').classList.remove('hidden-by-role');
+                document.getElementById('cancelExpenseBtn').classList.remove('hidden-by-role');
+            }
+        };
+        
+        window.updateOrderExpense = function() {
+            if (!editingExpenseId) return;
+            
+            const orderNumber = document.getElementById('expenseOrderNumber').value;
+            const expenseDate = document.getElementById('expenseDate').value;
+            const partsExpense = parseInt(document.getElementById('partsExpense').value) || 0;
+            const transportExpense = parseInt(document.getElementById('transportExpense').value) || 0;
+            const otherExpense = parseInt(document.getElementById('otherExpense').value) || 0;
+            const expenseDescription = document.getElementById('expenseDescription').value.trim();
+            
+            if (!orderNumber || !expenseDate || (partsExpense === 0 && transportExpense === 0 && otherExpense === 0)) {
+                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            const expenseIndex = orderExpenses.findIndex(e => e.id === editingExpenseId);
+            if (expenseIndex !== -1) {
+                orderExpenses[expenseIndex].orderNumber = orderNumber;
+                orderExpenses[expenseIndex].date = expenseDate;
+                orderExpenses[expenseIndex].parts = partsExpense;
+                orderExpenses[expenseIndex].transport = transportExpense;
+                orderExpenses[expenseIndex].other = otherExpense;
+                orderExpenses[expenseIndex].description = expenseDescription;
+                
+                saveData();
+                loadOrderExpenses();
+                loadDashboard();
+                
+                // مسح الحقول وإعادة الحالة
+                cancelEditExpense();
+            }
+        };
+        
+        window.cancelEditExpense = function() {
+            editingExpenseId = null;
+            clearExpenseForm();
+            
+            document.getElementById('saveExpenseBtn').classList.remove('hidden-by-role');
+            document.getElementById('updateExpenseBtn').classList.add('hidden-by-role');
+            document.getElementById('cancelExpenseBtn').classList.add('hidden-by-role');
+        };
+        
+        window.deleteOrderExpense = function(id) {
+            if (confirm('هل أنت متأكد من حذف هذا المصروف؟')) {
+                orderExpenses = orderExpenses.filter(expense => expense.id !== id);
+                saveData();
+                loadOrderExpenses();
+                loadDashboard();
+            }
+        };
+        
+        window.editGeneralExpense = function(id) {
+            const expense = generalExpenses.find(e => e.id === id);
+            if (expense) {
+                document.getElementById('generalExpenseDate').value = expense.date;
+                document.getElementById('generalExpenseType').value = expense.type;
+                document.getElementById('generalExpenseAmount').value = expense.amount;
+                document.getElementById('generalExpenseDescription').value = expense.description;
+                
+                editingGeneralExpenseId = id;
+                
+                // إظهار أزرار التحديث والإلغاء
+                document.getElementById('saveGeneralExpenseBtn').classList.add('hidden-by-role');
+                document.getElementById('updateGeneralExpenseBtn').classList.remove('hidden-by-role');
+                document.getElementById('cancelGeneralExpenseBtn').classList.remove('hidden-by-role');
+            }
+        };
+        
+        window.updateGeneralExpense = function() {
+            if (!editingGeneralExpenseId) return;
+            
+            const expenseDate = document.getElementById('generalExpenseDate').value;
+            const expenseType = document.getElementById('generalExpenseType').value;
+            const expenseAmount = parseInt(document.getElementById('generalExpenseAmount').value);
+            const expenseDescription = document.getElementById('generalExpenseDescription').value.trim();
+            
+            if (!expenseDate || !expenseType || isNaN(expenseAmount) || expenseAmount <= 0) {
+                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            const expenseIndex = generalExpenses.findIndex(e => e.id === editingGeneralExpenseId);
+            if (expenseIndex !== -1) {
+                generalExpenses[expenseIndex].date = expenseDate;
+                generalExpenses[expenseIndex].type = expenseType;
+                generalExpenses[expenseIndex].amount = expenseAmount;
+                generalExpenses[expenseIndex].description = expenseDescription;
+                
+                saveData();
+                loadGeneralExpenses();
+                loadDashboard();
+                
+                // مسح الحقول وإعادة الحالة
+                cancelEditGeneralExpense();
+            }
+        };
+        
+        window.cancelEditGeneralExpense = function() {
+            editingGeneralExpenseId = null;
+            clearGeneralExpenseForm();
+            
+            document.getElementById('saveGeneralExpenseBtn').classList.remove('hidden-by-role');
+            document.getElementById('updateGeneralExpenseBtn').classList.add('hidden-by-role');
+            document.getElementById('cancelGeneralExpenseBtn').classList.add('hidden-by-role');
+        };
+        
+        window.deleteGeneralExpense = function(id) {
+            if (confirm('هل أنت متأكد من حذف هذا المصروف العام؟')) {
+                generalExpenses = generalExpenses.filter(expense => expense.id !== id);
+                saveData();
+                loadGeneralExpenses();
+                loadDashboard();
+            }
+        };
+        
+        window.editAdvance = function(id) {
+            const advance = advances.find(a => a.id === id);
+            if (advance) {
+                document.getElementById('advanceEmployee').value = advance.employee;
+                document.getElementById('advanceDate').value = advance.date;
+                document.getElementById('advanceAmount').value = advance.amount;
+                document.getElementById('advanceReason').value = advance.reason;
+                
+                editingAdvanceId = id;
+                
+                // إظهار أزرار التحديث والإلغاء
+                document.getElementById('saveAdvanceBtn').classList.add('hidden-by-role');
+                document.getElementById('updateAdvanceBtn').classList.remove('hidden-by-role');
+                document.getElementById('cancelAdvanceBtn').classList.remove('hidden-by-role');
+            }
+        };
+        
+        window.updateAdvance = function() {
+            if (!editingAdvanceId) return;
+            
+            const employee = document.getElementById('advanceEmployee').value;
+            const advanceDate = document.getElementById('advanceDate').value;
+            const advanceAmount = parseInt(document.getElementById('advanceAmount').value);
+            const advanceReason = document.getElementById('advanceReason').value.trim();
+            
+            if (!employee || !advanceDate || isNaN(advanceAmount) || advanceAmount <= 0) {
+                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            const advanceIndex = advances.findIndex(a => a.id === editingAdvanceId);
+            if (advanceIndex !== -1) {
+                advances[advanceIndex].employee = employee;
+                advances[advanceIndex].date = advanceDate;
+                advances[advanceIndex].amount = advanceAmount;
+                advances[advanceIndex].reason = advanceReason;
+                
+                saveData();
+                loadAdvances();
+                
+                // مسح الحقول وإعادة الحالة
+                cancelEditAdvance();
+            }
+        };
+        
+        window.cancelEditAdvance = function() {
+            editingAdvanceId = null;
+            clearAdvanceForm();
+            
+            document.getElementById('saveAdvanceBtn').classList.remove('hidden-by-role');
+            document.getElementById('updateAdvanceBtn').classList.add('hidden-by-role');
+            document.getElementById('cancelAdvanceBtn').classList.add('hidden-by-role');
+        };
+        
+        window.deleteAdvance = function(id) {
+            if (confirm('هل أنت متأكد من حذف هذه السلفة؟')) {
+                advances = advances.filter(advance => advance.id !== id);
+                saveData();
+                loadAdvances();
+            }
+        };
+        
+        window.showPayAdvanceModal = showPayAdvanceModal;
+        window.restoreBackup = restoreBackup;
+        window.deleteBackup = deleteBackup;
         window.editUser = editUser;
         window.deleteUser = deleteUser;
-        window.editOrder = editOrder;
-        window.deleteOrder = deleteOrder;
-        window.editOrderExpense = editOrderExpense;
-        window.deleteOrderExpense = deleteOrderExpense;
-        window.editGeneralExpense = editGeneralExpense;
-        window.deleteGeneralExpense = deleteGeneralExpense;
-        window.editAdvance = editAdvance;
-        window.deleteAdvance = deleteAdvance;
+        window.deleteTechnician = deleteTechnician;
     </script>
 </body>
 </html>
