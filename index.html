@@ -1643,15 +1643,15 @@
         ];
         
         let customers = JSON.parse(localStorage.getItem('customers')) || [
-            {id: 1, name: "علي محمد", phone: "01012345678", address: "شارع السلام - القاهرة"},
-            {id: 2, name: "محمود أحمد", phone: "01087654321", address: "حي النصر - الجيزة"},
-            {id: 3, name: "سعيد جمال", phone: "01055556666", address: "المعادي - القاهرة"}
+            {id: 1, name: "علي محمد", phone: "01012345678", address: "شارع محمد نجيب - سيدي بشر"},
+            {id: 2, name: "محمود أحمد", phone: "01087654321", address: "شارع 45 - العصافر"},
+            {id: 3, name: "سعيد جمال", phone: "01055556666", address: "فيكتوريا - شارع سيبوية"}
         ];
         
         let orders = JSON.parse(localStorage.getItem('orders')) || [
-            {id: 1, orderNumber: "ORD-001", date: "2025-10-01", customerName: "علي محمد", customerPhone: "01012345678", customerAddress: "شارع السلام - القاهرة", technicianId: 1, repairType: "ثلاجة وتكييف", amount: 500, description: "صيانة ثلاجة"},
-            {id: 2, orderNumber: "ORD-002", date: "2025-10-05", customerName: "محمود أحمد", customerPhone: "01087654321", customerAddress: "حي النصر - الجيزة", technicianId: 2, repairType: "تكييف", amount: 800, description: "صيانة تكييف"},
-            {id: 3, orderNumber: "ORD-003", date: "2025-10-10", customerName: "سعيد جمال", customerPhone: "01055556666", customerAddress: "المعادي - القاهرة", technicianId: 3, repairType: "أجهزة منزلية", amount: 300, description: "صيانة غسالة"}
+            {id: 1, orderNumber: "ORD-001", date: "2025-10-01", customerName: "علي محمد", customerPhone: "01012345678", customerAddress: "شارع محمد نجيب - سيدي بشر", technicianId: 1, repairType: "ثلاجة وتكييف", amount: 500, description: "صيانة ثلاجة"},
+            {id: 2, orderNumber: "ORD-002", date: "2025-10-05", customerName: "محمود أحمد", customerPhone: "01087654321", customerAddress: "شارع 45 - العصافر", technicianId: 2, repairType: "تكييف", amount: 800, description: "صيانة تكييف"},
+            {id: 3, orderNumber: "ORD-003", date: "2025-10-10", customerName: "سعيد جمال", customerPhone: "01055556666", customerAddress: "فيكتوريا - شارع سيبوية", technicianId: 3, repairType: "أجهزة منزلية", amount: 300, description: "صيانة غسالة"}
         ];
         
         let orderExpenses = JSON.parse(localStorage.getItem('orderExpenses')) || [
