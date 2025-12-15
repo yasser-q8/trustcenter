@@ -1773,7 +1773,7 @@ option.textContent = `${user.name} (${getRoleName(user.role, user.name)})`;
         }
         
         // الحصول على اسم الدور
-        function getRoleName(role) {
+function getRoleName(role, userName) {
             switch(role) {
                case 'superAdmin': 
             // إذا كان اسم المستخدم "Yasser" يعرض "مطور النظام"
