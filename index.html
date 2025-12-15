@@ -243,7 +243,7 @@
             position: fixed;
             bottom: 20px;
             left: 20px;
-            background: linear-gradient(135deg, #80EF80, #2196F3);
+            background: linear-gradient(135deg, #FF6E00, #80EF80, #2196F3);
             color: white;
             padding: 10px 18px;
             border-radius: 10px;
@@ -329,7 +329,7 @@
         }
         
         .container {
-            max-width: 1250px;
+            max-width: 1300px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -1077,10 +1077,7 @@
                     <input type="submit" value="تسجيل الدخول" id="loginBtn">
                 </div>
                 
-                <div class="links">
-                    <a href="#" id="forgotPasswordLink">نسيت كلمة المرور؟</a>
-                    <a href="#" id="changeUserLink">تغيير المستخدم</a>
-                </div>
+              
                 
                 <div id="loginError">
                     <i class="fas fa-exclamation-circle"></i> كلمة المرور غير صحيحة
@@ -1913,13 +1910,13 @@
         
         let customers = JSON.parse(localStorage.getItem('customers')) || [
             {id: 1, name: "علي محمد", phone: "01012345678", address: "شارع محمد نجيب - سيدي بشر"},
-            {id: 2, name: "محمود أحمد", phone: "01087654321", address: "شارع 45 - العصافر"},
+            {id: 2, name: "محمود أحمد", phone: "01087654321", address: "شارع 45 - العصافرة"},
             {id: 3, name: "سعيد جمال", phone: "01055556666", address: "فيكتوريا - شارع سيبوية"}
         ];
         
         let orders = JSON.parse(localStorage.getItem('orders')) || [
             {id: 1, orderNumber: "ORD-001", date: "2025-12-01", customerName: "علي محمد", customerPhone: "01012345678", customerAddress: "شارع محمد نجيب - سيدي بشر", technicianId: 1, repairType: "ثلاجة وتكييف", amount: 500, description: "صيانة ثلاجة"},
-            {id: 2, orderNumber: "ORD-002", date: "2025-12-05", customerName: "محمود أحمد", customerPhone: "01087654321", customerAddress: "شارع 45 - العصافر", technicianId: 2, repairType: "تكييف", amount: 800, description: "صيانة تكييف"},
+            {id: 2, orderNumber: "ORD-002", date: "2025-12-05", customerName: "محمود أحمد", customerPhone: "01087654321", customerAddress: "شارع 45 - العصافرة", technicianId: 2, repairType: "تكييف", amount: 800, description: "صيانة تكييف"},
             {id: 3, orderNumber: "ORD-003", date: "2025-12-10", customerName: "سعيد جمال", customerPhone: "01055556666", customerAddress: "فيكتوريا - شارع سيبوية", technicianId: 3, repairType: "أجهزة منزلية", amount: 300, description: "صيانة غسالة"}
         ];
         
@@ -2005,18 +2002,7 @@
                 if (e.key === 'Enter') login();
             });
             
-            // نسيت كلمة المرور
-            document.getElementById('forgotPasswordLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                alert('كلمة المرور الافتراضية هي "123"');
-            });
-            
-            // تغيير المستخدم
-            document.getElementById('changeUserLink').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('loginUser').focus();
-            });
-            
+                        
             // تسجيل الخروج
             document.getElementById('logoutBtn').addEventListener('click', logout);
             
