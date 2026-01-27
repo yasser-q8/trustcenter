@@ -9,6 +9,8 @@
     <title>برنامج مركز تراست لصيانة الأجهزة المنزلية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         /* إعادة تعيين عام */
         * {
@@ -244,7 +246,7 @@
             position: fixed;
             bottom: 20px;
             left: 20px;
-            background: linear-gradient(135deg, #FF6E00, #80EF80, #2196F3);
+            background: linear-gradient(135deg,  #80EF80, #2196F3);
             color: white;
             padding: 10px 18px;
             border-radius: 10px;
@@ -327,6 +329,7 @@
             background-blend-mode: overlay;
             overflow-y: auto;
             min-height: 100vh;
+            padding-top: 100px; /* لتعويض الشريط الثابت */
         }
         
         .container {
@@ -340,18 +343,25 @@
             display: none;
         }
         
-        /* الهيدر */
+        /* الهيدر - ثابت في الأعلى */
         header {
             background: linear-gradient(135deg, #1a8c5e 0%, #2ecc71 100%);
             color: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 15px 20px;
+            border-radius: 0 0 10px 10px;
             margin-bottom: 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             flex-wrap: wrap;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            max-width: 1350px;
+            margin: 0 auto;
         }
         
         .logo-container {
@@ -361,8 +371,8 @@
         }
         
         .logo {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             background-color: white;
             display: flex;
@@ -379,12 +389,12 @@
         }
         
         .header-text h1 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 5px;
         }
         
         .header-text p {
-            font-size: 1rem;
+            font-size: 0.9rem;
             opacity: 0.9;
         }
         
@@ -393,27 +403,27 @@
             align-items: center;
             gap: 10px;
             flex-wrap: wrap;
-            margin-top: 10px;
+            margin-top: 5px;
         }
         
         .user-name {
             background-color: rgba(255, 255, 255, 0.2);
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         
         .logout-btn {
             background-color: #FF6E00;
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 6px 12px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         
         .logout-btn:hover {
@@ -429,6 +439,7 @@
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             flex-wrap: wrap;
+            margin-top: 20px;
         }
         
         .nav-btn {
@@ -654,7 +665,7 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-top: 5px solid #FF6E00;
+            border-top: 5px solid #28a745;
             transition: all 0.3s ease;
             min-height: 130px;
         }
@@ -713,7 +724,7 @@
             color: #ddd;
         }
         
-        /* مربعات مصروفات الأوردر */
+        /* مربعات مصروفات الفاتورة */
         .expense-inputs {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -919,6 +930,53 @@
             font-weight: 500; 
         }
         
+        /* قسم مصروفات الفاتورة */
+        .order-expenses-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px dashed #ddd;
+        }
+        
+        .order-expenses-section h4 {
+            color: #1a8c5e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* تتبع حركة الشركاء */
+        .partner-transactions {
+            background: #f0f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #4a90e2;
+        }
+        
+        .partner-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .partner-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-top: 4px solid #4a90e2;
+        }
+        
+        .partner-card h5 {
+            color: #4a90e2;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
         @media (max-width: 1200px) {
             .dashboard-cards {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -965,10 +1023,11 @@
             }
             
             .header-text h1 {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
             
             header {
+                padding: 10px;
                 flex-direction: column;
                 align-items: flex-start;
             }
@@ -976,7 +1035,7 @@
             .user-info {
                 width: 100%;
                 justify-content: center;
-                margin-top: 15px;
+                margin-top: 10px;
             }
             
             .date-filter {
@@ -988,6 +1047,10 @@
         @media (max-width: 576px) {
             .dashboard-cards {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            body.app-screen {
+                padding-top: 140px;
             }
         }
         
@@ -1077,6 +1140,21 @@
         body.app-screen #mainApp {
             display: block;
         }
+        
+        /* نموذج PDF مخفي */
+        .pdf-template {
+            position: fixed;
+            left: -10000px;
+            top: -10000px;
+            width: 794px;
+            height: 1123px;
+            background: white;
+            padding: 10px;
+            box-sizing: border-box;
+            z-index: -1000;
+            font-size: 12px;
+            font-family: 'Times New Roman', serif;
+        }
     </style>
 </head>
 <body class="login-screen">
@@ -1161,14 +1239,14 @@
                 <button class="nav-btn" data-section="orders">
                     <i class="fas fa-file-invoice-dollar"></i> تسجيل الفواتير
                 </button>
-                <button class="nav-btn" data-section="order-expenses">
-                    <i class="fas fa-tools"></i> مصروفات الأوردر
-                </button>
                 <button class="nav-btn" data-section="general-expenses" id="generalExpensesNav">
                     <i class="fas fa-receipt"></i> المصروفات العامة
                 </button>
                 <button class="nav-btn" data-section="advances" id="advancesNav">
                     <i class="fas fa-hand-holding-usd"></i> سلف الموظفين
+                </button>
+                <button class="nav-btn" data-section="partner-transactions" id="partnerTransactionsNav">
+                    <i class="fas fa-handshake"></i> حركة الشركاء
                 </button>
                 <button class="nav-btn" data-section="reports" id="reportsNav">
                     <i class="fas fa-chart-bar"></i> التقارير
@@ -1213,7 +1291,7 @@
                         <p id="commissionsPeriod">لهذا الشهر</p>
                     </div>
                     <div class="card">
-                        <h3>مصروفات الأوردرات</h3>
+                        <h3>مصروفات الفواتير</h3>
                         <div class="card-value" id="totalOrderExpensesCard">0 ج.م</div>
                         <p id="orderExpensesPeriod">لهذا الشهر</p>
                     </div>
@@ -1228,9 +1306,9 @@
                         <p id="profitPeriod">لهذا الشهر</p>
                     </div>
                     <div class="card">
-                        <h3>نسبة الربحية</h3>
-                        <div class="card-value" id="profitPercentage">0%</div>
-                        <p id="percentagePeriod">متوسط الربحية</p>
+                        <h3>نسبة الشريك الثاني (5%)</h3>
+                        <div class="card-value" id="partnerShare">0 ج.م</div>
+                        <p id="partnerPeriod">من صافي الربح</p>
                     </div>
                     <div class="card">
                         <h3>عدد الفواتير</h3>
@@ -1461,6 +1539,48 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- إدارة أنواع التصليح -->
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: #1a8c5e; margin-bottom: 15px;"><i class="fas fa-tools"></i> إدارة أنواع التصليح</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="repairTypeName">اسم نوع التصليح</label>
+                            <input type="text" id="repairTypeName" placeholder="أدخل نوع التصليح">
+                        </div>
+                    </div>
+                    <div class="action-btns">
+                        <button id="addRepairTypeBtn" class="btn btn-orange">
+                            <i class="fas fa-plus"></i> إضافة نوع تصليح
+                        </button>
+                        <button id="updateRepairTypeBtn" class="btn btn-success hidden-by-role">
+                            <i class="fas fa-save"></i> تحديث النوع
+                        </button>
+                        <button id="cancelRepairTypeBtn" class="btn btn-danger hidden-by-role">
+                            <i class="fas fa-times"></i> إلغاء التعديل
+                        </button>
+                    </div>
+                    
+                    <div class="table-container" style="margin-top: 30px;">
+                        <h4 style="color: #444; margin-bottom: 15px;">قائمة أنواع التصليح</h4>
+                        <table id="repairTypesTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>اسم نوع التصليح</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="repairTypesTableBody">
+                                <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                            </tbody>
+                        </table>
+                        <div id="noRepairTypes" class="empty-message">
+                            <i class="fas fa-tools"></i>
+                            <p>لا يوجد أنواع تصليح مسجلة بعد.</p>
+                        </div>
+                    </div>
+                </div>
             </section>
             
             <!-- شاشة تسجيل الفواتير -->
@@ -1517,17 +1637,66 @@
                     <div class="form-group">
                         <label for="repairType">نوع التصليح</label>
                         <select id="repairType">
-                            <option value="ثلاجة وتكييف">ثلاجة وتكييف</option>
-                            <option value="تكييف">تكييف</option>
-                            <option value="أجهزة منزلية">أجهزة منزلية</option>
-                            <option value="أخرى">أخرى</option>
+                            <!-- سيتم ملؤها بالبيانات من JavaScript -->
                         </select>
                     </div>
                 </div>
+                
+                <!-- قسم مصروفات الفاتورة -->
+                <div class="order-expenses-section">
+                    <h4><i class="fas fa-tools"></i> مصروفات الفاتورة</h4>
+                    <div class="expense-inputs">
+                        <div class="expense-box">
+                            <label for="partsExpense">قطع غيار (ج.م)</label>
+                            <input type="number" id="partsExpense" min="0" placeholder="مبلغ قطع الغيار" value="0">
+                        </div>
+                        <div class="expense-box">
+                            <label for="transportExpense">مواصلات (ج.م)</label>
+                            <input type="number" id="transportExpense" min="0" placeholder="مبلغ المواصلات" value="0">
+                        </div>
+                        <div class="expense-box">
+                            <label for="otherExpense">أخرى (ج.م)</label>
+                            <input type="number" id="otherExpense" min="0" placeholder="مصاريف أخرى" value="0">
+                        </div>
+                        <div class="expense-box">
+                            <label for="additionalExpense">مصروفات إضافية (ج.م)</label>
+                            <input type="number" id="additionalExpense" min="0" placeholder="مصروفات إضافية" value="0">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="expenseDescription">بيان المصروفات</label>
+                        <textarea id="expenseDescription" rows="2" placeholder="تفاصيل المصروفات"></textarea>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <label for="orderDescription">بيان الفاتورة (وصف الأعمال)</label>
                     <textarea id="orderDescription" rows="3" placeholder="تفاصيل الأعمال المنفذة"></textarea>
                 </div>
+                
+                <!-- ملخص الفاتورة -->
+                <div class="expense-summary" style="background: #e8f5e9; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <h4><i class="fas fa-calculator"></i> ملخص الفاتورة</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 10px;">
+                        <div>
+                            <label>إجمالي المبلغ:</label>
+                            <div id="totalAmountDisplay" style="font-weight: bold; font-size: 1.2rem;">0 ج.م</div>
+                        </div>
+                        <div>
+                            <label>إجمالي المصروفات:</label>
+                            <div id="totalExpensesDisplay" style="font-weight: bold; font-size: 1.2rem;">0 ج.م</div>
+                        </div>
+                        <div>
+                            <label>صافي المبلغ:</label>
+                            <div id="netAmountDisplay" style="font-weight: bold; font-size: 1.2rem; color: #1a8c5e;">0 ج.م</div>
+                        </div>
+                        <div>
+                            <label>عمولة الفني:</label>
+                            <div id="technicianCommissionDisplay" style="font-weight: bold; font-size: 1.2rem;">0 ج.م</div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="action-btns">
                     <button id="saveOrderBtn" class="btn btn-success">
                         <i class="fas fa-save"></i> حفظ الفاتورة
@@ -1557,6 +1726,9 @@
                                 <th>العنوان</th>
                                 <th>نوع التصليح</th>
                                 <th>المبلغ (ج.م)</th>
+                                <th>المصروفات</th>
+                                <th>صافي المبلغ</th>
+                                <th>عمولة الفني</th>
                                 <th>اسم الفني</th>
                                 <th>الإجراءات</th>
                             </tr>
@@ -1568,79 +1740,6 @@
                     <div id="noOrders" class="empty-message">
                         <i class="fas fa-file-invoice"></i>
                         <p>لا يوجد فواتير مسجلة بعد. قم بإضافة فاتورة جديدة.</p>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- شاشة مصروفات الأوردر -->
-            <section id="order-expenses" class="content-section">
-                <h2 class="section-title"><i class="fas fa-tools"></i> تسجيل مصروفات الأوردر</h2>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="expenseOrderNumber">رقم الأوردر (الفاتورة)</label>
-                        <select id="expenseOrderNumber">
-                            <option value="">اختر رقم الفاتورة</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="expenseDate">تاريخ المصروف</label>
-                        <input type="date" id="expenseDate">
-                    </div>
-                </div>
-                
-                <div class="expense-inputs">
-                    <div class="expense-box">
-                        <label for="partsExpense">قطع غيار (ج.م)</label>
-                        <input type="number" id="partsExpense" min="0" placeholder="مبلغ قطع الغيار">
-                    </div>
-                    <div class="expense-box">
-                        <label for="transportExpense">مواصلات (ج.م)</label>
-                        <input type="number" id="transportExpense" min="0" placeholder="مبلغ المواصلات">
-                    </div>
-                    <div class="expense-box">
-                        <label for="otherExpense">أخرى (ج.م)</label>
-                        <input type="number" id="otherExpense" min="0" placeholder="مصاريف أخرى">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="expenseDescription">بيان المصروف</label>
-                    <textarea id="expenseDescription" rows="3" placeholder="تفاصيل المصروف"></textarea>
-                </div>
-                <div class="action-btns">
-                    <button id="saveExpenseBtn" class="btn btn-success">
-                        <i class="fas fa-save"></i> حفظ المصروف
-                    </button>
-                    <button id="updateExpenseBtn" class="btn btn-success hidden-by-role">
-                        <i class="fas fa-save"></i> تحديث المصروف
-                    </button>
-                    <button id="cancelExpenseBtn" class="btn btn-danger hidden-by-role">
-                        <i class="fas fa-times"></i> إلغاء التعديل
-                    </button>
-                </div>
-                
-                <div class="table-container" style="margin-top: 40px;">
-                    <h3 class="section-title"><i class="fas fa-list"></i> مصروفات الأوردرات</h3>
-                    <table id="expensesTable">
-                        <thead>
-                            <tr>
-                                <th>رقم الفاتورة</th>
-                                <th>تاريخ المصروف</th>
-                                <th>قطع غيار</th>
-                                <th>مواصلات</th>
-                                <th>أخرى</th>
-                                <th>الإجمالي</th>
-                                <th>البيان</th>
-                                <th>الإجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="expensesTableBody">
-                            <!-- سيتم ملؤها بالبيانات من JavaScript -->
-                        </tbody>
-                    </table>
-                    <div id="noExpenses" class="empty-message">
-                        <i class="fas fa-tools"></i>
-                        <p>لا يوجد مصروفات مسجلة بعد. قم بإضافة مصروف جديد.</p>
                     </div>
                 </div>
             </section>
@@ -1662,6 +1761,9 @@
                             <option value="الرواتب">الرواتب</option>
                             <option value="النظافة">النظافة</option>
                             <option value="الضيافة">الضيافة</option>
+                            <option value="كهرباء">كهرباء</option>
+                            <option value="مياه">مياه</option>
+                            <option value="غاز">غاز</option>
                             <option value="أخرى">أخرى</option>
                         </select>
                     </div>
@@ -1771,6 +1873,9 @@
                         <button id="resetAdvancesBtn" class="btn">
                             <i class="fas fa-redo"></i> عرض الكل
                         </button>
+                        <button id="exportAdvancesPDF" class="btn btn-info">
+                            <i class="fas fa-file-pdf"></i> تصدير PDF
+                        </button>
                     </div>
                     
                     <!-- ملخص الذمة -->
@@ -1802,6 +1907,136 @@
                 </div>
             </section>
             
+            <!-- شاشة حركة الشركاء -->
+            <section id="partner-transactions" class="content-section">
+                <h2 class="section-title"><i class="fas fa-handshake"></i> حركة الشركاء والسحوبات</h2>
+                
+                <!-- ملخص الشركاء -->
+                <div class="partner-summary">
+                    <div class="partner-card">
+                        <h5>الشريك الأول (وائل)</h5>
+                        <div class="card-value" id="partner1Balance">0 ج.م</div>
+                        <p>إجمالي السحوبات</p>
+                    </div>
+                    <div class="partner-card">
+                        <h5>الشريك الثاني (5%)</h5>
+                        <div class="card-value" id="partner2Share">0 ج.م</div>
+                        <p>حصة الشريك الثاني</p>
+                    </div>
+                    <div class="partner-card">
+                        <h5>سحوبات الشريك الثاني</h5>
+                        <div class="card-value" id="partner2Withdrawals">0 ج.م</div>
+                        <p>إجمالي السحوبات</p>
+                    </div>
+                    <div class="partner-card">
+                        <h5>رصيد الشريك الثاني</h5>
+                        <div class="card-value card-profit" id="partner2Balance">0 ج.م</div>
+                        <p>الرصيد المستحق</p>
+                    </div>
+                </div>
+                
+                <!-- تسجيل سحوبة للشريك الأول -->
+                <div class="partner-transactions">
+                    <h4><i class="fas fa-money-bill-wave"></i> تسجيل سحوبة للشريك الأول (وائل)</h4>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="partner1Date">تاريخ السحوبة</label>
+                            <input type="date" id="partner1Date">
+                        </div>
+                        <div class="form-group">
+                            <label for="partner1Amount">مبلغ السحوبة (ج.م)</label>
+                            <input type="number" id="partner1Amount" min="0" placeholder="مبلغ السحوبة">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="partner1Description">بيان السحوبة</label>
+                        <textarea id="partner1Description" rows="2" placeholder="تفاصيل السحوبة"></textarea>
+                    </div>
+                    <div class="action-btns">
+                        <button id="savePartner1WithdrawalBtn" class="btn btn-orange">
+                            <i class="fas fa-save"></i> تسجيل سحوبة
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- تسجيل سحوبة للشريك الثاني -->
+                <div class="partner-transactions">
+                    <h4><i class="fas fa-money-bill-wave"></i> تسجيل سحوبة للشريك الثاني (5%)</h4>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="partner2Date">تاريخ السحوبة</label>
+                            <input type="date" id="partner2Date">
+                        </div>
+                        <div class="form-group">
+                            <label for="partner2Amount">مبلغ السحوبة (ج.م)</label>
+                            <input type="number" id="partner2Amount" min="0" placeholder="مبلغ السحوبة">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="partner2Description">بيان السحوبة</label>
+                        <textarea id="partner2Description" rows="2" placeholder="تفاصيل السحوبة"></textarea>
+                    </div>
+                    <div class="action-btns">
+                        <button id="savePartner2WithdrawalBtn" class="btn btn-orange">
+                            <i class="fas fa-save"></i> تسجيل سحوبة
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- فلاتر حركة الشركاء -->
+                <div class="date-filter">
+                    <div>
+                        <label for="partnerFromDate">من تاريخ</label>
+                        <input type="date" id="partnerFromDate">
+                    </div>
+                    <div>
+                        <label for="partnerToDate">إلى تاريخ</label>
+                        <input type="date" id="partnerToDate">
+                    </div>
+                    <div>
+                        <label for="partnerTypeFilter">نوع الحركة</label>
+                        <select id="partnerTypeFilter">
+                            <option value="">جميع الحركات</option>
+                            <option value="partner1">الشريك الأول</option>
+                            <option value="partner2">الشريك الثاني</option>
+                        </select>
+                    </div>
+                    <button id="filterPartnerTransactionsBtn" class="btn">
+                        <i class="fas fa-filter"></i> تصفية
+                    </button>
+                    <button id="resetPartnerTransactionsBtn" class="btn">
+                        <i class="fas fa-redo"></i> عرض الكل
+                    </button>
+                    <button id="exportPartnerPDF" class="btn btn-info">
+                        <i class="fas fa-file-pdf"></i> تصدير PDF
+                    </button>
+                </div>
+                
+                <!-- جدول حركة الشركاء -->
+                <div class="table-container">
+                    <h3 class="section-title"><i class="fas fa-list"></i> حركة الشركاء</h3>
+                    <table id="partnerTransactionsTable">
+                        <thead>
+                            <tr>
+                                <th>التاريخ</th>
+                                <th>اسم الشريك</th>
+                                <th>نوع الحركة</th>
+                                <th>المبلغ (ج.م)</th>
+                                <th>البيان</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="partnerTransactionsTableBody">
+                            <!-- سيتم ملؤها بالبيانات من JavaScript -->
+                        </tbody>
+                    </table>
+                    <div id="noPartnerTransactions" class="empty-message">
+                        <i class="fas fa-handshake"></i>
+                        <p>لا توجد حركات للشركاء بعد.</p>
+                    </div>
+                </div>
+            </section>
+            
             <!-- شاشة التقارير -->
             <section id="reports" class="content-section">
                 <h2 class="section-title"><i class="fas fa-chart-bar"></i> التقارير الشاملة</h2>
@@ -1825,6 +2060,9 @@
                         <button id="resetReportBtn" class="btn">
                             <i class="fas fa-redo"></i> عرض الكل
                         </button>
+                        <button id="exportReportPDF" class="btn btn-info">
+                            <i class="fas fa-file-pdf"></i> تصدير PDF
+                        </button>
                     </div>
                     
                     <div class="report-table">
@@ -1834,10 +2072,13 @@
                                     <th>رقم الفاتورة</th>
                                     <th>التاريخ</th>
                                     <th>قيمة الفاتورة</th>
+                                    <th>المصروفات</th>
+                                    <th>صافي قبل العمولة</th>
                                     <th>اسم الفني</th>
                                     <th>عمولة الفني</th> 
-                                    <th>مصروفات الأوردر</th>
-                                    <th>صافي الربح</th>
+                                    <th>صافي بعد العمولة</th>
+                                    <th>حصة الشريك (5%)</th>
+                                    <th>صافي المركز</th>
                                     <th>نسبة الربح</th>
                                 </tr>
                             </thead>
@@ -2020,6 +2261,55 @@
             <div class="name">Yasser Elkhateeb</div>
             <div class="title">مطور البرنامج 01146118541</div>
         </div>
+        
+        <!-- نموذج PDF مخفي -->
+        <div id="pdf-template" class="pdf-template">
+            <div class="pdf-header" style="padding: 5px; margin-bottom: 10px; padding-left: 30px;">
+                <div class="pdf-header-row" style="text-align: center;">
+                    <div style="text-align: center; margin-bottom: 10px;">
+                        <img src="https://i.postimg.cc/LX5MPzBx/logo.jpg" alt="شعار الشركة" 
+                             style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #4a90e2; margin-bottom: 5px; margin: 0 auto 5px; display: block;">
+                        <h2 style="color: #4a90e2; margin: 0; font-size: 18px;">
+                            مركز تراست لصيانة الأجهزة المنزلية
+                        </h2>
+                    </div>
+                    <h3 style="color: #4a90e2; margin: 0 0 8px 0; font-size: 16px;" id="pdf-title">كشف حساب</h3>
+                    <div style="margin-bottom: 8px; text-align: center;">
+                        <div style="font-size: 14px; font-weight: bold; display: inline-block;">
+                            <span id="pdf-subject-name"></span>
+                        </div>
+                        <div style="display: inline-block; width: 1cm;"></div>
+                        <div style="font-size: 12px; display: inline-block;">
+                            النوع: <span id="pdf-subject-type"></span>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 11px;">
+                        <div>الفترة: من <span id="pdf-start-date"></span> إلى <span id="pdf-end-date"></span></div>
+                        <div>تاريخ الطباعة: <span id="pdf-print-date"></span></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="pdf-summary" style="margin-bottom: 10px; padding: 8px; background: #f8f9fa; border-radius: 4px; font-size: 11px; padding-left: 30px;">
+            </div>
+            
+            <table class="statement-table" id="pdf-statement-table" style="font-size: 10px; border-collapse: collapse; width: calc(100% - 40px); margin-left: 30px;">
+                <thead>
+                    <tr>
+                        <th width="15%" style="padding: 4px; border: 1px solid #000; text-align: center; background: #4a90e2; color: white;">التاريخ</th>
+                        <th width="20%" style="padding: 4px; border: 1px solid #000; text-align: center; background: #4a90e2; color: white;">البيان</th>
+                        <th width="15%" style="padding: 4px; border: 1px solid #000; text-align: center; background: #4a90e2; color: white;">نوع الحركة</th>
+                        <th width="15%" style="padding: 4px; border: 1px solid #000; text-align: center; background: #4a90e2; color: white;">مدين</th>
+                        <th width="15%" style="padding: 4px; border: 1px solid #000; text-align: center; background: #4a90e2; color: white;">دائن</th>
+                        <th width="20%" style="padding: 4px; border: 1px solid #000; text-align: center; background: #4a90e2; color: white;">الرصيد</th>
+                    </tr>
+                </thead>
+                <tbody id="pdf-table-body" style="font-size: 9px;">
+                </tbody>
+                <tfoot id="pdf-totals" style="font-size: 11px; font-weight: bold;">
+                </tfoot>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -2032,6 +2322,7 @@
         let editingAdvanceId = null;
         let editingUserId = null;
         let editingCustomerId = null;
+        let editingRepairTypeId = null;
         let currentPayAdvance = null;
         let backupTimer = null;
         
@@ -2055,15 +2346,19 @@
             {id: 3, name: "سعيد جمال", phone: "01055556666", address: "فيكتوريا - شارع سيبوية"}
         ];
         
-        let orders = JSON.parse(localStorage.getItem('orders')) || [
-            {id: 1, orderNumber: "ORD-001", date: "2025-12-01", customerName: "علي محمد", customerPhone: "01012345678", customerAddress: "شارع محمد نجيب - سيدي بشر", technicianId: 1, repairType: "ثلاجة وتكييف", amount: 5500, description: "صيانة ثلاجة"},
-            {id: 2, orderNumber: "ORD-002", date: "2025-12-05", customerName: "محمود أحمد", customerPhone: "01087654321", customerAddress: "شارع 45 - العصافرة", technicianId: 2, repairType: "تكييف", amount: 2800, description: "صيانة تكييف"},
-            {id: 3, orderNumber: "ORD-003", date: "2025-12-10", customerName: "سعيد جمال", customerPhone: "01055556666", customerAddress: "فيكتوريا - شارع سيبوية", technicianId: 3, repairType: "أجهزة منزلية", amount: 2300, description: "صيانة غسالة"}
+        let repairTypes = JSON.parse(localStorage.getItem('repairTypes')) || [
+            {id: 1, name: "ثلاجة وتكييف"},
+            {id: 2, name: "تكييف"},
+            {id: 3, name: "أجهزة منزلية"},
+            {id: 4, name: "غسالة"},
+            {id: 5, name: "بوتاجاز"},
+            {id: 6, name: "أخرى"}
         ];
         
-        let orderExpenses = JSON.parse(localStorage.getItem('orderExpenses')) || [
-            {id: 1, orderNumber: "ORD-001", date: "2025-12-01", parts: 100, transport: 50, other: 0, description: "شراء قطع غيار للثلاجة ومواصلات"},
-            {id: 2, orderNumber: "ORD-002", date: "2025-12-05", parts: 200, transport: 0, other: 0, description: "شراء قطع غيار للتكييف"}
+        let orders = JSON.parse(localStorage.getItem('orders')) || [
+            {id: 1, orderNumber: "ORD-001", date: "2025-12-01", customerName: "علي محمد", customerPhone: "01012345678", customerAddress: "شارع محمد نجيب - سيدي بشر", technicianId: 1, repairType: "ثلاجة وتكييف", amount: 5500, parts: 100, transport: 50, other: 0, additional: 0, expenseDescription: "شراء قطع غيار", description: "صيانة ثلاجة"},
+            {id: 2, orderNumber: "ORD-002", date: "2025-12-05", customerName: "محمود أحمد", customerPhone: "01087654321", customerAddress: "شارع 45 - العصافرة", technicianId: 2, repairType: "تكييف", amount: 2800, parts: 200, transport: 0, other: 0, additional: 0, expenseDescription: "شراء قطع غيار", description: "صيانة تكييف"},
+            {id: 3, orderNumber: "ORD-003", date: "2025-12-10", customerName: "سعيد جمال", customerPhone: "01055556666", customerAddress: "فيكتوريا - شارع سيبوية", technicianId: 3, repairType: "أجهزة منزلية", amount: 2300, parts: 150, transport: 30, other: 20, additional: 0, expenseDescription: "قطع غيار ومواصلات", description: "صيانة غسالة"}
         ];
         
         let generalExpenses = JSON.parse(localStorage.getItem('generalExpenses')) || [
@@ -2078,6 +2373,11 @@
             {id: 3, employee: "أبو علي", date: "2025-12-10", amount: 200, reason: "تسديد جزء من السلفة", type: "تسديد"}
         ];
         
+        let partnerTransactions = JSON.parse(localStorage.getItem('partnerTransactions')) || [
+            {id: 1, date: "2025-12-01", partner: "الشريك الأول", type: "سحوبة", amount: 1000, description: "سحوبة شخصية"},
+            {id: 2, date: "2025-12-05", partner: "الشريك الثاني", type: "حصة", amount: 250, description: "حصة من الأرباح"}
+        ];
+        
         // النسخ الاحتياطية
         let backups = JSON.parse(localStorage.getItem('backups')) || [];
         
@@ -2086,10 +2386,11 @@
             localStorage.setItem('users', JSON.stringify(users));
             localStorage.setItem('technicians', JSON.stringify(technicians));
             localStorage.setItem('customers', JSON.stringify(customers));
+            localStorage.setItem('repairTypes', JSON.stringify(repairTypes));
             localStorage.setItem('orders', JSON.stringify(orders));
-            localStorage.setItem('orderExpenses', JSON.stringify(orderExpenses));
             localStorage.setItem('generalExpenses', JSON.stringify(generalExpenses));
             localStorage.setItem('advances', JSON.stringify(advances));
+            localStorage.setItem('partnerTransactions', JSON.stringify(partnerTransactions));
             localStorage.setItem('backups', JSON.stringify(backups));
         }
         
@@ -2102,24 +2403,59 @@
             // تعيين التواريخ في التطبيق الرئيسي (عند التحميل)
             if (document.getElementById('orderDate')) {
                 document.getElementById('orderDate').value = today;
-                document.getElementById('expenseDate').value = today;
                 document.getElementById('generalExpenseDate').value = today;
                 document.getElementById('advanceDate').value = today;
                 document.getElementById('payDate').value = today;
+                document.getElementById('partner1Date').value = today;
+                document.getElementById('partner2Date').value = today;
                 document.getElementById('summaryFromDate').value = firstDayOfMonth;
                 document.getElementById('summaryToDate').value = today;
                 document.getElementById('reportFromDate').value = firstDayOfMonth;
                 document.getElementById('reportToDate').value = today;
                 document.getElementById('advanceFromDate').value = firstDayOfMonth;
                 document.getElementById('advanceToDate').value = today;
+                document.getElementById('partnerFromDate').value = firstDayOfMonth;
+                document.getElementById('partnerToDate').value = today;
             }
             
             // إضافة المستمعين للأحداث
             setupEventListeners();
             
+            // تحميل أنواع التصليح
+            loadRepairTypes();
+            
+            // تحديث ملخص الفاتورة عند تغيير القيم
+            updateOrderSummary();
+            
             // بدء النسخ الاحتياطي التلقائي
             startAutoBackup();
         });
+        
+        // تحديث ملخص الفاتورة
+        function updateOrderSummary() {
+            const amount = parseFloat(document.getElementById('orderAmount').value) || 0;
+            const parts = parseFloat(document.getElementById('partsExpense').value) || 0;
+            const transport = parseFloat(document.getElementById('transportExpense').value) || 0;
+            const other = parseFloat(document.getElementById('otherExpense').value) || 0;
+            const additional = parseFloat(document.getElementById('additionalExpense').value) || 0;
+            
+            const totalExpenses = parts + transport + other + additional;
+            const netAmount = amount - totalExpenses;
+            
+            // حساب عمولة الفني (من صافي المبلغ بعد المصروفات)
+            const techId = parseInt(document.getElementById('technician').value);
+            const tech = technicians.find(t => t.id === techId);
+            let commission = 0;
+            if (tech && netAmount > 0) {
+                commission = netAmount * (tech.percentage / 100);
+            }
+            
+            // تحديث العرض
+            document.getElementById('totalAmountDisplay').textContent = amount.toLocaleString() + ' ج.م';
+            document.getElementById('totalExpensesDisplay').textContent = totalExpenses.toLocaleString() + ' ج.م';
+            document.getElementById('netAmountDisplay').textContent = netAmount.toLocaleString() + ' ج.م';
+            document.getElementById('technicianCommissionDisplay').textContent = commission.toLocaleString() + ' ج.م';
+        }
         
         // الحصول على اسم الدور
         function getRoleName(role, userName) {
@@ -2166,7 +2502,21 @@
                     if (this.dataset.section === 'reports') {
                         loadAllReports();
                     }
+                    // إذا كانت شاشة حركة الشركاء
+                    else if (this.dataset.section === 'partner-transactions') {
+                        loadPartnerTransactions();
+                        updatePartnerSummary();
+                    }
                 });
+            });
+            
+            // تحديث ملخص الفاتورة عند تغيير القيم
+            ['orderAmount', 'partsExpense', 'transportExpense', 'otherExpense', 'additionalExpense', 'technician'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('input', updateOrderSummary);
+                    element.addEventListener('change', updateOrderSummary);
+                }
             });
             
             // إدارة الفنيين
@@ -2181,6 +2531,13 @@
                 document.getElementById('addUserBtn').addEventListener('click', addUser);
                 document.getElementById('updateUserBtn').addEventListener('click', updateUser);
                 document.getElementById('cancelUserBtn').addEventListener('click', cancelEditUser);
+            }
+            
+            // إدارة أنواع التصليح
+            if (document.getElementById('addRepairTypeBtn')) {
+                document.getElementById('addRepairTypeBtn').addEventListener('click', addRepairType);
+                document.getElementById('updateRepairTypeBtn').addEventListener('click', updateRepairType);
+                document.getElementById('cancelRepairTypeBtn').addEventListener('click', cancelEditRepairType);
             }
             
             // إدارة العملاء
@@ -2203,13 +2560,6 @@
                         document.getElementById('customerAutofill').classList.remove('show');
                     }
                 });
-            }
-            
-            // إدارة مصروفات الأوردر
-            if (document.getElementById('saveExpenseBtn')) {
-                document.getElementById('saveExpenseBtn').addEventListener('click', saveOrderExpense);
-                document.getElementById('updateExpenseBtn').addEventListener('click', updateOrderExpense);
-                document.getElementById('cancelExpenseBtn').addEventListener('click', cancelEditExpense);
             }
             
             // إدارة المصروفات العامة
@@ -2239,6 +2589,19 @@
                 document.getElementById('confirmPayBtn').addEventListener('click', confirmPayAdvance);
             }
             
+            // حركة الشركاء
+            if (document.getElementById('savePartner1WithdrawalBtn')) {
+                document.getElementById('savePartner1WithdrawalBtn').addEventListener('click', savePartner1Withdrawal);
+                document.getElementById('savePartner2WithdrawalBtn').addEventListener('click', savePartner2Withdrawal);
+                document.getElementById('filterPartnerTransactionsBtn').addEventListener('click', loadPartnerTransactions);
+                document.getElementById('resetPartnerTransactionsBtn').addEventListener('click', function() {
+                    document.getElementById('partnerFromDate').value = '';
+                    document.getElementById('partnerToDate').value = '';
+                    document.getElementById('partnerTypeFilter').value = '';
+                    loadPartnerTransactions();
+                });
+            }
+            
             // النسخ الاحتياطي
             if (document.getElementById('createBackupBtn')) {
                 document.getElementById('createBackupBtn').addEventListener('click', createManualBackup);
@@ -2266,6 +2629,17 @@
                     document.getElementById('summaryToDate').value = new Date().toISOString().split('T')[0];
                     loadDashboard();
                 });
+            }
+            
+            // تصدير PDF
+            if (document.getElementById('exportAdvancesPDF')) {
+                document.getElementById('exportAdvancesPDF').addEventListener('click', exportAdvancesPDF);
+            }
+            if (document.getElementById('exportPartnerPDF')) {
+                document.getElementById('exportPartnerPDF').addEventListener('click', exportPartnerPDF);
+            }
+            if (document.getElementById('exportReportPDF')) {
+                document.getElementById('exportReportPDF').addEventListener('click', exportReportPDF);
             }
         }
         
@@ -2338,8 +2712,8 @@
             
             // إخفاء/إظهار الأزرار حسب الصلاحية
             const allEditButtons = document.querySelectorAll('.btn-success, .btn-danger, .edit-btn, .delete-btn, .pay-btn');
-            const allUpdateButtons = document.querySelectorAll('#updateTechBtn, #updateUserBtn, #updateOrderBtn, #updateExpenseBtn, #updateGeneralExpenseBtn, #updateAdvanceBtn, #updateCustomerBtn');
-            const allCancelButtons = document.querySelectorAll('#cancelTechBtn, #cancelUserBtn, #cancelOrderBtn, #cancelExpenseBtn, #cancelGeneralExpenseBtn, #cancelAdvanceBtn, #cancelCustomerBtn');
+            const allUpdateButtons = document.querySelectorAll('#updateTechBtn, #updateUserBtn, #updateOrderBtn, #updateGeneralExpenseBtn, #updateAdvanceBtn, #updateCustomerBtn, #updateRepairTypeBtn');
+            const allCancelButtons = document.querySelectorAll('#cancelTechBtn, #cancelUserBtn, #cancelOrderBtn, #cancelGeneralExpenseBtn, #cancelAdvanceBtn, #cancelCustomerBtn, #cancelRepairTypeBtn');
             
             // إدارة المستخدمين - مرئية فقط لسوبر أدمن
             const usersManagement = document.getElementById('usersManagement');
@@ -2348,6 +2722,9 @@
             // النسخ الاحتياطي - مرئي فقط لسوبر أدمن
             const backupButtons = document.querySelectorAll('#createBackupBtn, #restoreLastBackupBtn');
             
+            // حركة الشركاء - مرئية فقط لسوبر أدمن
+            const partnerButtons = document.querySelectorAll('#savePartner1WithdrawalBtn, #savePartner2WithdrawalBtn');
+            
             // إظهار/إخفاء أقسام التنقل
             const dashboardNav = document.getElementById('dashboardNav');
             const customersNav = document.getElementById('customersNav');
@@ -2355,6 +2732,7 @@
             const reportsNav = document.getElementById('reportsNav');
             const generalExpensesNav = document.getElementById('generalExpensesNav');
             const advancesNav = document.getElementById('advancesNav');
+            const partnerTransactionsNav = document.getElementById('partnerTransactionsNav');
             
             if (role === 'superAdmin') {
                 // سوبر أدمن: كل الصلاحيات
@@ -2362,6 +2740,9 @@
                     if (btn) btn.classList.remove('hidden-by-role');
                 });
                 backupButtons.forEach(btn => {
+                    if (btn) btn.classList.remove('hidden-by-role');
+                });
+                partnerButtons.forEach(btn => {
                     if (btn) btn.classList.remove('hidden-by-role');
                 });
                 allEditButtons.forEach(btn => {
@@ -2380,12 +2761,16 @@
                 if (reportsNav) reportsNav.classList.remove('disabled');
                 if (generalExpensesNav) generalExpensesNav.classList.remove('disabled');
                 if (advancesNav) advancesNav.classList.remove('disabled');
+                if (partnerTransactionsNav) partnerTransactionsNav.classList.remove('disabled');
             } else if (role === 'admin') {
-                // أدمن: لا يرى الإعدادات أو إدارة المستخدمين
+                // أدمن: لا يرى الإعدادات أو إدارة المستخدمين أو حركة الشركاء
                 userManagementButtons.forEach(btn => {
                     if (btn) btn.classList.add('hidden-by-role');
                 });
                 backupButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                partnerButtons.forEach(btn => {
                     if (btn) btn.classList.add('hidden-by-role');
                 });
                 // المشرف يمكنه التعديل فقط (بدون حذف)
@@ -2394,7 +2779,7 @@
                     if (btn) btn.classList.add('hidden-by-role');
                 });
                 // إظهار أزرار التعديل فقط
-                const editButtons = document.querySelectorAll('.edit-btn, .btn-success:not(#saveOrderBtn):not(#saveCustomerBtn):not(#saveExpenseBtn):not(#saveGeneralExpenseBtn)');
+                const editButtons = document.querySelectorAll('.edit-btn, .btn-success:not(#saveOrderBtn):not(#saveCustomerBtn):not(#saveGeneralExpenseBtn)');
                 editButtons.forEach(btn => {
                     if (btn) btn.classList.remove('hidden-by-role');
                 });
@@ -2411,10 +2796,11 @@
                 if (reportsNav) reportsNav.classList.add('disabled');
                 if (generalExpensesNav) generalExpensesNav.classList.add('disabled');
                 if (advancesNav) advancesNav.classList.add('disabled');
+                if (partnerTransactionsNav) partnerTransactionsNav.classList.add('disabled');
                 
-                // إذا كان في لوحة التحكم أو الإعدادات أو التقارير أو السلف أو المصاريف العامة، انتقل إلى العملاء
+                // إذا كان في لوحة التحكم أو الإعدادات أو التقارير أو السلف أو المصاريف العامة أو حركة الشركاء، انتقل إلى العملاء
                 const activeSection = document.querySelector('.content-section.active');
-                if (activeSection && ['dashboard', 'settings', 'reports', 'advances', 'general-expenses'].includes(activeSection.id)) {
+                if (activeSection && ['dashboard', 'settings', 'reports', 'advances', 'general-expenses', 'partner-transactions'].includes(activeSection.id)) {
                     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                     document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
                     if (customersNav) {
@@ -2423,11 +2809,14 @@
                     }
                 }
             } else if (role === 'dataEntry') {
-                // مدخل بيانات: لا يرى لوحة التحكم، ولا سلف الموظفين، ولا الإعدادات، ولا التقارير، ولا المصاريف العامة
+                // مدخل بيانات: لا يرى لوحة التحكم، ولا سلف الموظفين، ولا الإعدادات، ولا التقارير، ولا المصاريف العامة، ولا حركة الشركاء
                 userManagementButtons.forEach(btn => {
                     if (btn) btn.classList.add('hidden-by-role');
                 });
                 backupButtons.forEach(btn => {
+                    if (btn) btn.classList.add('hidden-by-role');
+                });
+                partnerButtons.forEach(btn => {
                     if (btn) btn.classList.add('hidden-by-role');
                 });
                 // مدخل البيانات لا يستطيع التعديل أو الحذف
@@ -2447,11 +2836,11 @@
                 if (reportsNav) reportsNav.classList.add('disabled');
                 if (generalExpensesNav) generalExpensesNav.classList.add('disabled');
                 if (advancesNav) advancesNav.classList.add('disabled');
+                if (partnerTransactionsNav) partnerTransactionsNav.classList.add('disabled');
                 
                 // إظهار أزرار الحفظ فقط
                 const saveButtons = [
                     document.getElementById('saveOrderBtn'),
-                    document.getElementById('saveExpenseBtn'),
                     document.getElementById('saveCustomerBtn'),
                     document.getElementById('saveGeneralExpenseBtn')
                 ];
@@ -2460,9 +2849,9 @@
                     if (btn) btn.classList.remove('hidden-by-role');
                 });
                 
-                // إذا كان في لوحة التحكم أو السلف أو الإعدادات أو التقارير أو المصاريف العامة، انتقل إلى العملاء
+                // إذا كان في لوحة التحكم أو السلف أو الإعدادات أو التقارير أو المصاريف العامة أو حركة الشركاء، انتقل إلى العملاء
                 const activeSection = document.querySelector('.content-section.active');
-                if (activeSection && ['dashboard', 'settings', 'reports', 'advances', 'general-expenses'].includes(activeSection.id)) {
+                if (activeSection && ['dashboard', 'settings', 'reports', 'advances', 'general-expenses', 'partner-transactions'].includes(activeSection.id)) {
                     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                     document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
                     if (customersNav) {
@@ -2477,8 +2866,8 @@
         function loadDataBasedOnRole() {
             loadTechnicians();
             loadCustomers();
+            loadRepairTypes();
             loadOrders();
-            loadOrderExpenses();
             loadGeneralExpenses();
             loadAdvances();
             loadDashboard();
@@ -2486,6 +2875,8 @@
             if (currentUser.role === 'superAdmin' || currentUser.role === 'admin') {
                 loadProfitReport();
                 loadAllReports();
+                loadPartnerTransactions();
+                updatePartnerSummary();
             }
             
             if (currentUser.role === 'superAdmin') {
@@ -2500,9 +2891,9 @@
             const toDate = document.getElementById('summaryToDate') ? document.getElementById('summaryToDate').value : '';
             
             let filteredOrders = orders;
-            let filteredOrderExpenses = orderExpenses;
             let filteredGeneralExpenses = generalExpenses;
             let filteredAdvances = advances;
+            let filteredPartnerTransactions = partnerTransactions;
             
             // تطبيق الفلاتر إذا كانت محددة
             if (fromDate || toDate) {
@@ -2513,13 +2904,6 @@
                     const orderDate = new Date(order.date);
                     if (from && orderDate < from) return false;
                     if (to && orderDate > to) return false;
-                    return true;
-                });
-                
-                filteredOrderExpenses = orderExpenses.filter(exp => {
-                    const expDate = new Date(exp.date);
-                    if (from && expDate < from) return false;
-                    if (to && expDate > to) return false;
                     return true;
                 });
                 
@@ -2536,31 +2920,46 @@
                     if (to && advDate > to) return false;
                     return true;
                 });
+                
+                filteredPartnerTransactions = partnerTransactions.filter(trans => {
+                    const transDate = new Date(trans.date);
+                    if (from && transDate < from) return false;
+                    if (to && transDate > to) return false;
+                    return true;
+                });
             }
             
             // الإيرادات
             const totalRevenue = filteredOrders.reduce((sum, order) => sum + order.amount, 0);
             
-            // مصروفات الأوردر
-            const totalOrderExpenses = filteredOrderExpenses.reduce((sum, exp) => {
-                return sum + (exp.parts || 0) + (exp.transport || 0) + (exp.other || 0);
+            // مصروفات الفواتير
+            const totalOrderExpenses = filteredOrders.reduce((sum, order) => {
+                return sum + (order.parts || 0) + (order.transport || 0) + (order.other || 0) + (order.additional || 0);
             }, 0);
             
             // المصروفات العامة
             const totalGeneralExpenses = filteredGeneralExpenses.reduce((sum, exp) => sum + exp.amount, 0);
             const totalExpenses = totalOrderExpenses + totalGeneralExpenses;
             
-            // عمولات الفنيين
+            // عمولات الفنيين (من صافي الربح بعد المصروفات)
             let totalTechCommission = 0;
             filteredOrders.forEach(order => {
                 const tech = technicians.find(t => t.id === order.technicianId);
                 if (tech) {
-                    totalTechCommission += order.amount * (tech.percentage / 100);
+                    const orderExpenses = (order.parts || 0) + (order.transport || 0) + (order.other || 0) + (order.additional || 0);
+                    const netAmount = order.amount - orderExpenses;
+                    totalTechCommission += netAmount * (tech.percentage / 100);
                 }
             });
             
-            // صافي الربح
-            const netProfit = totalRevenue - totalTechCommission - totalExpenses;
+            // صافي الربح بعد المصروفات وقبل العمولة
+            const netProfitBeforeCommission = totalRevenue - totalExpenses;
+            
+            // صافي الربح النهائي
+            const netProfit = netProfitBeforeCommission - totalTechCommission;
+            
+            // حصة الشريك الثاني (5% من صافي الربح بعد العمولة)
+            const partnerShare = netProfit * 0.05;
             
             // نسبة الربحية
             const profitPercentage = totalRevenue > 0 ? ((netProfit / totalRevenue) * 100).toFixed(1) : 0;
@@ -2594,6 +2993,7 @@
                 document.getElementById('percentagePeriod').textContent = periodText;
                 document.getElementById('orderExpensesPeriod').textContent = periodText;
                 document.getElementById('generalExpensesPeriod').textContent = periodText;
+                document.getElementById('partnerPeriod').textContent = periodText;
                 
                 // تحديث البيانات في لوحة التحكم
                 document.getElementById('totalRevenue').textContent = totalRevenue.toLocaleString() + ' ج.م';
@@ -2603,6 +3003,7 @@
                 document.getElementById('profitPercentage').textContent = profitPercentage + '%';
                 document.getElementById('totalOrderExpensesCard').textContent = totalOrderExpenses.toLocaleString() + ' ج.م';
                 document.getElementById('totalGeneralExpensesCard').textContent = totalGeneralExpenses.toLocaleString() + ' ج.م';
+                document.getElementById('partnerShare').textContent = partnerShare.toLocaleString() + ' ج.م';
                 document.getElementById('activeTechnicians').textContent = technicians.length;
                 document.getElementById('totalAdvances').textContent = netAdvances.toLocaleString() + ' ج.م';
                 
@@ -2641,6 +3042,153 @@
                         });
                     }
                 }
+            }
+        }
+        
+        // تحميل أنواع التصليح
+        function loadRepairTypes() {
+            const repairTypeSelect = document.getElementById('repairType');
+            const repairTypesTableBody = document.getElementById('repairTypesTableBody');
+            const noRepairTypes = document.getElementById('noRepairTypes');
+            
+            if (repairTypeSelect) repairTypeSelect.innerHTML = '';
+            if (repairTypesTableBody) repairTypesTableBody.innerHTML = '';
+            
+            if (repairTypes.length === 0) {
+                if (noRepairTypes) noRepairTypes.style.display = 'block';
+                if (document.getElementById('repairTypesTable')) {
+                    document.getElementById('repairTypesTable').style.display = 'none';
+                }
+            } else {
+                if (noRepairTypes) noRepairTypes.style.display = 'none';
+                if (document.getElementById('repairTypesTable')) {
+                    document.getElementById('repairTypesTable').style.display = 'table';
+                }
+                
+                repairTypes.forEach((type, index) => {
+                    // إضافة إلى القائمة المنسدلة
+                    if (repairTypeSelect) {
+                        const option = document.createElement('option');
+                        option.value = type.name;
+                        option.textContent = type.name;
+                        repairTypeSelect.appendChild(option);
+                    }
+                    
+                    // إضافة إلى الجدول
+                    if (repairTypesTableBody) {
+                        const row = repairTypesTableBody.insertRow();
+                        row.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${type.name}</td>
+                            <td class="action-btns">
+                                <button class="action-btn edit-btn" onclick="editRepairType(${type.id})">
+                                    <i class="fas fa-edit"></i> تعديل
+                                </button>
+                                <button class="action-btn delete-btn" onclick="deleteRepairType(${type.id})">
+                                    <i class="fas fa-trash"></i> حذف
+                                </button>
+                            </td>
+                        `;
+                    }
+                });
+            }
+        }
+        
+        // إضافة نوع تصليح جديد
+        function addRepairType() {
+            const nameInput = document.getElementById('repairTypeName');
+            
+            if (!nameInput) return;
+            
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert('الرجاء إدخال اسم نوع التصليح');
+                return;
+            }
+            
+            const newId = repairTypes.length > 0 ? Math.max(...repairTypes.map(t => t.id)) + 1 : 1;
+            
+            repairTypes.push({
+                id: newId,
+                name: name
+            });
+            
+            saveData();
+            loadRepairTypes();
+            
+            // مسح الحقل
+            nameInput.value = '';
+        }
+        
+        // تعديل نوع تصليح
+        function editRepairType(id) {
+            const type = repairTypes.find(t => t.id === id);
+            if (type) {
+                if (document.getElementById('repairTypeName')) {
+                    document.getElementById('repairTypeName').value = type.name;
+                    
+                    editingRepairTypeId = id;
+                    
+                    // إظهار أزرار التحديث والإلغاء
+                    if (document.getElementById('addRepairTypeBtn')) {
+                        document.getElementById('addRepairTypeBtn').classList.add('hidden-by-role');
+                        document.getElementById('updateRepairTypeBtn').classList.remove('hidden-by-role');
+                        document.getElementById('cancelRepairTypeBtn').classList.remove('hidden-by-role');
+                    }
+                }
+            }
+        }
+        
+        // تحديث نوع تصليح
+        function updateRepairType() {
+            if (!editingRepairTypeId) return;
+            
+            const nameInput = document.getElementById('repairTypeName');
+            
+            if (!nameInput) return;
+            
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                alert('الرجاء إدخال اسم نوع التصليح');
+                return;
+            }
+            
+            const typeIndex = repairTypes.findIndex(t => t.id === editingRepairTypeId);
+            if (typeIndex !== -1) {
+                repairTypes[typeIndex].name = name;
+                
+                saveData();
+                loadRepairTypes();
+                loadOrders();
+                
+                // مسح الحقول وإعادة الحالة
+                cancelEditRepairType();
+            }
+        }
+        
+        // إلغاء تعديل نوع تصليح
+        function cancelEditRepairType() {
+            editingRepairTypeId = null;
+            if (document.getElementById('repairTypeName')) {
+                document.getElementById('repairTypeName').value = '';
+                
+                if (document.getElementById('addRepairTypeBtn')) {
+                    document.getElementById('addRepairTypeBtn').classList.remove('hidden-by-role');
+                    document.getElementById('updateRepairTypeBtn').classList.add('hidden-by-role');
+                    document.getElementById('cancelRepairTypeBtn').classList.add('hidden-by-role');
+                }
+            }
+        }
+        
+        // حذف نوع تصليح
+        function deleteRepairType(id) {
+            if (confirm('هل أنت متأكد من حذف هذا النوع؟')) {
+                repairTypes = repairTypes.filter(type => type.id !== id);
+                saveData();
+                loadRepairTypes();
+                loadOrders();
             }
         }
         
@@ -2712,9 +3260,6 @@
                     }
                 });
             }
-            
-            // تحديث قائمة الفواتير في شاشة المصروفات
-            updateOrderNumberSelect();
         }
         
         // إضافة فني جديد
@@ -3089,6 +3634,15 @@
                     const tech = technicians.find(t => t.id === order.technicianId);
                     const techName = tech ? tech.name : 'غير معروف';
                     
+                    const totalExpenses = (order.parts || 0) + (order.transport || 0) + (order.other || 0) + (order.additional || 0);
+                    const netAmount = order.amount - totalExpenses;
+                    
+                    // حساب العمولة (من صافي المبلغ بعد المصروفات)
+                    let commission = 0;
+                    if (tech && netAmount > 0) {
+                        commission = netAmount * (tech.percentage / 100);
+                    }
+                    
                     const row = ordersTableBody.insertRow();
                     row.innerHTML = `
                         <td>${order.orderNumber}</td>
@@ -3098,6 +3652,9 @@
                         <td>${order.customerAddress || '-'}</td>
                         <td>${order.repairType}</td>
                         <td>${order.amount.toLocaleString()} ج.م</td>
+                        <td>${totalExpenses.toLocaleString()} ج.م</td>
+                        <td>${netAmount.toLocaleString()} ج.م</td>
+                        <td>${commission.toLocaleString()} ج.م</td>
                         <td>${techName}</td>
                         <td class="action-btns">
                             <button class="action-btn edit-btn" onclick="editOrder(${order.id})">
@@ -3110,9 +3667,6 @@
                     `;
                 });
             }
-            
-            // تحديث قائمة الفواتير في شاشة المصروفات
-            updateOrderNumberSelect();
         }
         
         // البحث في الفواتير
@@ -3159,7 +3713,15 @@
             const customerAddress = document.getElementById('customerAddress') ? document.getElementById('customerAddress').value.trim() : '';
             const technicianId = document.getElementById('technician') ? parseInt(document.getElementById('technician').value) : 0;
             const repairType = document.getElementById('repairType') ? document.getElementById('repairType').value : '';
-            const orderAmount = document.getElementById('orderAmount') ? parseInt(document.getElementById('orderAmount').value) : 0;
+            const orderAmount = document.getElementById('orderAmount') ? parseFloat(document.getElementById('orderAmount').value) : 0;
+            
+            // مصروفات الفاتورة
+            const partsExpense = document.getElementById('partsExpense') ? parseFloat(document.getElementById('partsExpense').value) || 0 : 0;
+            const transportExpense = document.getElementById('transportExpense') ? parseFloat(document.getElementById('transportExpense').value) || 0 : 0;
+            const otherExpense = document.getElementById('otherExpense') ? parseFloat(document.getElementById('otherExpense').value) || 0 : 0;
+            const additionalExpense = document.getElementById('additionalExpense') ? parseFloat(document.getElementById('additionalExpense').value) || 0 : 0;
+            const expenseDescription = document.getElementById('expenseDescription') ? document.getElementById('expenseDescription').value.trim() : '';
+            
             const orderDescription = document.getElementById('orderDescription') ? document.getElementById('orderDescription').value.trim() : '';
             
             if (!orderNumber || !orderDate || !customerPhone || !customerName || !technicianId || !repairType || isNaN(orderAmount) || orderAmount <= 0) {
@@ -3198,6 +3760,11 @@
                 technicianId: technicianId,
                 repairType: repairType,
                 amount: orderAmount,
+                parts: partsExpense,
+                transport: transportExpense,
+                other: otherExpense,
+                additional: additionalExpense,
+                expenseDescription: expenseDescription,
                 description: orderDescription
             });
             
@@ -3220,101 +3787,18 @@
                 document.getElementById('technician').value = '';
                 document.getElementById('repairType').value = 'ثلاجة وتكييف';
                 document.getElementById('orderAmount').value = '';
+                document.getElementById('partsExpense').value = '0';
+                document.getElementById('transportExpense').value = '0';
+                document.getElementById('otherExpense').value = '0';
+                document.getElementById('additionalExpense').value = '0';
+                document.getElementById('expenseDescription').value = '';
                 document.getElementById('orderDescription').value = '';
                 
                 const autofillDiv = document.getElementById('customerAutofill');
                 if (autofillDiv) autofillDiv.classList.remove('show');
-            }
-        }
-        
-        // تحميل مصروفات الأوردر
-        function loadOrderExpenses() {
-            const expensesTableBody = document.getElementById('expensesTableBody');
-            const noExpenses = document.getElementById('noExpenses');
-            
-            if (!expensesTableBody || !noExpenses) return;
-            
-            expensesTableBody.innerHTML = '';
-            
-            if (orderExpenses.length === 0) {
-                noExpenses.style.display = 'block';
-                if (document.getElementById('expensesTable')) {
-                    document.getElementById('expensesTable').style.display = 'none';
-                }
-            } else {
-                noExpenses.style.display = 'none';
-                if (document.getElementById('expensesTable')) {
-                    document.getElementById('expensesTable').style.display = 'table';
-                }
                 
-                orderExpenses.forEach(expense => {
-                    const total = (expense.parts || 0) + (expense.transport || 0) + (expense.other || 0);
-                    
-                    const row = expensesTableBody.insertRow();
-                    row.innerHTML = `
-                        <td>${expense.orderNumber}</td>
-                        <td>${formatDate(expense.date)}</td>
-                        <td>${(expense.parts || 0).toLocaleString()} ج.م</td>
-                        <td>${(expense.transport || 0).toLocaleString()} ج.م</td>
-                        <td>${(expense.other || 0).toLocaleString()} ج.م</td>
-                        <td>${total.toLocaleString()} ج.م</td>
-                        <td>${expense.description}</td>
-                        <td class="action-btns">
-                            <button class="action-btn edit-btn" onclick="editOrderExpense(${expense.id})">
-                                <i class="fas fa-edit"></i> تعديل
-                            </button>
-                            <button class="action-btn delete-btn" onclick="deleteOrderExpense(${expense.id})">
-                                <i class="fas fa-trash"></i> حذف
-                            </button>
-                        </td>
-                    `;
-                });
-            }
-        }
-        
-        // حفظ مصروف أوردر جديد
-        function saveOrderExpense() {
-            const orderNumber = document.getElementById('expenseOrderNumber') ? document.getElementById('expenseOrderNumber').value : '';
-            const expenseDate = document.getElementById('expenseDate') ? document.getElementById('expenseDate').value : '';
-            const partsExpense = document.getElementById('partsExpense') ? parseInt(document.getElementById('partsExpense').value) || 0 : 0;
-            const transportExpense = document.getElementById('transportExpense') ? parseInt(document.getElementById('transportExpense').value) || 0 : 0;
-            const otherExpense = document.getElementById('otherExpense') ? parseInt(document.getElementById('otherExpense').value) || 0 : 0;
-            const expenseDescription = document.getElementById('expenseDescription') ? document.getElementById('expenseDescription').value.trim() : '';
-            
-            if (!orderNumber || !expenseDate || (partsExpense === 0 && transportExpense === 0 && otherExpense === 0)) {
-                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            const newId = orderExpenses.length > 0 ? Math.max(...orderExpenses.map(e => e.id)) + 1 : 1;
-            
-            orderExpenses.push({
-                id: newId,
-                orderNumber: orderNumber,
-                date: expenseDate,
-                parts: partsExpense,
-                transport: transportExpense,
-                other: otherExpense,
-                description: expenseDescription
-            });
-            
-            saveData();
-            loadOrderExpenses();
-            loadDashboard();
-            
-            // مسح الحقول
-            clearExpenseForm();
-        }
-        
-        // مسح نموذج مصروف الأوردر
-        function clearExpenseForm() {
-            if (document.getElementById('expenseOrderNumber')) {
-                document.getElementById('expenseOrderNumber').value = '';
-                document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
-                document.getElementById('partsExpense').value = '';
-                document.getElementById('transportExpense').value = '';
-                document.getElementById('otherExpense').value = '';
-                document.getElementById('expenseDescription').value = '';
+                // تحديث الملخص
+                updateOrderSummary();
             }
         }
         
@@ -3619,13 +4103,192 @@
             hidePayAdvanceModal();
         }
         
+        // تحديث ملخص الشركاء
+        function updatePartnerSummary() {
+            // حساب حصة الشريك الثاني من جميع الفواتير
+            let totalPartner2Share = 0;
+            orders.forEach(order => {
+                const tech = technicians.find(t => t.id === order.technicianId);
+                const techPercentage = tech ? tech.percentage : 0;
+                
+                const orderExpenses = (order.parts || 0) + (order.transport || 0) + (order.other || 0) + (order.additional || 0);
+                const netAmount = order.amount - orderExpenses;
+                const commission = netAmount * (techPercentage / 100);
+                const netAfterCommission = netAmount - commission;
+                const partnerShare = netAfterCommission * 0.05;
+                
+                totalPartner2Share += partnerShare;
+            });
+            
+            // حساب سحوبات الشركاء
+            const partner1Withdrawals = partnerTransactions
+                .filter(trans => trans.partner === "الشريك الأول" && trans.type === "سحوبة")
+                .reduce((sum, trans) => sum + trans.amount, 0);
+            
+            const partner2Withdrawals = partnerTransactions
+                .filter(trans => trans.partner === "الشريك الثاني" && trans.type === "سحوبة")
+                .reduce((sum, trans) => sum + trans.amount, 0);
+            
+            const partner2Shares = partnerTransactions
+                .filter(trans => trans.partner === "الشريك الثاني" && trans.type === "حصة")
+                .reduce((sum, trans) => sum + trans.amount, 0);
+            
+            const partner2Balance = totalPartner2Share + partner2Shares - partner2Withdrawals;
+            
+            // تحديث العرض
+            if (document.getElementById('partner1Balance')) {
+                document.getElementById('partner1Balance').textContent = partner1Withdrawals.toLocaleString() + ' ج.م';
+                document.getElementById('partner2Share').textContent = totalPartner2Share.toLocaleString() + ' ج.م';
+                document.getElementById('partner2Withdrawals').textContent = partner2Withdrawals.toLocaleString() + ' ج.م';
+                document.getElementById('partner2Balance').textContent = partner2Balance.toLocaleString() + ' ج.م';
+            }
+        }
+        
+        // تحميل حركة الشركاء
+        function loadPartnerTransactions() {
+            const fromDate = document.getElementById('partnerFromDate') ? document.getElementById('partnerFromDate').value : '';
+            const toDate = document.getElementById('partnerToDate') ? document.getElementById('partnerToDate').value : '';
+            const typeFilter = document.getElementById('partnerTypeFilter') ? document.getElementById('partnerTypeFilter').value : '';
+            
+            const partnerTransactionsTableBody = document.getElementById('partnerTransactionsTableBody');
+            const noPartnerTransactions = document.getElementById('noPartnerTransactions');
+            
+            if (partnerTransactionsTableBody) partnerTransactionsTableBody.innerHTML = '';
+            
+            // تصفية حركة الشركاء
+            let filteredTransactions = partnerTransactions;
+            
+            if (fromDate || toDate) {
+                filteredTransactions = filteredTransactions.filter(trans => {
+                    const transDate = new Date(trans.date);
+                    const from = fromDate ? new Date(fromDate) : null;
+                    const to = toDate ? new Date(toDate) : null;
+                    
+                    if (from && transDate < from) return false;
+                    if (to && transDate > to) return false;
+                    
+                    return true;
+                });
+            }
+            
+            if (typeFilter) {
+                if (typeFilter === 'partner1') {
+                    filteredTransactions = filteredTransactions.filter(trans => trans.partner === "الشريك الأول");
+                } else if (typeFilter === 'partner2') {
+                    filteredTransactions = filteredTransactions.filter(trans => trans.partner === "الشريك الثاني");
+                }
+            }
+            
+            if (filteredTransactions.length === 0) {
+                if (noPartnerTransactions) noPartnerTransactions.style.display = 'block';
+                if (document.getElementById('partnerTransactionsTable')) {
+                    document.getElementById('partnerTransactionsTable').style.display = 'none';
+                }
+            } else {
+                if (noPartnerTransactions) noPartnerTransactions.style.display = 'none';
+                if (document.getElementById('partnerTransactionsTable')) {
+                    document.getElementById('partnerTransactionsTable').style.display = 'table';
+                }
+                
+                filteredTransactions.forEach(trans => {
+                    if (partnerTransactionsTableBody) {
+                        const row = partnerTransactionsTableBody.insertRow();
+                        const typeClass = trans.type === 'سحوبة' ? 'card-loss' : 'card-profit';
+                        
+                        row.innerHTML = `
+                            <td>${formatDate(trans.date)}</td>
+                            <td>${trans.partner}</td>
+                            <td>${trans.type}</td>
+                            <td class="${typeClass}">${trans.amount.toLocaleString()} ج.م</td>
+                            <td>${trans.description}</td>
+                            <td class="action-btns">
+                                <button class="action-btn delete-btn" onclick="deletePartnerTransaction(${trans.id})">
+                                    <i class="fas fa-trash"></i> حذف
+                                </button>
+                            </td>
+                        `;
+                    }
+                });
+            }
+            
+            updatePartnerSummary();
+        }
+        
+        // تسجيل سحوبة للشريك الأول
+        function savePartner1Withdrawal() {
+            const date = document.getElementById('partner1Date') ? document.getElementById('partner1Date').value : '';
+            const amount = document.getElementById('partner1Amount') ? parseFloat(document.getElementById('partner1Amount').value) : 0;
+            const description = document.getElementById('partner1Description') ? document.getElementById('partner1Description').value.trim() : '';
+            
+            if (!date || isNaN(amount) || amount <= 0) {
+                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            const newId = partnerTransactions.length > 0 ? Math.max(...partnerTransactions.map(t => t.id)) + 1 : 1;
+            
+            partnerTransactions.push({
+                id: newId,
+                date: date,
+                partner: "الشريك الأول",
+                type: "سحوبة",
+                amount: amount,
+                description: description || 'سحوبة شخصية'
+            });
+            
+            saveData();
+            loadPartnerTransactions();
+            
+            // مسح الحقول
+            document.getElementById('partner1Amount').value = '';
+            document.getElementById('partner1Description').value = '';
+        }
+        
+        // تسجيل سحوبة للشريك الثاني
+        function savePartner2Withdrawal() {
+            const date = document.getElementById('partner2Date') ? document.getElementById('partner2Date').value : '';
+            const amount = document.getElementById('partner2Amount') ? parseFloat(document.getElementById('partner2Amount').value) : 0;
+            const description = document.getElementById('partner2Description') ? document.getElementById('partner2Description').value.trim() : '';
+            
+            if (!date || isNaN(amount) || amount <= 0) {
+                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
+                return;
+            }
+            
+            const newId = partnerTransactions.length > 0 ? Math.max(...partnerTransactions.map(t => t.id)) + 1 : 1;
+            
+            partnerTransactions.push({
+                id: newId,
+                date: date,
+                partner: "الشريك الثاني",
+                type: "سحوبة",
+                amount: amount,
+                description: description || 'سحوبة شخصية'
+            });
+            
+            saveData();
+            loadPartnerTransactions();
+            
+            // مسح الحقول
+            document.getElementById('partner2Amount').value = '';
+            document.getElementById('partner2Description').value = '';
+        }
+        
+        // حذف حركة شريك
+        function deletePartnerTransaction(id) {
+            if (confirm('هل أنت متأكد من حذف هذه الحركة؟')) {
+                partnerTransactions = partnerTransactions.filter(trans => trans.id !== id);
+                saveData();
+                loadPartnerTransactions();
+            }
+        }
+        
         // تحميل تقرير الربحية
         function loadProfitReport() {
             const fromDate = document.getElementById('reportFromDate') ? document.getElementById('reportFromDate').value : '';
             const toDate = document.getElementById('reportToDate') ? document.getElementById('reportToDate').value : '';
             
             let filteredOrders = orders;
-            let filteredOrderExpenses = orderExpenses;
             
             // تطبيق الفلاتر إذا كانت محددة
             if (fromDate || toDate) {
@@ -3636,13 +4299,6 @@
                     const orderDate = new Date(order.date);
                     if (from && orderDate < from) return false;
                     if (to && orderDate > to) return false;
-                    return true;
-                });
-                
-                filteredOrderExpenses = orderExpenses.filter(exp => {
-                    const expDate = new Date(exp.date);
-                    if (from && expDate < from) return false;
-                    if (to && expDate > to) return false;
                     return true;
                 });
             }
@@ -3666,9 +4322,12 @@
                 }
                 
                 let totalRevenue = 0;
-                let totalCommissions = 0;
                 let totalExpenses = 0;
-                let totalProfit = 0;
+                let totalNetBeforeCommission = 0;
+                let totalCommission = 0;
+                let totalNetAfterCommission = 0;
+                let totalPartnerShare = 0;
+                let totalCenterNet = 0;
                 
                 filteredOrders.forEach(order => {
                     const tech = technicians.find(t => t.id === order.technicianId);
@@ -3676,23 +4335,34 @@
                     const techPercentage = tech ? tech.percentage : 0;
                     
                     // حساب مصروفات هذا الأوردر
-                    const orderExpenses = filteredOrderExpenses.filter(exp => exp.orderNumber === order.orderNumber);
-                    const totalOrderExpenses = orderExpenses.reduce((sum, exp) => {
-                        return sum + (exp.parts || 0) + (exp.transport || 0) + (exp.other || 0);
-                    }, 0);
+                    const orderExpenses = (order.parts || 0) + (order.transport || 0) + (order.other || 0) + (order.additional || 0);
                     
-                    // حساب العمولة
-                    const commission = order.amount * (techPercentage / 100);
+                    // حساب صافي قبل العمولة
+                    const netBeforeCommission = order.amount - orderExpenses;
                     
-                    // حساب الربح
-                    const profit = order.amount - commission - totalOrderExpenses;
-                    const profitPercentage = order.amount > 0 ? ((profit / order.amount) * 100).toFixed(1) : 0;
+                    // حساب العمولة (من صافي المبلغ بعد المصروفات)
+                    const commission = netBeforeCommission * (techPercentage / 100);
+                    
+                    // حساب صافي بعد العمولة
+                    const netAfterCommission = netBeforeCommission - commission;
+                    
+                    // حساب حصة الشريك (5%)
+                    const partnerShare = netAfterCommission * 0.05;
+                    
+                    // حساب صافي المركز
+                    const centerNet = netAfterCommission - partnerShare;
+                    
+                    // نسبة الربح
+                    const profitPercentage = order.amount > 0 ? ((centerNet / order.amount) * 100).toFixed(1) : 0;
                     
                     // تحديث الإجماليات
                     totalRevenue += order.amount;
-                    totalCommissions += commission;
-                    totalExpenses += totalOrderExpenses;
-                    totalProfit += profit;
+                    totalExpenses += orderExpenses;
+                    totalNetBeforeCommission += netBeforeCommission;
+                    totalCommission += commission;
+                    totalNetAfterCommission += netAfterCommission;
+                    totalPartnerShare += partnerShare;
+                    totalCenterNet += centerNet;
                     
                     if (profitReportTableBody) {
                         const row = profitReportTableBody.insertRow();
@@ -3700,17 +4370,20 @@
                             <td>${order.orderNumber}</td>
                             <td>${formatDate(order.date)}</td>
                             <td>${order.amount.toLocaleString()} ج.م</td>
+                            <td>${orderExpenses.toLocaleString()} ج.م</td>
+                            <td>${netBeforeCommission.toLocaleString()} ج.م</td>
                             <td>${techName}</td>
                             <td>${commission.toLocaleString()} ج.م</td>
-                            <td>${totalOrderExpenses.toLocaleString()} ج.م</td>
-                            <td>${profit.toLocaleString()} ج.م</td>
+                            <td>${netAfterCommission.toLocaleString()} ج.م</td>
+                            <td>${partnerShare.toLocaleString()} ج.م</td>
+                            <td>${centerNet.toLocaleString()} ج.م</td>
                             <td>${profitPercentage}%</td>
                         `;
                     }
                 });
                 
                 // تحديث التقرير المجمع
-                const overallProfitPercentage = totalRevenue > 0 ? ((totalProfit / totalRevenue) * 100).toFixed(1) : 0;
+                const overallProfitPercentage = totalRevenue > 0 ? ((totalCenterNet / totalRevenue) * 100).toFixed(1) : 0;
                 
                 if (aggregateReport) {
                     aggregateReport.innerHTML = `
@@ -3720,18 +4393,23 @@
                             <p>من ${filteredOrders.length} فاتورة</p>
                         </div>
                         <div class="card">
-                            <h3>إجمالي العمولات</h3>
-                            <div class="card-value">${totalCommissions.toLocaleString()} ج.م</div>
-                            <p>${((totalCommissions / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات</p>
-                        </div>
-                        <div class="card">
                             <h3>إجمالي المصروفات</h3>
                             <div class="card-value">${totalExpenses.toLocaleString()} ج.م</div>
                             <p>${((totalExpenses / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات</p>
                         </div>
                         <div class="card">
+                            <h3>إجمالي العمولات</h3>
+                            <div class="card-value">${totalCommission.toLocaleString()} ج.م</div>
+                            <p>${((totalCommission / totalRevenue) * 100 || 0).toFixed(1)}% من الإيرادات</p>
+                        </div>
+                        <div class="card">
+                            <h3>حصة الشريك الثاني</h3>
+                            <div class="card-value">${totalPartnerShare.toLocaleString()} ج.م</div>
+                            <p>5% من صافي الربح</p>
+                        </div>
+                        <div class="card">
                             <h3>صافي الربح</h3>
-                            <div class="card-value card-profit">${totalProfit.toLocaleString()} ج.م</div>
+                            <div class="card-value card-profit">${totalCenterNet.toLocaleString()} ج.م</div>
                             <p>نسبة الربحية: ${overallProfitPercentage}%</p>
                         </div>
                     `;
@@ -3785,7 +4463,11 @@
                     
                     technicianData[tech.id].orders++;
                     technicianData[tech.id].totalRevenue += order.amount;
-                    technicianData[tech.id].totalCommission += order.amount * (tech.percentage / 100);
+                    
+                    // حساب العمولة من صافي الربح بعد المصروفات
+                    const orderExpenses = (order.parts || 0) + (order.transport || 0) + (order.other || 0) + (order.additional || 0);
+                    const netAmount = order.amount - orderExpenses;
+                    technicianData[tech.id].totalCommission += netAmount * (tech.percentage / 100);
                 }
             });
             
@@ -4015,7 +4697,6 @@
             const toDate = document.getElementById('reportToDate') ? document.getElementById('reportToDate').value : '';
             
             let filteredOrders = orders;
-            let filteredOrderExpenses = orderExpenses;
             
             // تطبيق الفلاتر إذا كانت محددة
             if (fromDate || toDate) {
@@ -4026,13 +4707,6 @@
                     const orderDate = new Date(order.date);
                     if (from && orderDate < from) return false;
                     if (to && orderDate > to) return false;
-                    return true;
-                });
-                
-                filteredOrderExpenses = orderExpenses.filter(exp => {
-                    const expDate = new Date(exp.date);
-                    if (from && expDate < from) return false;
-                    if (to && expDate > to) return false;
                     return true;
                 });
             }
@@ -4058,19 +4732,22 @@
                 repairTypeData[repairType].totalRevenue += order.amount;
                 
                 // حساب مصروفات هذا الأوردر
-                const orderExpenses = filteredOrderExpenses.filter(exp => exp.orderNumber === order.orderNumber);
-                const totalOrderExpenses = orderExpenses.reduce((sum, exp) => {
-                    return sum + (exp.parts || 0) + (exp.transport || 0) + (exp.other || 0);
-                }, 0);
+                const orderExpenses = (order.parts || 0) + (order.transport || 0) + (order.other || 0) + (order.additional || 0);
                 
                 // حساب العمولة
                 const tech = technicians.find(t => t.id === order.technicianId);
                 const techPercentage = tech ? tech.percentage : 0;
-                const commission = order.amount * (techPercentage / 100);
+                const netBeforeCommission = order.amount - orderExpenses;
+                const commission = netBeforeCommission * (techPercentage / 100);
                 
-                repairTypeData[repairType].totalExpenses += totalOrderExpenses;
+                // حساب الربح النهائي
+                const netAfterCommission = netBeforeCommission - commission;
+                const partnerShare = netAfterCommission * 0.05;
+                const centerNet = netAfterCommission - partnerShare;
+                
+                repairTypeData[repairType].totalExpenses += orderExpenses;
                 repairTypeData[repairType].totalCommission += commission;
-                repairTypeData[repairType].netProfit += order.amount - commission - totalOrderExpenses;
+                repairTypeData[repairType].netProfit += centerNet;
             });
             
             // تحديث الجدول
@@ -4364,10 +5041,11 @@
                     users: JSON.parse(JSON.stringify(users)),
                     technicians: JSON.parse(JSON.stringify(technicians)),
                     customers: JSON.parse(JSON.stringify(customers)),
+                    repairTypes: JSON.parse(JSON.stringify(repairTypes)),
                     orders: JSON.parse(JSON.stringify(orders)),
-                    orderExpenses: JSON.parse(JSON.stringify(orderExpenses)),
                     generalExpenses: JSON.parse(JSON.stringify(generalExpenses)),
-                    advances: JSON.parse(JSON.stringify(advances))
+                    advances: JSON.parse(JSON.stringify(advances)),
+                    partnerTransactions: JSON.parse(JSON.stringify(partnerTransactions))
                 }
             };
             
@@ -4407,10 +5085,11 @@
                 users = JSON.parse(JSON.stringify(backup.data.users));
                 technicians = JSON.parse(JSON.stringify(backup.data.technicians));
                 customers = JSON.parse(JSON.stringify(backup.data.customers));
+                repairTypes = JSON.parse(JSON.stringify(backup.data.repairTypes));
                 orders = JSON.parse(JSON.stringify(backup.data.orders));
-                orderExpenses = JSON.parse(JSON.stringify(backup.data.orderExpenses));
                 generalExpenses = JSON.parse(JSON.stringify(backup.data.generalExpenses));
                 advances = JSON.parse(JSON.stringify(backup.data.advances));
+                partnerTransactions = JSON.parse(JSON.stringify(backup.data.partnerTransactions));
                 
                 saveData();
                 loadDataBasedOnRole();
@@ -4490,21 +5169,6 @@
             }
         }
         
-        // تحديث قائمة أرقام الفواتير في شاشة المصروفات
-        function updateOrderNumberSelect() {
-            const orderNumberSelect = document.getElementById('expenseOrderNumber');
-            if (!orderNumberSelect) return;
-            
-            orderNumberSelect.innerHTML = '<option value="">اختر رقم الفاتورة</option>';
-            
-            orders.forEach(order => {
-                const option = document.createElement('option');
-                option.value = order.orderNumber;
-                option.textContent = `${order.orderNumber} (${formatDate(order.date)})`;
-                orderNumberSelect.appendChild(option);
-            });
-        }
-        
         // تنسيق التاريخ
         function formatDate(dateString) {
             if (!dateString) return '';
@@ -4537,10 +5201,11 @@
                     users: JSON.parse(JSON.stringify(users)),
                     technicians: JSON.parse(JSON.stringify(technicians)),
                     customers: JSON.parse(JSON.stringify(customers)),
+                    repairTypes: JSON.parse(JSON.stringify(repairTypes)),
                     orders: JSON.parse(JSON.stringify(orders)),
-                    orderExpenses: JSON.parse(JSON.stringify(orderExpenses)),
                     generalExpenses: JSON.parse(JSON.stringify(generalExpenses)),
-                    advances: JSON.parse(JSON.stringify(advances))
+                    advances: JSON.parse(JSON.stringify(advances)),
+                    partnerTransactions: JSON.parse(JSON.stringify(partnerTransactions))
                 }
             };
             
@@ -4560,11 +5225,336 @@
             }
         }
         
+        // دالة حفظ PDF عامة
+        async function savePDF(title, subjectName, subjectType, data, columns) {
+            if (!window.jspdf) {
+                alert('مكتبة PDF غير محملة. يرجى تحديث الصفحة.');
+                return;
+            }
+            
+            try {
+                const pdfTemplate = document.getElementById('pdf-template');
+                const pdfTitle = document.getElementById('pdf-title');
+                const pdfSubjectName = document.getElementById('pdf-subject-name');
+                const pdfSubjectType = document.getElementById('pdf-subject-type');
+                const pdfStartDate = document.getElementById('pdf-start-date');
+                const pdfEndDate = document.getElementById('pdf-end-date');
+                const pdfPrintDate = document.getElementById('pdf-print-date');
+                const pdfSummary = document.getElementById('pdf-summary');
+                const pdfTableBody = document.getElementById('pdf-table-body');
+                const pdfTotals = document.getElementById('pdf-totals');
+                
+                // تعيين بيانات PDF
+                pdfTitle.textContent = title;
+                pdfSubjectName.textContent = subjectName;
+                pdfSubjectType.textContent = subjectType;
+                pdfStartDate.textContent = document.getElementById('advanceFromDate')?.value || document.getElementById('partnerFromDate')?.value || document.getElementById('reportFromDate')?.value || 'بداية';
+                pdfEndDate.textContent = document.getElementById('advanceToDate')?.value || document.getElementById('partnerToDate')?.value || document.getElementById('reportToDate')?.value || 'النهاية';
+                pdfPrintDate.textContent = formatDate(new Date().toISOString());
+                
+                // إنشاء ملخص
+                let summaryHTML = '';
+                if (subjectType === 'موظف') {
+                    // حساب ملخص الموظف
+                    const employeeAdvances = advances.filter(a => a.employee === subjectName);
+                    const totalAdvances = employeeAdvances.filter(a => a.type === 'سلفة').reduce((sum, a) => sum + a.amount, 0);
+                    const totalPayments = employeeAdvances.filter(a => a.type === 'تسديد').reduce((sum, a) => sum + a.amount, 0);
+                    const balance = totalAdvances - totalPayments;
+                    
+                    summaryHTML = `
+                        <p><strong>إجمالي السلف:</strong> ${totalAdvances.toLocaleString()} ج.م</p>
+                        <p><strong>إجمالي التسديدات:</strong> ${totalPayments.toLocaleString()} ج.م</p>
+                        <p><strong>الرصيد الحالي:</strong> <span style="color: ${balance > 0 ? '#dc3545' : '#1a8c5e'}">${balance.toLocaleString()} ج.م</span></p>
+                    `;
+                } else if (subjectType === 'شريك') {
+                    // حساب ملخص الشريك
+                    const partnerTrans = partnerTransactions.filter(t => t.partner === subjectName);
+                    const totalWithdrawals = partnerTrans.filter(t => t.type === 'سحوبة').reduce((sum, t) => sum + t.amount, 0);
+                    const totalShares = partnerTrans.filter(t => t.type === 'حصة').reduce((sum, t) => sum + t.amount, 0);
+                    const balance = subjectName === 'الشريك الثاني' ? (totalShares - totalWithdrawals) : -totalWithdrawals;
+                    
+                    summaryHTML = `
+                        <p><strong>إجمالي السحوبات:</strong> ${totalWithdrawals.toLocaleString()} ج.م</p>
+                        ${subjectName === 'الشريك الثاني' ? `<p><strong>إجمالي الحصص:</strong> ${totalShares.toLocaleString()} ج.م</p>` : ''}
+                        <p><strong>الرصيد الحالي:</strong> <span style="color: ${balance > 0 ? '#1a8c5e' : '#dc3545'}">${balance.toLocaleString()} ج.م</span></p>
+                    `;
+                }
+                pdfSummary.innerHTML = summaryHTML;
+                
+                // ملء جدول البيانات
+                pdfTableBody.innerHTML = '';
+                let totalDebit = 0;
+                let totalCredit = 0;
+                let runningBalance = 0;
+                
+                data.forEach(item => {
+                    const row = pdfTableBody.insertRow();
+                    
+                    columns.forEach(col => {
+                        const cell = row.insertCell();
+                        if (col.field === 'date') {
+                            cell.textContent = formatDate(item[col.field]);
+                        } else if (col.field === 'amount') {
+                            const amount = item[col.field];
+                            cell.textContent = amount.toLocaleString() + ' ج.م';
+                            
+                            // حساب المدين والدائن والرصيد
+                            if (subjectType === 'موظف') {
+                                if (item.type === 'سلفة') {
+                                    totalDebit += amount;
+                                    runningBalance += amount;
+                                } else if (item.type === 'تسديد') {
+                                    totalCredit += amount;
+                                    runningBalance -= amount;
+                                }
+                            } else if (subjectType === 'شريك') {
+                                if (item.type === 'سحوبة') {
+                                    totalDebit += amount;
+                                    runningBalance -= amount;
+                                } else if (item.type === 'حصة') {
+                                    totalCredit += amount;
+                                    runningBalance += amount;
+                                }
+                            }
+                        } else {
+                            cell.textContent = item[col.field] || '-';
+                        }
+                    });
+                    
+                    // إضافة خلية الرصيد
+                    const balanceCell = row.insertCell();
+                    balanceCell.textContent = runningBalance.toLocaleString() + ' ج.م';
+                    balanceCell.style.color = runningBalance > 0 ? '#dc3545' : '#1a8c5e';
+                });
+                
+                // إضافة الإجماليات
+                pdfTotals.innerHTML = `
+                    <tr>
+                        <td colspan="3" style="text-align: left; padding: 8px; border: 1px solid #000;">الإجمالي</td>
+                        <td style="text-align: center; padding: 8px; border: 1px solid #000;">${totalDebit.toLocaleString()} ج.م</td>
+                        <td style="text-align: center; padding: 8px; border: 1px solid #000;">${totalCredit.toLocaleString()} ج.م</td>
+                        <td style="text-align: center; padding: 8px; border: 1px solid #000; color: ${runningBalance > 0 ? '#dc3545' : '#1a8c5e'}">${runningBalance.toLocaleString()} ج.م</td>
+                    </tr>
+                `;
+                
+                // إظهار العنصر مؤقتاً لالتقاط الصورة
+                const originalDisplay = pdfTemplate.style.display;
+                const originalPosition = pdfTemplate.style.position;
+                const originalLeft = pdfTemplate.style.left;
+                const originalTop = pdfTemplate.style.top;
+                const originalWidth = pdfTemplate.style.width;
+                const originalHeight = pdfTemplate.style.height;
+                const originalZIndex = pdfTemplate.style.zIndex;
+                
+                pdfTemplate.style.display = 'block';
+                pdfTemplate.style.position = 'fixed';
+                pdfTemplate.style.left = '0';
+                pdfTemplate.style.top = '0';
+                pdfTemplate.style.width = '794px';
+                pdfTemplate.style.height = '1123px';
+                pdfTemplate.style.zIndex = '10000';
+                pdfTemplate.style.background = 'white';
+                pdfTemplate.style.padding = '5px';
+                
+                // استخدام html2canvas لالتقاط الصورة
+                const canvas = await html2canvas(pdfTemplate, {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#FFFFFF',
+                    width: 794,
+                    height: 1123,
+                    windowWidth: 794,
+                    windowHeight: 1123
+                });
+                
+                // إعادة العنصر إلى وضعه الأصلي
+                pdfTemplate.style.display = originalDisplay;
+                pdfTemplate.style.position = originalPosition;
+                pdfTemplate.style.left = originalLeft;
+                pdfTemplate.style.top = originalTop;
+                pdfTemplate.style.width = originalWidth;
+                pdfTemplate.style.height = originalHeight;
+                pdfTemplate.style.zIndex = originalZIndex;
+                
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                const pdf = new window.jspdf.jsPDF('p', 'pt', 'a4');
+                
+                const imgWidth = pdf.internal.pageSize.getWidth();
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                // إضافة الصورة إلى PDF
+                pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                
+                // تنظيف اسم الملف
+                const cleanSubjectName = subjectName.replace(/[^\w\u0600-\u06FF\s]/g, '');
+                const fileName = `${title}_${cleanSubjectName}.pdf`;
+                
+                pdf.save(fileName);
+                
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert('حدث خطأ أثناء إنشاء ملف PDF: ' + error.message);
+            }
+        }
+        
+        // تصدير PDF للسلف
+        function exportAdvancesPDF() {
+            const employee = document.getElementById('advanceEmployeeFilter').value;
+            const fromDate = document.getElementById('advanceFromDate').value;
+            const toDate = document.getElementById('advanceToDate').value;
+            
+            let filteredData = advances;
+            
+            if (employee) {
+                filteredData = filteredData.filter(a => a.employee === employee);
+            }
+            
+            if (fromDate || toDate) {
+                filteredData = filteredData.filter(a => {
+                    const advanceDate = new Date(a.date);
+                    const from = fromDate ? new Date(fromDate) : null;
+                    const to = toDate ? new Date(toDate) : null;
+                    
+                    if (from && advanceDate < from) return false;
+                    if (to && advanceDate > to) return false;
+                    
+                    return true;
+                });
+            }
+            
+            const subjectName = employee || 'جميع الموظفين';
+            const columns = [
+                { field: 'date', title: 'التاريخ' },
+                { field: 'employee', title: 'اسم الموظف' },
+                { field: 'type', title: 'نوع الحركة' },
+                { field: 'amount', title: 'المبلغ' },
+                { field: 'reason', title: 'البيان' }
+            ];
+            
+            savePDF('كشف حساب سلف الموظفين', subjectName, 'موظف', filteredData, columns);
+        }
+        
+        // تصدير PDF للشركاء
+        function exportPartnerPDF() {
+            const partner = document.getElementById('partnerTypeFilter').value;
+            const fromDate = document.getElementById('partnerFromDate').value;
+            const toDate = document.getElementById('partnerToDate').value;
+            
+            let filteredData = partnerTransactions;
+            
+            if (partner === 'partner1') {
+                filteredData = filteredData.filter(t => t.partner === "الشريك الأول");
+            } else if (partner === 'partner2') {
+                filteredData = filteredData.filter(t => t.partner === "الشريك الثاني");
+            }
+            
+            if (fromDate || toDate) {
+                filteredData = filteredData.filter(t => {
+                    const transDate = new Date(t.date);
+                    const from = fromDate ? new Date(fromDate) : null;
+                    const to = toDate ? new Date(toDate) : null;
+                    
+                    if (from && transDate < from) return false;
+                    if (to && transDate > to) return false;
+                    
+                    return true;
+                });
+            }
+            
+            const subjectName = partner === 'partner1' ? 'الشريك الأول' : 
+                              partner === 'partner2' ? 'الشريك الثاني' : 'جميع الشركاء';
+            const columns = [
+                { field: 'date', title: 'التاريخ' },
+                { field: 'partner', title: 'اسم الشريك' },
+                { field: 'type', title: 'نوع الحركة' },
+                { field: 'amount', title: 'المبلغ' },
+                { field: 'description', title: 'البيان' }
+            ];
+            
+            savePDF('كشف حساب حركة الشركاء', subjectName, 'شريك', filteredData, columns);
+        }
+        
+        // تصدير PDF للتقرير
+        function exportReportPDF() {
+            const fromDate = document.getElementById('reportFromDate').value;
+            const toDate = document.getElementById('reportToDate').value;
+            
+            let filteredOrders = orders;
+            
+            if (fromDate || toDate) {
+                filteredOrders = filteredOrders.filter(order => {
+                    const orderDate = new Date(order.date);
+                    const from = fromDate ? new Date(fromDate) : null;
+                    const to = toDate ? new Date(toDate) : null;
+                    
+                    if (from && orderDate < from) return false;
+                    if (to && orderDate > to) return false;
+                    
+                    return true;
+                });
+            }
+            
+            // تحويل البيانات إلى تنسيق مناسب للPDF
+            const reportData = filteredOrders.map(order => {
+                const tech = technicians.find(t => t.id === order.technicianId);
+                const techName = tech ? tech.name : 'غير معروف';
+                const techPercentage = tech ? tech.percentage : 0;
+                
+                const orderExpenses = (order.parts || 0) + (order.transport || 0) + (order.other || 0) + (order.additional || 0);
+                const netBeforeCommission = order.amount - orderExpenses;
+                const commission = netBeforeCommission * (techPercentage / 100);
+                const netAfterCommission = netBeforeCommission - commission;
+                const partnerShare = netAfterCommission * 0.05;
+                const centerNet = netAfterCommission - partnerShare;
+                const profitPercentage = order.amount > 0 ? ((centerNet / order.amount) * 100).toFixed(1) : 0;
+                
+                return {
+                    date: order.date,
+                    orderNumber: order.orderNumber,
+                    customerName: order.customerName,
+                    repairType: order.repairType,
+                    amount: order.amount,
+                    expenses: orderExpenses,
+                    netBeforeCommission: netBeforeCommission,
+                    technician: techName,
+                    commission: commission,
+                    netAfterCommission: netAfterCommission,
+                    partnerShare: partnerShare,
+                    centerNet: centerNet,
+                    profitPercentage: profitPercentage + '%'
+                };
+            });
+            
+            const subjectName = `تقرير ربحية الفواتير ${fromDate ? `من ${formatDate(fromDate)}` : ''} ${toDate ? `إلى ${formatDate(toDate)}` : ''}`.trim();
+            const columns = [
+                { field: 'date', title: 'التاريخ' },
+                { field: 'orderNumber', title: 'رقم الفاتورة' },
+                { field: 'customerName', title: 'اسم العميل' },
+                { field: 'repairType', title: 'نوع التصليح' },
+                { field: 'amount', title: 'قيمة الفاتورة' },
+                { field: 'expenses', title: 'المصروفات' },
+                { field: 'netBeforeCommission', title: 'صافي قبل العمولة' },
+                { field: 'technician', title: 'اسم الفني' },
+                { field: 'commission', title: 'عمولة الفني' },
+                { field: 'netAfterCommission', title: 'صافي بعد العمولة' },
+                { field: 'partnerShare', title: 'حصة الشريك' },
+                { field: 'centerNet', title: 'صافي المركز' },
+                { field: 'profitPercentage', title: 'نسبة الربح' }
+            ];
+            
+            savePDF('تقرير ربحية الفواتير', subjectName, 'تقرير', reportData, columns);
+        }
+        
         // تعريف الدوال التي تحتاج إلى الوصول من أزرار HTML
         window.fillCustomerInfo = fillCustomerInfo;
         window.editTechnician = editTechnician;
+        window.deleteTechnician = deleteTechnician;
         window.editCustomer = editCustomer;
         window.deleteCustomer = deleteCustomer;
+        window.editRepairType = editRepairType;
+        window.deleteRepairType = deleteRepairType;
+        
         window.editOrder = function(id) {
             const order = orders.find(o => o.id === id);
             if (order && document.getElementById('orderNumber')) {
@@ -4576,6 +5566,11 @@
                 document.getElementById('technician').value = order.technicianId;
                 document.getElementById('repairType').value = order.repairType;
                 document.getElementById('orderAmount').value = order.amount;
+                document.getElementById('partsExpense').value = order.parts || 0;
+                document.getElementById('transportExpense').value = order.transport || 0;
+                document.getElementById('otherExpense').value = order.other || 0;
+                document.getElementById('additionalExpense').value = order.additional || 0;
+                document.getElementById('expenseDescription').value = order.expenseDescription || '';
                 document.getElementById('orderDescription').value = order.description;
                 
                 // إظهار بيانات العميل
@@ -4594,6 +5589,9 @@
                     document.getElementById('updateOrderBtn').classList.remove('hidden-by-role');
                     document.getElementById('cancelOrderBtn').classList.remove('hidden-by-role');
                 }
+                
+                // تحديث الملخص
+                updateOrderSummary();
             }
         };
         
@@ -4607,7 +5605,15 @@
             const customerAddress = document.getElementById('customerAddress') ? document.getElementById('customerAddress').value.trim() : '';
             const technicianId = document.getElementById('technician') ? parseInt(document.getElementById('technician').value) : 0;
             const repairType = document.getElementById('repairType') ? document.getElementById('repairType').value : '';
-            const orderAmount = document.getElementById('orderAmount') ? parseInt(document.getElementById('orderAmount').value) : 0;
+            const orderAmount = document.getElementById('orderAmount') ? parseFloat(document.getElementById('orderAmount').value) : 0;
+            
+            // مصروفات الفاتورة
+            const partsExpense = document.getElementById('partsExpense') ? parseFloat(document.getElementById('partsExpense').value) || 0 : 0;
+            const transportExpense = document.getElementById('transportExpense') ? parseFloat(document.getElementById('transportExpense').value) || 0 : 0;
+            const otherExpense = document.getElementById('otherExpense') ? parseFloat(document.getElementById('otherExpense').value) || 0 : 0;
+            const additionalExpense = document.getElementById('additionalExpense') ? parseFloat(document.getElementById('additionalExpense').value) || 0 : 0;
+            const expenseDescription = document.getElementById('expenseDescription') ? document.getElementById('expenseDescription').value.trim() : '';
+            
             const orderDescription = document.getElementById('orderDescription') ? document.getElementById('orderDescription').value.trim() : '';
             
             if (!orderNumber || !orderDate || !customerPhone || !customerName || !technicianId || !repairType || isNaN(orderAmount) || orderAmount <= 0) {
@@ -4631,6 +5637,11 @@
                 orders[orderIndex].technicianId = technicianId;
                 orders[orderIndex].repairType = repairType;
                 orders[orderIndex].amount = orderAmount;
+                orders[orderIndex].parts = partsExpense;
+                orders[orderIndex].transport = transportExpense;
+                orders[orderIndex].other = otherExpense;
+                orders[orderIndex].additional = additionalExpense;
+                orders[orderIndex].expenseDescription = expenseDescription;
                 orders[orderIndex].description = orderDescription;
                 
                 saveData();
@@ -4658,80 +5669,6 @@
                 orders = orders.filter(order => order.id !== id);
                 saveData();
                 loadOrders();
-                loadDashboard();
-            }
-        };
-        
-        window.editOrderExpense = function(id) {
-            const expense = orderExpenses.find(e => e.id === id);
-            if (expense && document.getElementById('expenseOrderNumber')) {
-                document.getElementById('expenseOrderNumber').value = expense.orderNumber;
-                document.getElementById('expenseDate').value = expense.date;
-                document.getElementById('partsExpense').value = expense.parts || 0;
-                document.getElementById('transportExpense').value = expense.transport || 0;
-                document.getElementById('otherExpense').value = expense.other || 0;
-                document.getElementById('expenseDescription').value = expense.description;
-                
-                editingExpenseId = id;
-                
-                // إظهار أزرار التحديث والإلغاء
-                if (document.getElementById('saveExpenseBtn')) {
-                    document.getElementById('saveExpenseBtn').classList.add('hidden-by-role');
-                    document.getElementById('updateExpenseBtn').classList.remove('hidden-by-role');
-                    document.getElementById('cancelExpenseBtn').classList.remove('hidden-by-role');
-                }
-            }
-        };
-        
-        window.updateOrderExpense = function() {
-            if (!editingExpenseId) return;
-            
-            const orderNumber = document.getElementById('expenseOrderNumber') ? document.getElementById('expenseOrderNumber').value : '';
-            const expenseDate = document.getElementById('expenseDate') ? document.getElementById('expenseDate').value : '';
-            const partsExpense = document.getElementById('partsExpense') ? parseInt(document.getElementById('partsExpense').value) || 0 : 0;
-            const transportExpense = document.getElementById('transportExpense') ? parseInt(document.getElementById('transportExpense').value) || 0 : 0;
-            const otherExpense = document.getElementById('otherExpense') ? parseInt(document.getElementById('otherExpense').value) || 0 : 0;
-            const expenseDescription = document.getElementById('expenseDescription') ? document.getElementById('expenseDescription').value.trim() : '';
-            
-            if (!orderNumber || !expenseDate || (partsExpense === 0 && transportExpense === 0 && otherExpense === 0)) {
-                alert('الرجاء ملء جميع الحقول المطلوبة بشكل صحيح');
-                return;
-            }
-            
-            const expenseIndex = orderExpenses.findIndex(e => e.id === editingExpenseId);
-            if (expenseIndex !== -1) {
-                orderExpenses[expenseIndex].orderNumber = orderNumber;
-                orderExpenses[expenseIndex].date = expenseDate;
-                orderExpenses[expenseIndex].parts = partsExpense;
-                orderExpenses[expenseIndex].transport = transportExpense;
-                orderExpenses[expenseIndex].other = otherExpense;
-                orderExpenses[expenseIndex].description = expenseDescription;
-                
-                saveData();
-                loadOrderExpenses();
-                loadDashboard();
-                
-                // مسح الحقول وإعادة الحالة
-                cancelEditExpense();
-            }
-        };
-        
-        window.cancelEditExpense = function() {
-            editingExpenseId = null;
-            clearExpenseForm();
-            
-            if (document.getElementById('saveExpenseBtn')) {
-                document.getElementById('saveExpenseBtn').classList.remove('hidden-by-role');
-                document.getElementById('updateExpenseBtn').classList.add('hidden-by-role');
-                document.getElementById('cancelExpenseBtn').classList.add('hidden-by-role');
-            }
-        };
-        
-        window.deleteOrderExpense = function(id) {
-            if (confirm('هل أنت متأكد من حذف هذا المصروف؟')) {
-                orderExpenses = orderExpenses.filter(expense => expense.id !== id);
-                saveData();
-                loadOrderExpenses();
                 loadDashboard();
             }
         };
@@ -4875,7 +5812,10 @@
         window.deleteBackup = deleteBackup;
         window.editUser = editUser;
         window.deleteUser = deleteUser;
-        window.deleteTechnician = deleteTechnician;
+        window.deletePartnerTransaction = deletePartnerTransaction;
+        window.exportAdvancesPDF = exportAdvancesPDF;
+        window.exportPartnerPDF = exportPartnerPDF;
+        window.exportReportPDF = exportReportPDF;
     </script>
 </body>
 </html>
